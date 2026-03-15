@@ -11,7 +11,42 @@
         <changefreq>weekly</changefreq>
     </url>
     <url>
-        <loc>https://www.yourdomain.com/product-detail.html</loc>
+        <loc>https://www.yourdomain.com/products.html?category=bolts</loc>
+        <priority>0.88</priority>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.yourdomain.com/products.html?category=nuts</loc>
+        <priority>0.88</priority>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.yourdomain.com/products.html?category=washers</loc>
+        <priority>0.88</priority>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.yourdomain.com/products.html?category=screws</loc>
+        <priority>0.88</priority>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.yourdomain.com/product.html?slug=hex-head-bolts-din-931</loc>
+        <priority>0.85</priority>
+        <changefreq>monthly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.yourdomain.com/product.html?slug=hex-head-cap-screws-din-933</loc>
+        <priority>0.85</priority>
+        <changefreq>monthly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.yourdomain.com/product.html?slug=hex-nuts-din-934</loc>
+        <priority>0.85</priority>
+        <changefreq>monthly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.yourdomain.com/product.html?slug=flat-washers-din-125</loc>
         <priority>0.85</priority>
         <changefreq>monthly</changefreq>
     </url>

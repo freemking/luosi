@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="page-title">Our Products - Industrial Fasteners, Bolts, Nuts, Screws | Fastener Pro</title>
-    <meta name="description" id="page-description" content="Browse our complete range of industrial fasteners including bolts, nuts, washers, screws, threaded rods and custom parts. All international standards available.">
-    <meta name="keywords" content="industrial fasteners products, bolts for sale, nuts supplier, screws, washers, threaded rods">
-    <meta property="og:title" content="Our Products - Industrial Fasteners | Fastener Pro">
-    <meta property="og:description" content="Browse our complete range of industrial fasteners including bolts, nuts, washers, screws and more.">
-    <meta property="og:type" content="website">
-    <link rel="canonical" href="https://www.yourdomain.com/products.html">
+    <title id="page-title">Product | Fastener Pro</title>
+    <meta name="description" id="page-description" content="Product description">
+    <meta name="keywords" id="page-keywords" content="fasteners, bolts, industrial">
+    <meta property="og:title" id="og-title" content="Product | Fastener Pro">
+    <meta property="og:description" id="og-description" content="Product description">
+    <meta property="og:type" content="product">
+    <link rel="canonical" href="https://www.yourdomain.com/product.html">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -30,7 +30,7 @@
                 <nav>
                     <ul>
                         <li><a href="index.html">Home</a></li>
-                        <li><a href="products.html" class="active">Products</a></li>
+                        <li><a href="products.html">Products</a></li>
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="contact.html">Contact Us</a></li>
                     </ul>
@@ -39,55 +39,37 @@
         </div>
     </header>
 
-    <div class="page-header">
-        <div class="container">
-            <h1 id="page-header-title">Our Products</h1>
-            <p id="page-header-subtitle">Comprehensive selection of high-quality industrial fasteners</p>
-        </div>
-    </div>
-
     <div class="breadcrumb">
         <div class="container">
             <ol>
                 <li><a href="index.html">Home</a></li>
-                <li id="breadcrumb-current">Products</li>
+                <li><a href="products.html">Products</a></li>
+                <li id="breadcrumb-current">Product</li>
             </ol>
         </div>
     </div>
 
-    <section class="product-list">
+    <section class="product-detail">
         <div class="container">
-            <div class="product-filter">
-                <div class="filter-group">
-                    <label for="category">Category:</label>
-                    <select id="category">
-                        <option value="">All Categories</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="standard">Standard:</label>
-                    <select id="standard">
-                        <option value="">All Standards</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="material">Material:</label>
-                    <select id="material">
-                        <option value="">All Materials</option>
-                    </select>
-                </div>
+            <div id="product-content">
             </div>
+        </div>
+    </section>
 
-            <div class="products-grid" id="products-grid">
+    <section class="featured-products">
+        <div class="container">
+            <h2 class="section-title">Related Products</h2>
+            <p class="section-subtitle">You may also be interested in these complementary products</p>
+            <div class="products-grid" id="related-products">
             </div>
         </div>
     </section>
 
     <section class="contact-cta">
         <div class="container">
-            <h2>Can't Find What You Need?</h2>
-            <p>Contact us for special requirements or custom fastener solutions. We can manufacture according to your specifications.</p>
-            <a href="contact.html" class="btn btn-accent">Send Inquiry</a>
+            <h2>Ready to Place Your Order?</h2>
+            <p>Contact us today for a competitive quote. We offer factory direct pricing with high quality standards.</p>
+            <a href="contact.html" class="btn btn-accent">Send Inquiry Now</a>
         </div>
     </section>
 
@@ -144,7 +126,7 @@
     <script src="js/data.js"></script>
     <script src="js/router.js"></script>
     <script src="js/templates.js"></script>
-    <script src="js/products.js"></script>
+    <script src="js/product-detail.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
