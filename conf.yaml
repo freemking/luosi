@@ -1,10 +1,10 @@
 database:
   driver: mysql
-  host: 127.0.0.1
+  host: 111.231.105.53
   port: 3306
-  user: root
-  password: 123456
-  dbname: demo
+  user: yuanmao
+  password: Luosi@2026!@#$%^
+  dbname: luosi
   charset: utf8mb4
   parseTime: true
   loc: Local
