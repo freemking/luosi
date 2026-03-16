@@ -135,7 +135,7 @@ header {
 }
 
 .header-main {
-    padding: 20px 0;
+    padding: 10px 0;
 }
 
 .header-main .container {
@@ -145,20 +145,25 @@ header {
 }
 
 .logo {
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    max-height: 60px;
+    width: auto;
 }
 
 nav ul {
     display: flex;
     list-style: none;
-    gap: 30px;
+    gap: 40px;
 }
 
 nav a {
     color: var(--dark-color);
     font-weight: 500;
+    font-size: 20px;
     padding: 8px 0;
     border-bottom: 2px solid transparent;
     transition: all 0.3s ease;
