@@ -1,0 +1,18 @@
+database:
+  driver: mysql
+  host: 127.0.0.1
+  port: 3306
+  user: root
+  password: 123456
+  dbname: demo
+  charset: utf8mb4
+  parseTime: true
+  loc: Local
+
+mail:
+  smtp_host: smtp.gmail.com
+  smtp_port: 587
+  smtp_username: your-email@gmail.com
+  smtp_password: your-app-password
+  from: your-email@gmail.com
+  to: recipient-email@example.com
