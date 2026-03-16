@@ -1,0 +1,27 @@
+<header>
+    <div class="header-top">
+        <div class="container">
+            <div class="header-contact">
+                <span>📧 <a href="mailto:info@fastener-pro.com">info@fastener-pro.com</a></span>
+                <span>📞 <a href="tel:+8613484309191">+86 13484309191</a></span>
+            </div>
+            <div>Professional Industrial Fastener Manufacturer & Supplier</div>
+        </div>
+    </div>
+    <div class="header-main">
+        <div class="container">
+            <a href="/" class="logo"><img src="/static/images/logo.png" alt="Fastener Pro Logo"></a>
+            <button class="mobile-menu-btn">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="/" {{if eq .active "home"}}class="active"{{end}}>Home</a></li>
+                    <li><a href="/products" {{if eq .active "products"}}class="active"{{end}}>Products</a></li>
+                    <li><a href="/about" {{if eq .active "about"}}class="active"{{end}}>About Us</a></li>
+                    <li><a href="/contact" {{if eq .active "contact"}}class="active"{{end}}>Contact Us</a></li>
+                    <li><a href="/faq" {{if eq .active "faq"}}class="active"{{end}}>FAQ</a></li>
+                    <li><a href="/feedback" {{if eq .active "feedback"}}class="active"{{end}}>Feedback</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>

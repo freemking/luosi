@@ -13,31 +13,7 @@
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <header>
-        <div class="header-top">
-            <div class="container">
-                <div class="header-contact">
-                    <span>📧 <a href="mailto:info@fastener-pro.com">info@fastener-pro.com</a></span>
-                    <span>📞 <a href="tel:+8613484309191">+86 13484309191</a></span>
-                </div>
-                <div>Professional Industrial Fastener Manufacturer & Supplier</div>
-            </div>
-        </div>
-        <div class="header-main">
-            <div class="container">
-                <a href="/" class="logo"><img src="/static/images/logo.png" alt="Fastener Pro Logo"></a>
-                <button class="mobile-menu-btn">☰</button>
-                <nav>
-                    <ul>
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/products">Products</a></li>
-                        <li><a href="/about" class="active">About Us</a></li>
-                        <li><a href="/contact">Contact Us</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
+    {{template "header.html" .}}
 
     <div class="page-header">
         <div class="container">
@@ -167,59 +143,7 @@
         </div>
     </section>
 
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-col">
-                    <h3>FASTENER PRO</h3>
-                    <p>Professional manufacturer and supplier of industrial fasteners serving global customers with high-quality products and excellent service.</p>
-                    <p>Quality, reliability, and customer satisfaction are our top priorities.</p>
-                </div>
-                <div class="footer-col">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/products">Products</a></li>
-                        <li><a href="/about">About Us</a></li>
-                        <li><a href="/contact">Contact Us</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h3>Products</h3>
-                    <ul>
-                        <li><a href="/products?category=bolts">Bolts</a></li>
-                        <li><a href="/products?category=nuts">Nuts</a></li>
-                        <li><a href="/products?category=washers">Washers</a></li>
-                        <li><a href="/products?category=screws">Screws</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h3>Contact Info</h3>
-                    <ul class="contact-info">
-                        <li>
-                            <span>📍</span>
-                            <span>Hangzhou, Zhejiang, China<br>311121</span>
-                        </li>
-                        <li>
-                            <span>📞</span>
-                            <span><a href="tel:+8613484309191">+86 13484309191</a></span>
-                        </li>
-                        <li>
-                            <span>📧</span>
-                            <span><a href="mailto:info@fastener-pro.com">info@fastener-pro.com</a></span>
-                        </li>
-                        <li>
-                            <span>🕒</span>
-                            <span>Monday - Friday: 9:00 - 18:00</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Fastener Pro. All Rights Reserved.</p>
-            </div>
-        </div>
-    </footer>
+    {{template "footer.html" .}}
 
     <script src="/static/js/main.js"></script>
 </body>
