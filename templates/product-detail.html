@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{if .product}}{{.product.Name}} - High Quality Industrial Fasteners | Fastener Pro{{else}}Product | Fastener Pro{{end}}</title>
+    <meta name="description" content="{{if .product}}{{.product.Description}}{{else}}Product description{{end}}">
+    <meta name="keywords" content="{{if .product}}{{.product.Name}}, {{.product.Category}}, {{.product.Standard}}{{else}}fasteners, bolts, industrial{{end}}">
+    <meta property="og:title" content="{{if .product}}{{.product.Name}} - High Quality Industrial Fasteners{{else}}Product | Fastener Pro{{end}}">
+    <meta property="og:description" content="{{if .product}}{{.product.Description}}{{else}}Product description{{end}}">
+    <meta property="og:type" content="product">
+    <link rel="canonical" href="https://www.yourdomain.com/product-detail.html">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="header-top">
+            <div class="container">
+                <div class="header-contact">
+                    <span>📧 <a href="mailto:info@fastener-pro.com">info@fastener-pro.com</a></span>
+                    <span>📞 <a href="tel:+8613484309191">+86 13484309191</a></span>
+                </div>
+                <div>Professional Industrial Fastener Manufacturer & Supplier</div>
+            </div>
+        </div>
+        <div class="header-main">
+            <div class="container">
+                <a href="/" class="logo"><img src="/static/images/logo.png" alt="Fastener Pro Logo"></a>
+                <button class="mobile-menu-btn">☰</button>
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/products" class="active">Products</a></li>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/contact">Contact Us</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="breadcrumb">
+        <div class="container">
+            <ol>
+                <li><a href="/">Home</a></li>
+                <li><a href="/products">Products</a></li>
+                <li>{{if .product}}{{.product.Name}}{{else}}Product{{end}}</li>
+            </ol>
+        </div>
+    </div>
+
+    <section class="product-detail">
+        <div class="container">
+            {{if .error}}
+            <div class="error-message">
+                <p>{{.error}}</p>
+            </div>
+            {{else if .product}}
+            <div class="product-detail-container">
+                <div class="product-gallery">
+                    <div class="main-image">
+                        {{if .product.ImageURL}}
+                        <img src="{{.product.ImageURL}}" alt="{{.product.Name}}">
+                        {{else}}
+                        🔩
+                        {{end}}
+                    </div>
+                    <div class="thumbnail-grid">
+                        <div class="thumbnail active">
+                            {{if .product.ImageURL}}
+                            <img src="{{.product.ImageURL}}" alt="{{.product.Name}}">
+                            {{else}}
+                            🔩
+                            {{end}}
+                        </div>
+                        <div class="thumbnail">
+                            {{if .product.ImageURL}}
+                            <img src="{{.product.ImageURL}}" alt="{{.product.Name}}">
+                            {{else}}
+                            🔩
+                            {{end}}
+                        </div>
+                        <div class="thumbnail">
+                            {{if .product.ImageURL}}
+                            <img src="{{.product.ImageURL}}" alt="{{.product.Name}}">
+                            {{else}}
+                            🔩
+                            {{end}}
+                        </div>
+                        <div class="thumbnail">
+                            {{if .product.ImageURL}}
+                            <img src="{{.product.ImageURL}}" alt="{{.product.Name}}">
+                            {{else}}
+                            📏
+                            {{end}}
+                        </div>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h1>{{.product.Name}}</h1>
+                    <div class="product-standard">{{.product.Standard}}</div>
+                    <p>{{.product.Description}}</p>
+                    
+                    <div class="available-standards">
+                        <h3>Available Standards</h3>
+                        <div class="standards-list">
+                            <span class="standard-item">{{.product.Standard}}</span>
+                        </div>
+                    </div>
+
+                    <div class="product-specs">
+                        <h3>Product Specifications</h3>
+                        <table class="spec-table">
+                            <tr>
+                                <td>Category:</td>
+                                <td>{{.product.Category}}</td>
+                            </tr>
+                            <tr>
+                                <td>Standard:</td>
+                                <td>{{.product.Standard}}</td>
+                            </tr>
+                            <tr>
+                                <td>Material:</td>
+                                <td>{{.product.Material}}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <a href="/contact" class="btn">Request Quote & Inquire</a>
+                </div>
+            </div>
+
+            <div class="product-detail-bottom">
+                <div class="tabs">
+                    <ul class="tab-list">
+                        <li><button class="tab-btn active" data-tab="description">Description</button></li>
+                        <li><button class="tab-btn" data-tab="specifications">Specifications</button></li>
+                        <li><button class="tab-btn" data-tab="applications">Applications</button></li>
+                        <li><button class="tab-btn" data-tab="packaging">Packaging & Delivery</button></li>
+                    </ul>
+                </div>
+
+                <div class="tab-content active" id="description">
+                    <h3 style="font-size: 24px; margin-bottom: 20px; color: var(--dark-color);">Product Description</h3>
+                    <p style="color: var(--gray-color); line-height: 1.8; margin-bottom: 16px;">{{.product.Description}}</p>
+                </div>
+
+                <div class="tab-content" id="specifications">
+                    <h3 style="font-size: 24px; margin-bottom: 20px; color: var(--dark-color);">Technical Specifications</h3>
+                    <div class="product-specs" style="margin-top: 0;">
+                        <table class="spec-table">
+                            <tr>
+                                <td>Standard:</td>
+                                <td>{{.product.Standard}}</td>
+                            </tr>
+                            <tr>
+                                <td>Product Name:</td>
+                                <td>{{.product.Name}}</td>
+                            </tr>
+                            <tr>
+                                <td>Category:</td>
+                                <td>{{.product.Category}}</td>
+                            </tr>
+                            <tr>
+                                <td>Material:</td>
+                                <td>{{.product.Material}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="applications">
+                    <h3 style="font-size: 24px; margin-bottom: 20px; color: var(--dark-color);">Common Applications</h3>
+                    <p style="color: var(--gray-color); line-height: 1.8; margin-bottom: 20px;">{{.product.Name}} are widely used in various industrial applications. Some common applications include:</p>
+                    <div class="application-list">
+                        <div class="application-item">
+                            <span>🏭</span>
+                            <span>Industrial Machinery</span>
+                        </div>
+                        <div class="application-item">
+                            <span>🏗️</span>
+                            <span>Construction</span>
+                        </div>
+                        <div class="application-item">
+                            <span>🚗</span>
+                            <span>Automotive Industry</span>
+                        </div>
+                        <div class="application-item">
+                            <span>⚙️</span>
+                            <span>Equipment Manufacturing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="packaging">
+                    <h3 style="font-size: 24px; margin-bottom: 20px; color: var(--dark-color);">Packaging & Delivery</h3>
+                    <p style="color: var(--gray-color); line-height: 1.8; margin-bottom: 16px;"><strong>Standard Packaging:</strong> Small items are packed in carton boxes, then into wooden pallets. Larger sizes are packed in wooden cases or according to customer requirements.</p>
+                    <p style="color: var(--gray-color); line-height: 1.8; margin-bottom: 16px;"><strong>Delivery Time:</strong></p>
+                    <ul style="color: var(--gray-color); line-height: 1.8; margin-left: 20px;">
+                        <li>Standard items in stock: 7-15 days</li>
+                        <li>Custom production: 20-35 days depending on quantity</li>
+                        <li>Urgent orders can be accommodated</li>
+                    </ul>
+                </div>
+            </div>
+            {{end}}
+        </div>
+    </section>
+
+    <section class="featured-products">
+        <div class="container">
+            <h2 class="section-title">Related Products</h2>
+            <p class="section-subtitle">You may also be interested in these complementary products</p>
+            <div class="products-grid">
+                {{range .products}}
+                <div class="product-card">
+                    <div class="product-image">
+                        {{if .ImageURL}}
+                        <img src="{{.ImageURL}}" alt="{{.Name}}">
+                        {{else}}
+                        🔩
+                        {{end}}
+                    </div>
+                    <div class="product-content">
+                        <h3>{{.Name}}</h3>
+                        <p>{{.Description}}</p>
+                        <div class="product-standards">
+                            <span class="standard-tag">{{.Standard}}</span>
+                            <span class="standard-tag">{{.Material}}</span>
+                        </div>
+                        <a href="/product/{{.ID}}" class="btn btn-outline">View Details</a>
+                    </div>
+                </div>
+                {{end}}
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-cta">
+        <div class="container">
+            <h2>Ready to Place Your Order?</h2>
+            <p>Contact us today for a competitive quote. We offer factory direct pricing with high quality standards.</p>
+            <a href="/contact" class="btn btn-accent">Send Inquiry Now</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h3>FASTENER PRO</h3>
+                    <p>Professional manufacturer and supplier of industrial fasteners serving global customers with high-quality products and excellent service.</p>
+                    <p>Quality, reliability, and customer satisfaction are our top priorities.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/products">Products</a></li>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/contact">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Products</h3>
+                    <ul>
+                        <li><a href="/products?category=bolts">Bolts</a></li>
+                        <li><a href="/products?category=nuts">Nuts</a></li>
+                        <li><a href="/products?category=washers">Washers</a></li>
+                        <li><a href="/products?category=screws">Screws</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Info</h3>
+                    <ul class="contact-info">
+                        <li>
+                            <span>📍</span>
+                            <span>Hangzhou, Zhejiang, China<br>311121</span>
+                        </li>
+                        <li>
+                            <span>📞</span>
+                            <span><a href="tel:+8613484309191">+86 13484309191</a></span>
+                        </li>
+                        <li>
+                            <span>📧</span>
+                            <span><a href="mailto:info@fastener-pro.com">info@fastener-pro.com</a></span>
+                        </li>
+                        <li>
+                            <span>🕒</span>
+                            <span>Monday - Friday: 9:00 - 18:00</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Fastener Pro. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

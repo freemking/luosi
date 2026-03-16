@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Fasteners & Bolts Supplier - High Quality Industrial Fasteners</title>
+    <meta name="description" content="Leading manufacturer and supplier of high-quality industrial fasteners, bolts, nuts, washers, and custom non-standard parts. DIN, BS, JIS, ISO standards available.">
+    <meta name="keywords" content="fasteners, bolts, nuts, washers, screws, industrial fasteners, DIN standards, ISO fasteners">
+    <meta name="author" content="Professional Fastener Supplier">
+    <meta property="og:title" content="Premium Fasteners & Bolts Supplier - High Quality Industrial Fasteners">
+    <meta property="og:description" content="Leading manufacturer and supplier of high-quality industrial fasteners, bolts, nuts, washers, and custom non-standard parts.">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="https://www.yourdomain.com/">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Fastener Pro",
+      "description": "Premium Industrial Fasteners Supplier",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+86 13484309191",
+        "email": "info@fastener-pro.com",
+        "contactType": "sales"
+      }
+    }
+    </script>
+</head>
+<body>
+    <header>
+        <div class="header-top">
+            <div class="container">
+                <div class="header-contact">
+                    <span>📧 <a href="mailto:info@fastener-pro.com">info@fastener-pro.com</a></span>
+                    <span>📞 <a href="tel:+8613484309191">+86 13484309191</a></span>
+                </div>
+                <div>Professional Industrial Fastener Manufacturer & Supplier</div>
+            </div>
+        </div>
+        <div class="header-main">
+            <div class="container">
+                <a href="/" class="logo"><img src="/static/images/logo.png" alt="Fastener Pro Logo"></a>
+                <button class="mobile-menu-btn">☰</button>
+                <nav>
+                    <ul>
+                        <li><a href="/" class="active">Home</a></li>
+                        <li><a href="/products">Products</a></li>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/contact">Contact Us</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Your Trusted Source for Premium Industrial Fasteners</h1>
+            <p>High-quality bolts, nuts, screws, washers and custom fastener solutions for industries worldwide. Serving global customers with DIN, BS, JIS, and ISO standard products.</p>
+            <div class="hero-buttons">
+                <a href="/products" class="btn">Browse Products</a>
+                <a href="/contact" class="btn">Get a Quote</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="about">
+        <div class="container">
+            <h2 class="section-title">About Our Company</h2>
+            <p class="section-subtitle">Your reliable partner in industrial fastening solutions with years of export experience</p>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Professional Fastener Manufacturing & Export</h3>
+                    <p>We are a specialist in the supply of all standard DIN, BS, JIS and ISO fasteners and other industrial parts. Our customer base has grown to consist of hundreds of both domestic and foreign companies, including some renowned global corporations for which we have worked our way to participate in their various programs as an approved vendor.</p>
+                    <p>Quality is our lifeline and the main reason of our repeat business. We offer products of high quality, competitive prices, prompt deliveries and excellent after sales service.</p>
+                    <div class="about-features">
+                        <div class="about-feature">
+                            <div class="about-feature-icon">✓</div>
+                            <div class="about-feature-text">
+                                <h4>ISO 9001 Certified</h4>
+                                <p>Strict quality control system</p>
+                            </div>
+                        </div>
+                        <div class="about-feature">
+                            <div class="about-feature-icon">✓</div>
+                            <div class="about-feature-text">
+                                <h4>Custom Solutions</h4>
+                                <p>Non-standard parts available</p>
+                            </div>
+                        </div>
+                        <div class="about-feature">
+                            <div class="about-feature-icon">✓</div>
+                            <div class="about-feature-text">
+                                <h4>Global Export</h4>
+                                <p>Export to 30+ countries</p>
+                            </div>
+                        </div>
+                        <div class="about-feature">
+                            <div class="about-feature-icon">✓</div>
+                            <div class="about-feature-text">
+                                <h4>Fast Delivery</h4>
+                                <p>Large inventory in stock</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="about.html" class="btn btn-outline" style="margin-top: 30px;">Learn More About Us</a>
+                </div>
+                <div class="about-image" style="background: #f3f4f6; border-radius: 12px; display: flex; align-items: center; justify-content: center; min-height: 400px; font-size: 150px;">
+                    🔩
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="product-categories">
+        <div class="container">
+            <h2 class="section-title">Our Product Categories</h2>
+            <p class="section-subtitle">Comprehensive range of industrial fasteners to meet your every requirement</p>
+            <div class="categories-grid" id="categories-grid">
+            </div>
+        </div>
+    </section>
+
+    <section class="featured-products">
+        <div class="container">
+            <h2 class="section-title">Featured Products</h2>
+            <p class="section-subtitle">Explore our most popular fastener products trusted by global customers</p>
+            <div class="products-grid">
+                {{range .products}}
+                <div class="product-card">
+                    <div class="product-image">
+                        {{if .ImageURL}}
+                        <img src="{{.ImageURL}}" alt="{{.Name}}">
+                        {{else}}
+                        🔩
+                        {{end}}
+                    </div>
+                    <div class="product-content">
+                        <h3>{{.Name}}</h3>
+                        <p>{{.Description}}</p>
+                        <div class="product-standards">
+                            <span class="standard-tag">{{.Standard}}</span>
+                            <span class="standard-tag">{{.Material}}</span>
+                        </div>
+                        <a href="/product/{{.ID}}" class="btn">View Details</a>
+                    </div>
+                </div>
+                {{end}}
+            </div>
+            <div class="view-all">
+                <a href="/products" class="btn">View All Products</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="why-choose-us">
+        <div class="container">
+            <h2 class="section-title">Why Choose Us</h2>
+            <p class="section-subtitle">What makes us the preferred fastener supplier for global industrial customers</p>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">✔</div>
+                    <h3>Strict Quality Control</h3>
+                    <p>Every batch undergoes rigorous testing and inspection to ensure compliance with international standards and specifications.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💰</div>
+                    <h3>Competitive Pricing</h3>
+                    <p>Direct from factory pricing with no middlemen markup, providing excellent value for your procurement budget.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📦</div>
+                    <h3>Large Inventory</h3>
+                    <p>Extensive warehouse inventory allows for immediate shipment of most standard products, reducing your lead time.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Export Experience</h3>
+                    <p>Years of exporting experience with well-established logistics and documentation procedures for smooth international delivery.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📏</div>
+                    <h3>Full Standards Coverage</h3>
+                    <p>Complete range of DIN, BS, JIS, ISO, ANSI, and other international standards to meet all your specification needs.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Custom Solutions</h3>
+                    <p>Capability to produce custom and non-standard fasteners according to your drawings and specific requirements.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-cta">
+        <div class="container">
+            <h2>Ready to Place Your Order?</h2>
+            <p>Contact us today for a competitive quote and professional service. We look forward to working with you.</p>
+            <a href="contact.html" class="btn btn-accent">Contact Us Now</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h3>FASTENER PRO</h3>
+                    <p>Professional manufacturer and supplier of industrial fasteners serving global customers with high-quality products and excellent service.</p>
+                    <p>Quality, reliability, and customer satisfaction are our top priorities.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/products">Products</a></li>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/contact">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Products</h3>
+                    <ul>
+                        <li><a href="/products?category=bolts">Bolts</a></li>
+                        <li><a href="/products?category=nuts">Nuts</a></li>
+                        <li><a href="/products?category=washers">Washers</a></li>
+                        <li><a href="/products?category=screws">Screws</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Info</h3>
+                    <ul class="contact-info">
+                        <li>
+                            <span>📍</span>
+                            <span>Hangzhou, Zhejiang, China<br>311121</span>
+                        </li>
+                        <li>
+                            <span>📞</span>
+                            <span><a href="tel:+8613484309191">+86 13484309191</a></span>
+                        </li>
+                        <li>
+                            <span>📧</span>
+                            <span><a href="mailto:info@fastener-pro.com">info@fastener-pro.com</a></span>
+                        </li>
+                        <li>
+                            <span>🕒</span>
+                            <span>Monday - Friday: 9:00 - 18:00</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Fastener Pro. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/js/data.js"></script>
+    <script src="/static/js/router.js"></script>
+    <script src="/static/js/templates.js"></script>
+    <script src="/static/js/home.js"></script>
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
