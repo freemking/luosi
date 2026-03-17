@@ -6,27 +6,27 @@
         <changefreq>daily</changefreq>
     </url>
     <url>
-        <loc>https://www.yourdomain.com/products.html</loc>
+        <loc>https://www.yourdomain.com/products</loc>
         <priority>0.90</priority>
         <changefreq>weekly</changefreq>
     </url>
     <url>
-        <loc>https://www.yourdomain.com/products.html?category=bolts</loc>
+        <loc>https://www.yourdomain.com/products?category=bolts</loc>
         <priority>0.88</priority>
         <changefreq>weekly</changefreq>
     </url>
     <url>
-        <loc>https://www.yourdomain.com/products.html?category=nuts</loc>
+        <loc>https://www.yourdomain.com/products?category=nuts</loc>
         <priority>0.88</priority>
         <changefreq>weekly</changefreq>
     </url>
     <url>
-        <loc>https://www.yourdomain.com/products.html?category=washers</loc>
+        <loc>https://www.yourdomain.com/products?category=washers</loc>
         <priority>0.88</priority>
         <changefreq>weekly</changefreq>
     </url>
     <url>
-        <loc>https://www.yourdomain.com/products.html?category=screws</loc>
+        <loc>https://www.yourdomain.com/products?category=screws</loc>
         <priority>0.88</priority>
         <changefreq>weekly</changefreq>
     </url>

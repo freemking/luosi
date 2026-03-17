@@ -1,0 +1,60 @@
+package routes
+
+import (
+	"admin-backend/controllers"
+	"admin-backend/middleware"
+
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
+)
+
+// SetupRoutes 设置路由
+func SetupRoutes(r *gin.Engine) {
+	// 配置CORS
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+	}))
+
+	// 公开路由
+	public := r.Group("/api")
+	{
+		// 验证码
+		public.GET("/captcha", controllers.GetCaptcha)
+		// 登录
+		public.POST("/login", controllers.Login)
+	}
+
+	// 需要认证的路由
+	protected := r.Group("/api")
+	protected.Use(middleware.AuthMiddleware())
+	{
+		// 用户信息
+		protected.GET("/user/info", controllers.GetUserInfo)
+
+		// 产品管理
+		protected.GET("/products", controllers.GetProducts)
+		protected.GET("/products/:id", controllers.GetProduct)
+		protected.POST("/products", controllers.CreateProduct)
+		protected.PUT("/products/:id", controllers.UpdateProduct)
+		protected.DELETE("/products/:id", controllers.DeleteProduct)
+
+		// 反馈管理
+		protected.GET("/feedbacks", controllers.GetFeedbacks)
+		protected.GET("/feedbacks/:id", controllers.GetFeedback)
+
+		// 用户管理（需要超级管理员权限）
+		users := protected.Group("/users")
+		users.Use(middleware.SuperAdminMiddleware())
+		{
+			users.GET("", controllers.GetUsers)
+			users.GET("/:id", controllers.GetUser)
+			users.POST("", controllers.CreateUser)
+			users.PUT("/:id", controllers.UpdateUser)
+			users.DELETE("/:id", controllers.DeleteUser)
+		}
+	}
+}

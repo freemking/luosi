@@ -106,8 +106,8 @@
                 {{range .products}}
                 <div class="product-card">
                     <div class="product-image">
-                        {{if .ImageURL}}
-                        <img src="{{.ImageURL}}" alt="{{.Name}}">
+                        {{if gt (len .Images) 0}}
+                        <img src="{{(index .Images 0).ImageURL}}" alt="{{.Name}}">
                         {{else}}
                         🔩
                         {{end}}
@@ -179,10 +179,6 @@
 
     {{template "footer.html" .}}
 
-    <script src="/static/js/data.js"></script>
-    <script src="/static/js/router.js"></script>
-    <script src="/static/js/templates.js"></script>
-    <script src="/static/js/home.js"></script>
     <script src="/static/js/main.js"></script>
 </body>
 </html>

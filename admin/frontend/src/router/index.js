@@ -1,0 +1,74 @@
+import { createRouter, createWebHistory } from 'vue-router'
+import Login from '../views/Login.vue'
+import Layout from '../components/Layout.vue'
+import Dashboard from '../views/Dashboard.vue'
+import UserManagement from '../views/UserManagement.vue'
+import ProductManagement from '../views/ProductManagement.vue'
+import FeedbackManagement from '../views/FeedbackManagement.vue'
+
+const routes = [
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/',
+    name: 'Layout',
+    component: Layout,
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        name: 'Dashboard',
+        component: Dashboard
+      },
+      {
+        path: 'users',
+        name: 'UserManagement',
+        component: UserManagement,
+        meta: { requiresSuperAdmin: true }
+      },
+      {
+        path: 'products',
+        name: 'ProductManagement',
+        component: ProductManagement
+      },
+      {
+        path: 'feedbacks',
+        name: 'FeedbackManagement',
+        component: FeedbackManagement
+      }
+    ]
+  }
+]
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+})
+
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token')
+  
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!token) {
+      next({ name: 'Login' })
+    } else {
+      if (to.matched.some(record => record.meta.requiresSuperAdmin)) {
+        const user = JSON.parse(localStorage.getItem('user'))
+        if (user && user.role === 'super') {
+          next()
+        } else {
+          next({ name: 'Dashboard' })
+        }
+      } else {
+        next()
+      }
+    }
+  } else {
+    next()
+  }
+})
+
+export default router

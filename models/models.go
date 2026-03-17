@@ -21,9 +21,18 @@ type Product struct {
 	Category    string    `json:"category" gorm:"size:100;not null"`
 	Standard    string    `json:"standard" gorm:"size:100"`
 	Material    string    `json:"material" gorm:"size:100"`
-	ImageURL    string    `json:"image_url" gorm:"size:255"`
 	CreatedAt   time.Time `json:"created_at" gorm:"autoCreateTime"`
 	UpdatedAt   time.Time `json:"updated_at" gorm:"autoUpdateTime"`
+	Images      []ProductImage `json:"images" gorm:"foreignKey:ProductID"`
+}
+
+// ProductImage 产品图片模型
+type ProductImage struct {
+	ID        uint      `json:"id" gorm:"primaryKey"`
+	ProductID uint      `json:"product_id" gorm:"not null"`
+	ImageURL  string    `json:"image_url" gorm:"size:255;not null"`
+	Order     int       `json:"order" gorm:"default:0"`
+	CreatedAt time.Time `json:"created_at" gorm:"autoCreateTime"`
 }
 
 // Contact 联系表单模型
@@ -57,7 +66,7 @@ func InitDB(dsn string) error {
 	}
 
 	// 自动迁移表结构
-	err = db.AutoMigrate(&Product{}, &Contact{})
+	err = db.AutoMigrate(&Product{}, &Contact{}, &ProductImage{})
 	if err != nil {
 		return fmt.Errorf("failed to migrate database: %w", err)
 	}
@@ -83,7 +92,7 @@ func GetProductsWithPagination(page, pageSize int) ([]Product, int64, error) {
 
 	// 分页查询
 	offset := (page - 1) * pageSize
-	result := DB.Offset(offset).Limit(pageSize).Find(&products)
+	result := DB.Preload("Images").Offset(offset).Limit(pageSize).Find(&products)
 
 	return products, total, result.Error
 }
@@ -102,7 +111,7 @@ func GetProductsByCategoryWithPagination(category string, page, pageSize int) ([
 
 	// 分页查询
 	offset := (page - 1) * pageSize
-	query := DB.Offset(offset).Limit(pageSize)
+	query := DB.Preload("Images").Offset(offset).Limit(pageSize)
 	if category != "" {
 		query = query.Where("category = ?", category)
 	}
@@ -114,7 +123,7 @@ func GetProductsByCategoryWithPagination(category string, page, pageSize int) ([
 // GetProductByID 根据ID获取产品
 func GetProductByID(id uint) (Product, error) {
 	var product Product
-	result := DB.First(&product, id)
+	result := DB.Preload("Images").First(&product, id)
 	return product, result.Error
 }
 

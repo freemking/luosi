@@ -35,41 +35,18 @@
             <div class="product-detail-container">
                 <div class="product-gallery">
                     <div class="main-image">
-                        {{if .product.ImageURL}}
-                        <img src="{{.product.ImageURL}}" alt="{{.product.Name}}">
+                        {{if gt (len .product.Images) 0}}
+                        <img src="{{(index .product.Images 0).ImageURL}}" alt="{{.product.Name}}">
                         {{else}}
                         🔩
                         {{end}}
                     </div>
                     <div class="thumbnail-grid">
-                        <div class="thumbnail active">
-                            {{if .product.ImageURL}}
-                            <img src="{{.product.ImageURL}}" alt="{{.product.Name}}">
-                            {{else}}
-                            🔩
-                            {{end}}
+                        {{range $index, $image := .product.Images}}
+                        <div class="thumbnail {{if eq $index 0}}active{{end}}">
+                            <img src="{{$image.ImageURL}}" alt="{{$.product.Name}}">
                         </div>
-                        <div class="thumbnail">
-                            {{if .product.ImageURL}}
-                            <img src="{{.product.ImageURL}}" alt="{{.product.Name}}">
-                            {{else}}
-                            🔩
-                            {{end}}
-                        </div>
-                        <div class="thumbnail">
-                            {{if .product.ImageURL}}
-                            <img src="{{.product.ImageURL}}" alt="{{.product.Name}}">
-                            {{else}}
-                            🔩
-                            {{end}}
-                        </div>
-                        <div class="thumbnail">
-                            {{if .product.ImageURL}}
-                            <img src="{{.product.ImageURL}}" alt="{{.product.Name}}">
-                            {{else}}
-                            📏
-                            {{end}}
-                        </div>
+                        {{end}}
                     </div>
                 </div>
                 <div class="product-info">

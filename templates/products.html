@@ -9,7 +9,7 @@
     <meta property="og:title" content="Our Products - Industrial Fasteners | Fastener Pro">
     <meta property="og:description" content="Browse our complete range of industrial fasteners including bolts, nuts, washers, screws and more.">
     <meta property="og:type" content="website">
-    <link rel="canonical" href="https://www.yourdomain.com/products.html">
+    <link rel="canonical" href="https://www.yourdomain.com/products">
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
@@ -62,8 +62,8 @@
                 {{range .products}}
                 <div class="product-card">
                     <div class="product-image">
-                        {{if .ImageURL}}
-                        <img src="{{.ImageURL}}" alt="{{.Name}}">
+                        {{if gt (len .Images) 0}}
+                        <img src="{{(index .Images 0).ImageURL}}" alt="{{.Name}}">
                         {{else}}
                         🔩
                         {{end}}
@@ -126,10 +126,6 @@
 
     {{template "footer.html" .}}
 
-    <script src="/static/js/data.js"></script>
-    <script src="/static/js/router.js"></script>
-    <script src="/static/js/templates.js"></script>
-    <script src="/static/js/products.js"></script>
     <script src="/static/js/main.js"></script>
 </body>
 </html>

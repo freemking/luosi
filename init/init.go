@@ -8,7 +8,7 @@ import (
 
 func main() {
 	// 加载配置文件
-	cfg, err := config.LoadConfig("../conf.yaml")
+	cfg, err := config.LoadConfig("conf.yaml")
 	if err != nil {
 		log.Fatalf("Failed to load config: %v", err)
 	}
@@ -52,7 +52,6 @@ func addMockProducts() {
 			Category:    "bolts",
 			Standard:    "DIN 931 / ISO 4014",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/bolt.jpg",
 		},
 		{
 			Name:        "Hex Nuts DIN 934",
@@ -60,7 +59,6 @@ func addMockProducts() {
 			Category:    "nuts",
 			Standard:    "DIN 934 / ISO 4032",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/nut.jpg",
 		},
 		{
 			Name:        "Flat Washers DIN 125",
@@ -68,7 +66,6 @@ func addMockProducts() {
 			Category:    "washers",
 			Standard:    "DIN 125 / ISO 7089",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/washer.jpg",
 		},
 		{
 			Name:        "Wood Screws",
@@ -76,7 +73,6 @@ func addMockProducts() {
 			Category:    "screws",
 			Standard:    "DIN 7991",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/screw.jpg",
 		},
 		{
 			Name:        "Allen Head Bolts DIN 912",
@@ -84,7 +80,6 @@ func addMockProducts() {
 			Category:    "bolts",
 			Standard:    "DIN 912 / ISO 4762",
 			Material:    "Stainless Steel",
-			ImageURL:    "/static/images/allen-bolt.jpg",
 		},
 		{
 			Name:        "Lock Nuts DIN 985",
@@ -92,7 +87,6 @@ func addMockProducts() {
 			Category:    "nuts",
 			Standard:    "DIN 985 / ISO 10511",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/lock-nut.jpg",
 		},
 		{
 			Name:        "Hex Head Cap Screws DIN 933",
@@ -100,7 +94,6 @@ func addMockProducts() {
 			Category:    "bolts",
 			Standard:    "DIN 933 / ISO 4017",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/bolt.jpg",
 		},
 		{
 			Name:        "Square Nuts DIN 557",
@@ -108,7 +101,6 @@ func addMockProducts() {
 			Category:    "nuts",
 			Standard:    "DIN 557",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/nut.jpg",
 		},
 		{
 			Name:        "Spring Washers DIN 127",
@@ -116,7 +108,6 @@ func addMockProducts() {
 			Category:    "washers",
 			Standard:    "DIN 127",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/washer.jpg",
 		},
 		{
 			Name:        "Machine Screws DIN 965",
@@ -124,7 +115,6 @@ func addMockProducts() {
 			Category:    "screws",
 			Standard:    "DIN 965",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/screw.jpg",
 		},
 		{
 			Name:        "Hex Flange Bolts DIN 6921",
@@ -132,7 +122,6 @@ func addMockProducts() {
 			Category:    "bolts",
 			Standard:    "DIN 6921 / ISO 4162",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/allen-bolt.jpg",
 		},
 		{
 			Name:        "Wing Nuts DIN 315",
@@ -140,7 +129,6 @@ func addMockProducts() {
 			Category:    "nuts",
 			Standard:    "DIN 315",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/lock-nut.jpg",
 		},
 		{
 			Name:        "Conical Spring Washers DIN 128",
@@ -148,7 +136,6 @@ func addMockProducts() {
 			Category:    "washers",
 			Standard:    "DIN 128",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/washer.jpg",
 		},
 		{
 			Name:        "Self-Tapping Screws DIN 7504",
@@ -156,7 +143,6 @@ func addMockProducts() {
 			Category:    "screws",
 			Standard:    "DIN 7504",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/screw.jpg",
 		},
 		{
 			Name:        "T-Head Bolts DIN 186",
@@ -164,7 +150,6 @@ func addMockProducts() {
 			Category:    "bolts",
 			Standard:    "DIN 186",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/bolt.jpg",
 		},
 		{
 			Name:        "Acorn Nuts DIN 1587",
@@ -172,7 +157,6 @@ func addMockProducts() {
 			Category:    "nuts",
 			Standard:    "DIN 1587",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/nut.jpg",
 		},
 		{
 			Name:        "Toothed Lock Washers DIN 6798",
@@ -180,7 +164,6 @@ func addMockProducts() {
 			Category:    "washers",
 			Standard:    "DIN 6798",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/washer.jpg",
 		},
 		{
 			Name:        "Socket Head Cap Screws DIN 912",
@@ -188,7 +171,6 @@ func addMockProducts() {
 			Category:    "screws",
 			Standard:    "DIN 912 / ISO 4762",
 			Material:    "Stainless Steel",
-			ImageURL:    "/static/images/screw.jpg",
 		},
 		{
 			Name:        "Eye Bolts DIN 580",
@@ -196,7 +178,6 @@ func addMockProducts() {
 			Category:    "bolts",
 			Standard:    "DIN 580",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/bolt.jpg",
 		},
 		{
 			Name:        "Castle Nuts DIN 935",
@@ -204,7 +185,6 @@ func addMockProducts() {
 			Category:    "nuts",
 			Standard:    "DIN 935",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/nut.jpg",
 		},
 		{
 			Name:        "Carriage Bolts DIN 603",
@@ -212,7 +192,6 @@ func addMockProducts() {
 			Category:    "bolts",
 			Standard:    "DIN 603",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/bolt.jpg",
 		},
 		{
 			Name:        "Hex Socket Set Screws DIN 913",
@@ -220,7 +199,6 @@ func addMockProducts() {
 			Category:    "screws",
 			Standard:    "DIN 913",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/screw.jpg",
 		},
 		{
 			Name:        "Fender Washers",
@@ -228,7 +206,6 @@ func addMockProducts() {
 			Category:    "washers",
 			Standard:    "ANSI B18.22.1",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/washer.jpg",
 		},
 		{
 			Name:        "Jam Nuts",
@@ -236,7 +213,6 @@ func addMockProducts() {
 			Category:    "nuts",
 			Standard:    "DIN 439",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/nut.jpg",
 		},
 		{
 			Name:        "Lag Screws",
@@ -244,7 +220,6 @@ func addMockProducts() {
 			Category:    "screws",
 			Standard:    "ANSI B18.2.1",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/screw.jpg",
 		},
 		{
 			Name:        "Shoulder Bolts",
@@ -252,7 +227,6 @@ func addMockProducts() {
 			Category:    "bolts",
 			Standard:    "DIN 609",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/bolt.jpg",
 		},
 		{
 			Name:        "Tee Nuts",
@@ -260,7 +234,6 @@ func addMockProducts() {
 			Category:    "nuts",
 			Standard:    "DIN 1624",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/nut.jpg",
 		},
 		{
 			Name:        "Lock Washers",
@@ -268,7 +241,6 @@ func addMockProducts() {
 			Category:    "washers",
 			Standard:    "DIN 127",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/washer.jpg",
 		},
 		{
 			Name:        "Pan Head Screws",
@@ -276,7 +248,6 @@ func addMockProducts() {
 			Category:    "screws",
 			Standard:    "DIN 7985",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/screw.jpg",
 		},
 		{
 			Name:        "U-Bolts",
@@ -284,7 +255,6 @@ func addMockProducts() {
 			Category:    "bolts",
 			Standard:    "DIN 3570",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/bolt.jpg",
 		},
 		{
 			Name:        "Flange Nuts",
@@ -292,7 +262,6 @@ func addMockProducts() {
 			Category:    "nuts",
 			Standard:    "DIN 6923",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/nut.jpg",
 		},
 		{
 			Name:        "Countersunk Washers",
@@ -300,7 +269,6 @@ func addMockProducts() {
 			Category:    "washers",
 			Standard:    "DIN 603",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/washer.jpg",
 		},
 		{
 			Name:        "Button Head Screws",
@@ -308,7 +276,6 @@ func addMockProducts() {
 			Category:    "screws",
 			Standard:    "DIN 7984",
 			Material:    "Stainless Steel",
-			ImageURL:    "/static/images/screw.jpg",
 		},
 		{
 			Name:        "J-Bolts",
@@ -316,7 +283,6 @@ func addMockProducts() {
 			Category:    "bolts",
 			Standard:    "DIN 580",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/bolt.jpg",
 		},
 		{
 			Name:        "Cap Nuts",
@@ -324,7 +290,6 @@ func addMockProducts() {
 			Category:    "nuts",
 			Standard:    "DIN 1587",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/nut.jpg",
 		},
 		{
 			Name:        "Spiral Washers",
@@ -332,7 +297,6 @@ func addMockProducts() {
 			Category:    "washers",
 			Standard:    "DIN 128",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/washer.jpg",
 		},
 		{
 			Name:        "Set Screws",
@@ -340,7 +304,6 @@ func addMockProducts() {
 			Category:    "screws",
 			Standard:    "DIN 916",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/screw.jpg",
 		},
 		{
 			Name:        "Eyebolt with Nut",
@@ -348,7 +311,6 @@ func addMockProducts() {
 			Category:    "bolts",
 			Standard:    "DIN 580",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/bolt.jpg",
 		},
 		{
 			Name:        "Slotted Nuts",
@@ -356,7 +318,6 @@ func addMockProducts() {
 			Category:    "nuts",
 			Standard:    "DIN 935",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/nut.jpg",
 		},
 		{
 			Name:        "Thrust Washers",
@@ -364,7 +325,6 @@ func addMockProducts() {
 			Category:    "washers",
 			Standard:    "DIN 71412",
 			Material:    "Bronze",
-			ImageURL:    "/static/images/washer.jpg",
 		},
 		{
 			Name:        "Hex Head Screws",
@@ -372,7 +332,6 @@ func addMockProducts() {
 			Category:    "screws",
 			Standard:    "DIN 933",
 			Material:    "Stainless Steel",
-			ImageURL:    "/static/images/screw.jpg",
 		},
 		{
 			Name:        "Stud Bolts",
@@ -380,7 +339,6 @@ func addMockProducts() {
 			Category:    "bolts",
 			Standard:    "DIN 939",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/bolt.jpg",
 		},
 		{
 			Name:        "Acorn Cap Nuts",
@@ -388,7 +346,6 @@ func addMockProducts() {
 			Category:    "nuts",
 			Standard:    "DIN 1587",
 			Material:    "Stainless Steel",
-			ImageURL:    "/static/images/nut.jpg",
 		},
 		{
 			Name:        "Shim Washers",
@@ -396,7 +353,6 @@ func addMockProducts() {
 			Category:    "washers",
 			Standard:    "DIN 988",
 			Material:    "Stainless Steel",
-			ImageURL:    "/static/images/washer.jpg",
 		},
 		{
 			Name:        "Self-Drilling Screws",
@@ -404,7 +360,6 @@ func addMockProducts() {
 			Category:    "screws",
 			Standard:    "DIN 7504",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/screw.jpg",
 		},
 		{
 			Name:        "Hex Lag Screws",
@@ -412,15 +367,36 @@ func addMockProducts() {
 			Category:    "screws",
 			Standard:    "ANSI B18.2.1",
 			Material:    "Carbon Steel",
-			ImageURL:    "/static/images/screw.jpg",
 		},
 	}
 
 	// 插入mock数据
 	for _, product := range mockProducts {
+		// 创建产品
 		err := models.DB.Create(&product).Error
 		if err != nil {
 			log.Printf("Failed to add product %s: %v", product.Name, err)
+			continue
+		}
+
+		// 为产品添加多张图片
+		imageURLs := []string{
+			"/static/images/bolt.jpg",
+			"/static/images/nut.jpg",
+			"/static/images/washer.jpg",
+			"/static/images/screw.jpg",
+		}
+
+		for i, imageURL := range imageURLs {
+			productImage := models.ProductImage{
+				ProductID: product.ID,
+				ImageURL:  imageURL,
+				Order:     i,
+			}
+			err := models.DB.Create(&productImage).Error
+			if err != nil {
+				log.Printf("Failed to add image for product %s: %v", product.Name, err)
+			}
 		}
 	}
 }
