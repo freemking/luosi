@@ -18,7 +18,7 @@
           <p>Admin Management System</p>
         </div>
         <a-card 
-          bordered="false" 
+          :bordered="false" 
           class="login-card"
           size="default"
         >
@@ -39,7 +39,6 @@
                 v-model:value="loginForm.username"
                 placeholder="请输入用户名"
                 size="large"
-                @keyup.enter="handleLogin"
                 style="width: 100%"
               />
             </a-form-item>
@@ -71,7 +70,6 @@
                     v-model:value="loginForm.captcha"
                     placeholder="请输入验证码"
                     size="large"
-                    @keyup.enter="handleLogin"
                     style="width: 100%"
                   />
                 </a-col>
@@ -119,11 +117,11 @@ const router = useRouter()
 const authStore = useAuthStore()
 
 const loginFormRef = ref(null)
-const loginForm = {
+const loginForm = ref({
   username: 'admin',
   password: '1qaz@WSX',
   captcha: ''
-}
+})
 
 const captchaId = ref('')
 const captchaImage = ref('')
@@ -135,7 +133,7 @@ const refreshCaptcha = async () => {
     const data = await authStore.getCaptcha()
     captchaId.value = data.captcha_id
     captchaImage.value = data.captcha
-    loginForm.captcha = ''
+    loginForm.value.captcha = ''
   } catch (err) {
     message.error('获取验证码失败')
     console.error('Failed to refresh captcha:', err)
@@ -143,18 +141,31 @@ const refreshCaptcha = async () => {
 }
 
 const handleLogin = async () => {
+  if (!loginFormRef.value) {
+    return
+  }
   try {
     await loginFormRef.value.validate()
   } catch (err) {
-    return
+    // 检查是否是因为outOfDate导致的验证失败
+    if (err.outOfDate) {
+      try {
+        // 重新验证
+        await loginFormRef.value.validate()
+      } catch (secondErr) {
+        return
+      }
+    } else {
+      return
+    }
   }
   error.value = ''
   try {
     loading.value = true
     await authStore.login(
-      loginForm.username,
-      loginForm.password,
-      loginForm.captcha.trim(),
+      loginForm.value.username,
+      loginForm.value.password,
+      loginForm.value.captcha.trim(),
       captchaId.value
     )
     message.success('登录成功')

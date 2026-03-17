@@ -4,6 +4,7 @@ import Layout from '../components/Layout.vue'
 import Dashboard from '../views/Dashboard.vue'
 import UserManagement from '../views/UserManagement.vue'
 import ProductManagement from '../views/ProductManagement.vue'
+import ProductDetail from '../views/ProductDetail.vue'
 import FeedbackManagement from '../views/FeedbackManagement.vue'
 
 const routes = [
@@ -33,6 +34,18 @@ const routes = [
         path: 'products',
         name: 'ProductManagement',
         component: ProductManagement
+      },
+      {
+        path: 'products/create',
+        name: 'ProductCreate',
+        component: ProductDetail,
+        meta: { title: '新建产品' }
+      },
+      {
+        path: 'products/:id',
+        name: 'ProductEdit',
+        component: ProductDetail,
+        meta: { title: '编辑产品' }
       },
       {
         path: 'feedbacks',

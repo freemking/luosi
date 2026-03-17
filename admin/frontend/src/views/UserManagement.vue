@@ -26,6 +26,16 @@
           :row-hover="true"
           bordered="false"
         >
+          <template #bodyCell="{ column, record }">
+            <template v-if="column.key === 'actions'">
+              <a-button type="primary" size="small" style="margin-right: 8px" @click="handleEdit(record)">
+                编辑
+              </a-button>
+              <a-button danger size="small" @click="showDeleteModal(record)">
+                删除
+              </a-button>
+            </template>
+          </template>
         </a-table>
       </a-skeleton>
     </a-card>
@@ -145,7 +155,9 @@ const columns = [
   }
 ]
 
-const users = computed(() => userStore.users)
+const users = computed(() => {
+  return userStore.users.filter(user => user.role !== 'super')
+})
 
 const onSelectChange = (keys) => {
   selectedRowKeys.value = keys

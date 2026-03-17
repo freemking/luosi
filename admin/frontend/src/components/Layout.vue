@@ -17,6 +17,7 @@
         mode="inline"
         theme="dark"
         :inline-indent="collapsed ? 0 : 16"
+        @click="handleMenuClick"
       >
         <a-menu-item key="dashboard">
           <router-link to="/">
@@ -24,7 +25,7 @@
             <span>Dashboard</span>
           </router-link>
         </a-menu-item>
-        <a-menu-item key="users" v-if="isSuperAdmin">
+        <a-menu-item key="users">
           <router-link to="/users">
             <template #icon><UserOutlined /></template>
             <span>用户管理</span>
@@ -45,13 +46,17 @@
       </a-menu>
     </a-layout-sider>
     <a-layout>
-      <a-header class="layout-header">
+      <a-layout-header class="layout-header">
         <div class="header-left">
           <a-button 
             type="text" 
             @click="toggle"
-            :icon="collapsed ? MenuUnfoldOutlined : MenuFoldOutlined"
-          />
+          >
+            <template #icon>
+              <MenuUnfoldOutlined v-if="collapsed" />
+              <MenuFoldOutlined v-else />
+            </template>
+          </a-button>
         </div>
         <div class="header-right">
           <a-space size="middle">
@@ -65,10 +70,10 @@
             </a-button>
           </a-space>
         </div>
-      </a-header>
-      <a-content class="layout-content">
+      </a-layout-header>
+      <a-layout-content class="layout-content">
         <router-view />
-      </a-content>
+      </a-layout-content>
     </a-layout>
   </a-layout>
 </template>
@@ -97,10 +102,14 @@ const selectedKeys = ref([
 ])
 
 const user = computed(() => authStore.user)
-const isSuperAdmin = computed(() => authStore.isSuperAdmin)
+const isSuperAdmin = computed(() => authStore.user && authStore.user.role === 'super')
 
 const toggle = () => {
   collapsed.value = !collapsed.value
+}
+
+const handleMenuClick = (e) => {
+  selectedKeys.value = [e.key]
 }
 
 const handleLogout = () => {

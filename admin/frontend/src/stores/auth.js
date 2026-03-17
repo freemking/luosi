@@ -17,7 +17,7 @@ apiClient.interceptors.request.use(config => {
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    user: null,
+    user: JSON.parse(localStorage.getItem('user')) || null,
     token: localStorage.getItem('token'),
     loading: false,
     error: null
