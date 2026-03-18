@@ -69,18 +69,24 @@
           </a-col>
         </a-row>
         <a-form-item label="产品图片">
-          <div v-for="(image, index) in productForm.images" :key="index" class="image-item">
-            <a-input
-              v-model:value="image.image_url"
-              placeholder="图片URL"
-              style="width: 85%; margin-right: 8px;"
-            />
-            <a-button danger @click="removeImage(index)"><DeleteOutlined /></a-button>
-          </div>
-          <a-button @click="addImage" type="dashed" block>
-            <PlusOutlined />
-            添加图片
-          </a-button>
+          <a-upload
+            v-model:file-list="fileList"
+            action="http://localhost:8081/api/upload"
+            list-type="picture-card"
+            :max-count="9"
+            :headers="uploadHeaders"
+            name="image"
+            @preview="handlePreview"
+            @remove="handleRemove"
+          >
+            <div v-if="fileList.length < 9">
+              <PlusOutlined />
+              <div style="margin-top: 8px">上传</div>
+            </div>
+          </a-upload>
+          <a-modal :open="previewVisible" :footer="null" @cancel="previewVisible = false">
+            <img alt="example" style="width: 100%" :src="previewImage" />
+          </a-modal>
         </a-form-item>
       </a-form>
       
@@ -115,6 +121,14 @@ const productForm = ref({
   images: []
 })
 
+const fileList = ref([])
+const previewVisible = ref(false)
+const previewImage = ref('')
+
+const uploadHeaders = computed(() => ({
+  Authorization: `Bearer ${localStorage.getItem('token')}`
+}))
+
 const isEditing = computed(() => !!route.params.id)
 
 const fetchProduct = async () => {
@@ -127,6 +141,16 @@ const fetchProduct = async () => {
       productForm.value.standard = product.standard || ''
       productForm.value.material = product.material || ''
       productForm.value.images = product.images ? [...product.images] : []
+      
+      if (product.images && product.images.length > 0) {
+        fileList.value = product.images.map((img, index) => ({
+          uid: String(-index - 1),
+          name: img.image_url.split('/').pop(),
+          status: 'done',
+          url: img.image_url,
+          response: { url: img.image_url }
+        }))
+      }
     } catch (err) {
       message.error('获取产品信息失败')
       goBack()
@@ -134,25 +158,51 @@ const fetchProduct = async () => {
   }
 }
 
-const addImage = () => {
-  productForm.value.images.push({
-    image_url: '',
-    order: productForm.value.images.length
+const handlePreview = async (file) => {
+  if (!file.url && !file.preview) {
+    file.preview = await getBase64(file.originFileObj)
+  }
+  previewImage.value = file.url || file.preview
+  previewVisible.value = true
+}
+
+const getBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = () => resolve(reader.result)
+    reader.onerror = (error) => reject(error)
   })
 }
 
-const removeImage = (index) => {
-  productForm.value.images.splice(index, 1)
+const handleRemove = (file) => {
+  const index = fileList.value.indexOf(file)
+  const newFileList = fileList.value.slice()
+  newFileList.splice(index, 1)
+  fileList.value = newFileList
 }
 
 const handleSubmit = async () => {
   try {
     submitting.value = true
+    
+    const images = fileList.value
+      .filter(file => file.status === 'done' && file.response?.url)
+      .map((file, index) => ({
+        image_url: file.response.url,
+        order: index
+      }))
+    
+    const submitData = {
+      ...productForm.value,
+      images
+    }
+    
     if (isEditing.value) {
-      await productStore.updateProduct(route.params.id, productForm.value)
+      await productStore.updateProduct(route.params.id, submitData)
       message.success('产品更新成功')
     } else {
-      await productStore.createProduct(productForm.value)
+      await productStore.createProduct(submitData)
       message.success('产品创建成功')
     }
     goBack()

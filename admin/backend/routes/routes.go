@@ -14,10 +14,13 @@ func SetupRoutes(r *gin.Engine) {
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"*"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization", "X-Requested-With"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
 	}))
+
+	// 静态文件服务 - 上传的图片
+	r.Static("/uploads", "./uploads")
 
 	// 公开路由
 	public := r.Group("/api")
@@ -32,6 +35,9 @@ func SetupRoutes(r *gin.Engine) {
 	protected := r.Group("/api")
 	protected.Use(middleware.AuthMiddleware())
 	{
+		// 图片上传
+		protected.POST("/upload", controllers.UploadImage)
+
 		// 用户信息
 		protected.GET("/user/info", controllers.GetUserInfo)
 
