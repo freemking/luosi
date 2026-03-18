@@ -1,7 +1,7 @@
 <template>
   <div class="feedback-management">
     <a-page-header title="反馈管理" style="padding: 0 0 16px 0;" />
-    <a-card bordered="false">
+    <a-card :bordered="false">
       <a-skeleton :loading="loading" active>
         <a-table
           :data-source="feedbacks"
@@ -17,7 +17,7 @@
             size: 'middle'
           }"
           :row-hover="true"
-          bordered="false"
+          :bordered="false"
         >
           <template #bodyCell="{ column, record }">
             <template v-if="column.key === 'action'">

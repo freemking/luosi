@@ -20,26 +20,20 @@
         :label-col="{ span: 6 }"
         :wrapper-col="{ span: 18 }"
       >
-        <a-row :gutter="16">
-          <a-col :span="12">
-            <a-form-item
-              label="产品名称"
-              name="name"
-              :rules="[{ required: true, message: '请输入产品名称' }]"
-            >
-              <a-input v-model:value="productForm.name" placeholder="请输入产品名称" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item
-              label="产品分类"
-              name="category"
-              :rules="[{ required: true, message: '请输入产品分类' }]"
-            >
-              <a-input v-model:value="productForm.category" placeholder="请输入产品分类" />
-            </a-form-item>
-          </a-col>
-        </a-row>
+        <a-form-item
+          label="产品名称"
+          name="name"
+          :rules="[{ required: true, message: '请输入产品名称' }]"
+        >
+          <a-input v-model:value="productForm.name" placeholder="请输入产品名称" />
+        </a-form-item>
+        <a-form-item
+          label="产品分类"
+          name="category"
+          :rules="[{ required: true, message: '请输入产品分类' }]"
+        >
+          <a-input v-model:value="productForm.category" placeholder="请输入产品分类" />
+        </a-form-item>
         <a-form-item
           label="产品描述"
           name="description"
@@ -50,29 +44,24 @@
             :rows="3"
           />
         </a-form-item>
-        <a-row :gutter="16">
-          <a-col :span="12">
-            <a-form-item
-              label="规格"
-              name="standard"
-            >
-              <a-input v-model:value="productForm.standard" placeholder="请输入规格" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item
-              label="材质"
-              name="material"
-            >
-              <a-input v-model:value="productForm.material" placeholder="请输入材质" />
-            </a-form-item>
-          </a-col>
-        </a-row>
+        <a-form-item
+          label="规格"
+          name="standard"
+        >
+          <a-input v-model:value="productForm.standard" placeholder="请输入规格" />
+        </a-form-item>
+        <a-form-item
+          label="材质"
+          name="material"
+        >
+          <a-input v-model:value="productForm.material" placeholder="请输入材质" />
+        </a-form-item>
         <a-form-item label="产品图片">
           <a-upload
             v-model:file-list="fileList"
             action="http://localhost:8081/api/upload"
             list-type="picture-card"
+            :multiple="true"
             :max-count="9"
             :headers="uploadHeaders"
             name="image"

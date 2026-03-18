@@ -27,8 +27,7 @@ const routes = [
       {
         path: 'users',
         name: 'UserManagement',
-        component: UserManagement,
-        meta: { requiresSuperAdmin: true }
+        component: UserManagement
       },
       {
         path: 'products',

@@ -7,14 +7,13 @@
         新建用户
       </a-button>
     </div>
-    <a-card bordered="false">
+    <a-card :bordered="false">
       <a-skeleton :loading="loading" active>
         <a-table
           :data-source="users"
           :loading="loading"
           :columns="columns"
           rowKey="id"
-          :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
           :scroll="{ x: 600 }"
           :pagination="{
             pageSize: 10,
@@ -24,7 +23,7 @@
             size: 'middle'
           }"
           :row-hover="true"
-          bordered="false"
+          :bordered="false"
         >
           <template #bodyCell="{ column, record }">
             <template v-if="column.key === 'actions'">
@@ -113,7 +112,6 @@ const submitting = ref(false)
 const deleting = ref(false)
 const isEditing = ref(false)
 const currentId = ref(null)
-const selectedRowKeys = ref([])
 
 const userForm = ref({
   username: '',
@@ -158,10 +156,6 @@ const columns = [
 const users = computed(() => {
   return userStore.users.filter(user => user.role !== 'super')
 })
-
-const onSelectChange = (keys) => {
-  selectedRowKeys.value = keys
-}
 
 const fetchUsers = async () => {
   try {

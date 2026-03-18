@@ -39,13 +39,38 @@ type UpdateProductRequest struct {
 func GetProducts(c *gin.Context) {
 	var products []models.Product
 
-	result := models.DB.Preload("Images").Find(&products)
+	// 获取分页参数
+	pageStr := c.DefaultQuery("page", "1")
+	pageSizeStr := c.DefaultQuery("pageSize", "10")
+
+	page, err := strconv.Atoi(pageStr)
+	if err != nil || page < 1 {
+		page = 1
+	}
+
+	pageSize, err := strconv.Atoi(pageSizeStr)
+	if err != nil || pageSize < 1 || pageSize > 100 {
+		pageSize = 10
+	}
+
+	// 计算偏移量
+	offset := (page - 1) * pageSize
+
+	// 获取总数
+	var total int64
+	models.DB.Model(&models.Product{}).Count(&total)
+
+	// 分页查询
+	result := models.DB.Preload("Images").Limit(pageSize).Offset(offset).Find(&products)
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get products"})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"products": products})
+	c.JSON(http.StatusOK, gin.H{
+		"products": products,
+		"total":    total,
+	})
 }
 
 // GetProduct 获取单个产品
@@ -202,4 +227,17 @@ func DeleteProduct(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "Product deleted successfully"})
+}
+
+// GetProductCount 获取产品总数
+func GetProductCount(c *gin.Context) {
+	var count int64
+
+	result := models.DB.Model(&models.Product{}).Count(&count)
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get product count"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"count": count})
 }

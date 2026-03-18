@@ -43,6 +43,7 @@ func SetupRoutes(r *gin.Engine) {
 
 		// 产品管理
 		protected.GET("/products", controllers.GetProducts)
+		protected.GET("/products/count", controllers.GetProductCount)
 		protected.GET("/products/:id", controllers.GetProduct)
 		protected.POST("/products", controllers.CreateProduct)
 		protected.PUT("/products/:id", controllers.UpdateProduct)
@@ -50,17 +51,14 @@ func SetupRoutes(r *gin.Engine) {
 
 		// 反馈管理
 		protected.GET("/feedbacks", controllers.GetFeedbacks)
+		protected.GET("/feedbacks/count", controllers.GetFeedbackCount)
 		protected.GET("/feedbacks/:id", controllers.GetFeedback)
 
-		// 用户管理（需要超级管理员权限）
-		users := protected.Group("/users")
-		users.Use(middleware.SuperAdminMiddleware())
-		{
-			users.GET("", controllers.GetUsers)
-			users.GET("/:id", controllers.GetUser)
-			users.POST("", controllers.CreateUser)
-			users.PUT("/:id", controllers.UpdateUser)
-			users.DELETE("/:id", controllers.DeleteUser)
-		}
+		// 用户管理
+		protected.GET("/users", controllers.GetUsers)
+		protected.GET("/users/:id", controllers.GetUser)
+		protected.POST("/users", controllers.CreateUser)
+		protected.PUT("/users/:id", controllers.UpdateUser)
+		protected.DELETE("/users/:id", controllers.DeleteUser)
 	}
 }

@@ -7,7 +7,7 @@
         新建产品
       </a-button>
     </div>
-    <a-card bordered="false">
+    <a-card :bordered="false">
       <a-skeleton :loading="loading" active>
         <a-table
           :data-source="products"
@@ -16,14 +16,17 @@
           rowKey="id"
           :scroll="{ x: 800 }"
           :pagination="{
-            pageSize: 10,
+            current: currentPage,
+            pageSize: pageSize,
+            total: total,
             showSizeChanger: true,
             showQuickJumper: true,
             showTotal: (total) => `共 ${total} 条`,
-            size: 'middle'
+            size: 'middle',
+            onChange: handlePaginationChange
           }"
           :row-hover="true"
-          bordered="false"
+          :bordered="false"
         >
           <template #bodyCell="{ column, record }">
             <template v-if="column.key === 'images'">
@@ -81,6 +84,11 @@ const deleteModalVisible = ref(false)
 const deleting = ref(false)
 const currentId = ref(null)
 
+// 分页相关数据
+const currentPage = ref(1)
+const pageSize = ref(10)
+const total = ref(0)
+
 const productForm = ref({
   name: '',
   description: '',
@@ -134,7 +142,8 @@ const products = computed(() => productStore.products)
 const fetchProducts = async () => {
   try {
     loading.value = true
-    await productStore.getProducts()
+    const result = await productStore.getProducts(currentPage.value, pageSize.value)
+    total.value = result.total
   } catch (err) {
     message.error('获取产品列表失败')
   } finally {
@@ -167,6 +176,13 @@ const handleDelete = async () => {
   } finally {
     deleting.value = false
   }
+}
+
+// 分页变化处理函数
+const handlePaginationChange = (current, size) => {
+  currentPage.value = current
+  pageSize.value = size
+  fetchProducts()
 }
 
 onMounted(() => {

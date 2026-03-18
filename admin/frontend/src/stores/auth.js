@@ -85,13 +85,21 @@ export const useProductStore = defineStore('product', {
     error: null
   }),
   actions: {
-    async getProducts() {
+    async getProducts(page = 1, pageSize = 10) {
       this.loading = true
       this.error = null
       try {
-        const response = await apiClient.get('/products')
+        const response = await apiClient.get('/products', {
+          params: {
+            page,
+            pageSize
+          }
+        })
         this.products = response.data.products
-        return response.data.products
+        return {
+          products: response.data.products,
+          total: response.data.total
+        }
       } catch (error) {
         this.error = error.response?.data?.error || 'Failed to get products'
         throw error
@@ -151,6 +159,19 @@ export const useProductStore = defineStore('product', {
         this.products = this.products.filter(p => p.id !== id)
       } catch (error) {
         this.error = error.response?.data?.error || 'Failed to delete product'
+        throw error
+      } finally {
+        this.loading = false
+      }
+    },
+    async getProductCount() {
+      this.loading = true
+      this.error = null
+      try {
+        const response = await apiClient.get('/products/count')
+        return response.data.count
+      } catch (error) {
+        this.error = error.response?.data?.error || 'Failed to get product count'
         throw error
       } finally {
         this.loading = false
@@ -269,6 +290,19 @@ export const useFeedbackStore = defineStore('feedback', {
         return response.data.feedback
       } catch (error) {
         this.error = error.response?.data?.error || 'Failed to get feedback'
+        throw error
+      } finally {
+        this.loading = false
+      }
+    },
+    async getFeedbackCount() {
+      this.loading = true
+      this.error = null
+      try {
+        const response = await apiClient.get('/feedbacks/count')
+        return response.data.count
+      } catch (error) {
+        this.error = error.response?.data?.error || 'Failed to get feedback count'
         throw error
       } finally {
         this.loading = false

@@ -6,17 +6,6 @@
         <a-card :bordered="true" class="stat-card">
           <template #title>
             <a-space>
-              <UserOutlined style="color: #1890ff; font-size: 24px;" />
-              <span>用户总数</span>
-            </a-space>
-          </template>
-          <div class="stat-number">{{ stats.users }}</div>
-        </a-card>
-      </a-col>
-      <a-col :xs="24" :sm="12" :md="8" :lg="6">
-        <a-card :bordered="true" class="stat-card">
-          <template #title>
-            <a-space>
               <AppstoreOutlined style="color: #52c41a; font-size: 24px;" />
               <span>产品总数</span>
             </a-space>
@@ -41,29 +30,25 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { UserOutlined, AppstoreOutlined, MessageOutlined } from '@ant-design/icons-vue'
-import { useUserStore, useProductStore, useFeedbackStore } from '../stores/auth'
+import { AppstoreOutlined, MessageOutlined } from '@ant-design/icons-vue'
+import { useProductStore, useFeedbackStore } from '../stores/auth'
 
-const userStore = useUserStore()
 const productStore = useProductStore()
 const feedbackStore = useFeedbackStore()
 
 const stats = ref({
-  users: 0,
   products: 0,
   feedbacks: 0
 })
 
 const fetchStats = async () => {
   try {
-    await Promise.all([
-      userStore.getUsers(),
-      productStore.getProducts(),
-      feedbackStore.getFeedbacks()
+    const [productCount, feedbackCount] = await Promise.all([
+      productStore.getProductCount(),
+      feedbackStore.getFeedbackCount()
     ])
-    stats.value.users = userStore.users.length
-    stats.value.products = productStore.products.length
-    stats.value.feedbacks = feedbackStore.feedbacks.length
+    stats.value.products = productCount
+    stats.value.feedbacks = feedbackCount
   } catch (err) {
     console.error('Failed to fetch stats:', err)
   }

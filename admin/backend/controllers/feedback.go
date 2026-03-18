@@ -40,3 +40,16 @@ func GetFeedback(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"feedback": feedback})
 }
+
+// GetFeedbackCount 获取反馈总数
+func GetFeedbackCount(c *gin.Context) {
+	var count int64
+
+	result := models.DB.Model(&models.Feedback{}).Count(&count)
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get feedback count"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"count": count})
+}
