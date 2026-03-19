@@ -40,7 +40,7 @@
         <a-menu-item key="feedbacks">
           <router-link to="/feedbacks">
             <template #icon><MessageOutlined /></template>
-            <span>反馈管理</span>
+            <span>留言管理</span>
           </router-link>
         </a-menu-item>
       </a-menu>

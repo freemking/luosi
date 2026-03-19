@@ -49,7 +49,7 @@ func SetupRoutes(r *gin.Engine) {
 		protected.PUT("/products/:id", controllers.UpdateProduct)
 		protected.DELETE("/products/:id", controllers.DeleteProduct)
 
-		// 反馈管理
+		// 留言管理
 		protected.GET("/feedbacks", controllers.GetFeedbacks)
 		protected.GET("/feedbacks/count", controllers.GetFeedbackCount)
 		protected.GET("/feedbacks/:id", controllers.GetFeedback)

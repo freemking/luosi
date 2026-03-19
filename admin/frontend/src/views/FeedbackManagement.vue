@@ -1,6 +1,6 @@
 <template>
   <div class="feedback-management">
-    <a-page-header title="反馈管理" style="padding: 0 0 16px 0;" />
+    <a-page-header title="留言管理" style="padding: 0 0 16px 0;" />
     <a-card :bordered="false">
       <a-skeleton :loading="loading" active>
         <a-table
