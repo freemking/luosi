@@ -26,7 +26,7 @@ jobs:
       - name: 编译 Go 项目
         run: |
           # 禁用CGO + 编译Linux amd64版本
-          CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o luosi main.go
+          CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o app main.go
           # 说明：-o app 是编译后的二进制名，main.go 是你的入口文件
 
       # 4. 配置 SSH 免密登录
