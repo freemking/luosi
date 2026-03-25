@@ -54,4 +54,4 @@ jobs:
           scp -P ${{ secrets.SERVER_PORT }} -r templates ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_DIR }}/
           
           # 5. 授权并重启服务
-          $SSH -P ${{ secrets.SERVER_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd ${{ secrets.DEPLOY_DIR }} && chmod +x app && systemctl restart go-luosi"
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} -p ${{ secrets.SERVER_PORT }} "cd ${{ secrets.DEPLOY_DIR }} && chmod +x app && systemctl restart go-luosi"
