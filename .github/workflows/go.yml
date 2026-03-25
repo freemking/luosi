@@ -1,28 +1,56 @@
-# This workflow will build a golang project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+name: 部署 Go 项目到服务器
 
-name: Go
-
+# 触发条件：push 到 main 分支自动部署
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
+  # 支持手动触发部署
+  workflow_dispatch:
 
+# 部署任务
 jobs:
-
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+      # 1. 拉取代码
+      - name: 检出代码
+        uses: actions/checkout@v4
 
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: '1.20'
+      # 2. 安装 Go 环境（修改为你的 Go 版本）
+      - name: 安装 Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.26'  # 改成你的项目 Go 版本
 
-    - name: Build
-      run: go build -v ./...
+      # 3. 编译 Go 二进制（关键：跨平台编译 Linux 版本）
+      - name: 编译 Go 项目
+        run: |
+          # 禁用CGO + 编译Linux amd64版本
+          CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o luosi main.go
+          # 说明：-o app 是编译后的二进制名，main.go 是你的入口文件
 
-    - name: Test
-      run: go test -v ./...
+      # 4. 配置 SSH 免密登录
+      - name: 配置 SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
+
+      # 5. 上传编译好的二进制到服务器
+      - name: 上传文件到服务器
+        run: |
+          # 严格主机密钥检查关闭，避免连接失败
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} -p ${{ secrets.SERVER_PORT }} "mkdir -p ${{ secrets.DEPLOY_DIR }}"
+          # 上传二进制文件
+          scp -P ${{ secrets.SERVER_PORT }} app ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_DIR }}/
+
+      # 6. 服务器端：授权 + 重启服务（核心）
+      - name: 重启 Go 服务
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} -p ${{ secrets.SERVER_PORT }} << 'EOF'
+            # 进入部署目录
+            cd ${{ secrets.DEPLOY_DIR }}
+            # 给二进制添加执行权限
+            chmod +x app
+            # 重启服务（推荐用 systemd 托管，下面会教你配置）
+            systemctl restart go-luosi
+          EOF
