@@ -28,6 +28,9 @@ func main() {
 	// 设置定时任务
 	cron.SetupCron(cfg)
 
+	// 设置Gin为发布模式
+	gin.SetMode(gin.ReleaseMode)
+
 	// 创建Gin引擎
 	r := gin.Default()
 
