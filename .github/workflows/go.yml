@@ -41,8 +41,8 @@ jobs:
           # 严格主机密钥检查关闭，避免连接失败
           ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} -p ${{ secrets.SERVER_PORT }} "mkdir -p ${{ secrets.DEPLOY_DIR }}"
           
-          # 1. 删除服务器旧的 static 和 template 目录
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p ${{ secrets.SERVER_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "rm -rf ${{ secrets.DEPLOY_DIR }}/static ${{ secrets.DEPLOY_DIR }}/template"
+          # 1. 删除服务器旧的 static 和 templates 目录
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p ${{ secrets.SERVER_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "rm -rf ${{ secrets.DEPLOY_DIR }}/static ${{ secrets.DEPLOY_DIR }}/templates"
           
           # 2. 上传二进制文件
           scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -P ${{ secrets.SERVER_PORT }} app ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_DIR }}/
@@ -50,8 +50,8 @@ jobs:
           # 3. 上传 static 目录（递归）
           scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -P ${{ secrets.SERVER_PORT }} -r static ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_DIR }}/
           
-          # 4. 上传 template 目录（递归）
-          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -P ${{ secrets.SERVER_PORT }} -r template ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_DIR }}/
+          # 4. 上传 templates 目录（递归）
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -P ${{ secrets.SERVER_PORT }} -r templates ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_DIR }}/
           
           # 5. 授权并重启服务
           $SSH ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd ${{ secrets.DEPLOY_DIR }} && chmod +x app && systemctl restart go-luosi"
