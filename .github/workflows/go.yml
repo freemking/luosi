@@ -39,19 +39,19 @@ jobs:
       - name: 上传文件到服务器
         run: |
           # 关闭严格主机检查 + 正确端口位置
-          ssh -o StrictHostKeyChecking=no -p ${{ secrets.SERVER_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "mkdir -p ${{ secrets.DEPLOY_DIR }}"
+          ssh -p ${{ secrets.SERVER_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "mkdir -p ${{ secrets.DEPLOY_DIR }}"
           
           # 1. 删除旧目录
-          ssh -o StrictHostKeyChecking=no -p ${{ secrets.SERVER_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "rm -rf ${{ secrets.DEPLOY_DIR }}/static ${{ secrets.DEPLOY_DIR }}/templates"
+          ssh -p ${{ secrets.SERVER_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "rm -rf ${{ secrets.DEPLOY_DIR }}/static ${{ secrets.DEPLOY_DIR }}/templates"
           
           # 2. 上传二进制
-          scp -o StrictHostKeyChecking=no -P ${{ secrets.SERVER_PORT }} app ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_DIR }}/
+          scp -P ${{ secrets.SERVER_PORT }} app ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_DIR }}/
           
           # 3. 上传 static
-          scp -o StrictHostKeyChecking=no -P ${{ secrets.SERVER_PORT }} -r static ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_DIR }}/
+          scp -P ${{ secrets.SERVER_PORT }} -r static ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_DIR }}/
           
           # 4. 上传 templates
-          scp -o StrictHostKeyChecking=no -P ${{ secrets.SERVER_PORT }} -r templates ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_DIR }}/
+          scp -P ${{ secrets.SERVER_PORT }} -r templates ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_DIR }}/
           
           # 5. 授权 + 重启服务（加了 sudo！）
-          ssh -o StrictHostKeyChecking=no -p ${{ secrets.SERVER_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd ${{ secrets.DEPLOY_DIR }} && chmod +x app && sudo systemctl restart go-luosi"
+          ssh -p ${{ secrets.SERVER_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd ${{ secrets.DEPLOY_DIR }} && chmod +x app && sudo systemctl restart go-luosi"
