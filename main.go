@@ -7,6 +7,7 @@ import (
 	"fastener-pro/routes"
 	"html/template"
 	"log"
+	"reflect"
 
 	"github.com/gin-gonic/gin"
 )
@@ -57,6 +58,24 @@ func main() {
 				seq[i] = start + i
 			}
 			return seq
+		},
+		"len": func(s interface{}) int {
+			switch v := s.(type) {
+			case []interface{}:
+				return len(v)
+			case string:
+				return len(v)
+			default:
+				// Use reflection to handle slices of any type
+				rv := reflect.ValueOf(s)
+				if rv.Kind() == reflect.Slice {
+					return rv.Len()
+				}
+				return 0
+			}
+		},
+		"safe": func(s string) template.HTML {
+			return template.HTML(s)
 		},
 	})
 

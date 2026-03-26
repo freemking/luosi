@@ -47,6 +47,19 @@ type Contact struct {
 	CreatedAt time.Time `json:"created_at" gorm:"autoCreateTime"`
 }
 
+// News 新闻模型
+type News struct {
+	ID          uint      `json:"id" gorm:"primaryKey"`
+	Title       string    `json:"title" gorm:"size:255;not null"`
+	CoverImage  string    `json:"cover_image" gorm:"size:255"`
+	PublishDate time.Time `json:"publish_date" gorm:"type:date"`
+	Summary     string    `json:"summary" gorm:"size:500"`
+	Content     string    `json:"content" gorm:"type:text"`
+	Status      int       `json:"status" gorm:"default:1"` // 1: 已发布, 0: 草稿
+	CreatedAt   time.Time `json:"created_at" gorm:"autoCreateTime"`
+	UpdatedAt   time.Time `json:"updated_at" gorm:"autoUpdateTime"`
+}
+
 // InitDB 初始化数据库连接
 func InitDB(dsn string) error {
 	// 配置GORM日志
@@ -66,7 +79,7 @@ func InitDB(dsn string) error {
 	}
 
 	// 自动迁移表结构
-	err = db.AutoMigrate(&Product{}, &Contact{}, &ProductImage{})
+	err = db.AutoMigrate(&Product{}, &Contact{}, &ProductImage{}, &News{})
 	if err != nil {
 		return fmt.Errorf("failed to migrate database: %w", err)
 	}
@@ -145,4 +158,66 @@ func GetContacts() ([]Contact, error) {
 	var contacts []Contact
 	result := DB.Find(&contacts)
 	return contacts, result.Error
+}
+
+// GetNewsList 获取新闻列表（分页）
+func GetNewsList(page, pageSize int) ([]News, int64, error) {
+	var newsList []News
+	var total int64
+
+	// 计算总数
+	DB.Model(&News{}).Where("status = ?", 1).Count(&total)
+
+	// 分页查询
+	offset := (page - 1) * pageSize
+	result := DB.Where("status = ?", 1).Order("publish_date DESC").Offset(offset).Limit(pageSize).Find(&newsList)
+
+	return newsList, total, result.Error
+}
+
+// GetAllNews 获取所有新闻（管理用）
+func GetAllNews(page, pageSize int) ([]News, int64, error) {
+	var newsList []News
+	var total int64
+
+	// 计算总数
+	DB.Model(&News{}).Count(&total)
+
+	// 分页查询
+	offset := (page - 1) * pageSize
+	result := DB.Order("created_at DESC").Offset(offset).Limit(pageSize).Find(&newsList)
+
+	return newsList, total, result.Error
+}
+
+// GetNewsByID 根据ID获取新闻
+func GetNewsByID(id uint) (News, error) {
+	var news News
+	result := DB.First(&news, id)
+	return news, result.Error
+}
+
+// CreateNews 创建新闻
+func CreateNews(news News) error {
+	result := DB.Create(&news)
+	return result.Error
+}
+
+// UpdateNews 更新新闻
+func UpdateNews(news News) error {
+	result := DB.Save(&news)
+	return result.Error
+}
+
+// DeleteNews 删除新闻
+func DeleteNews(id uint) error {
+	result := DB.Delete(&News{}, id)
+	return result.Error
+}
+
+// GetNewsCount 获取新闻总数
+func GetNewsCount() (int64, error) {
+	var count int64
+	result := DB.Model(&News{}).Where("status = ?", 1).Count(&count)
+	return count, result.Error
 }

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News - Industrial Fastener Industry Updates | Fastener Pro</title>
+    <meta name="description" content="Stay updated with the latest news and insights from the industrial fastener industry. Product updates, industry trends, and company announcements.">
+    <meta name="keywords" content="fastener news, industrial fastener updates, bolt industry news, manufacturing insights">
+    <meta property="og:title" content="News - Industrial Fastener Industry Updates | Fastener Pro">
+    <meta property="og:description" content="Stay updated with the latest news and insights from the industrial fastener industry.">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="https://www.yourdomain.com/news">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    {{template "header.html" .}}
+
+    <div class="page-header">
+        <div class="container">
+            <h1>Industry News</h1>
+            <p>Exhibitions, market insights, and innovations shaping the fastener industry</p>
+        </div>
+    </div>
+
+    <div class="breadcrumb">
+        <div class="container">
+            <ol>
+                <li><a href="/">Home</a></li>
+                <li>News</li>
+            </ol>
+        </div>
+    </div>
+
+    <section class="news-list">
+        <div class="container">
+            <!-- News Grid -->
+            {{if .error}}
+            <div class="error-message" style="text-align: center; padding: 60px 40px; background: white; border-radius: 4px; margin-bottom: 40px;">
+                <p style="color: var(--gray-color); font-size: 16px;">{{.error}}</p>
+            </div>
+            {{else if eq (len .newsList) 0}}
+            <div class="empty-message" style="text-align: center; padding: 60px 40px; background: white; border-radius: 4px; margin-bottom: 40px;">
+                <p style="color: var(--gray-color); font-size: 16px;">No news articles available at the moment.</p>
+            </div>
+            {{else}}
+            <div class="news-grid">
+                {{range $index, $item := .newsList}}
+                <article class="news-card">
+                    <a href="/news/{{$item.ID}}" class="news-card-link">
+                        <div class="news-image">
+                            {{if $item.CoverImage}}
+                            <img src="{{$item.CoverImage}}" alt="{{$item.Title}}">
+                            {{else}}
+                            <div class="news-image-placeholder"></div>
+                            {{end}}
+                        </div>
+                        <div class="news-content">
+                            <time class="news-date">{{$item.PublishDate.Format "Jan 02, 2006"}}</time>
+                            <h3>{{$item.Title}}</h3>
+                            <p>{{$item.Summary}}</p>
+                            <span class="read-more">Read Article</span>
+                        </div>
+                    </a>
+                </article>
+                {{end}}
+            </div>
+
+            <!-- Pagination -->
+            {{if gt .pages 1}}
+            <div class="pagination">
+                <div class="pagination-wrapper">
+                    {{if gt .page 1}}
+                    <a href="/news?page={{sub .page 1}}&pageSize={{.pageSize}}" class="pagination-btn">← Prev</a>
+                    {{else}}
+                    <span class="pagination-btn disabled">← Prev</span>
+                    {{end}}
+
+                    {{range $i := seq 1 .pages}}
+                        {{if eq $i $.page}}
+                        <a href="/news?page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn active">{{$i}}</a>
+                        {{else}}
+                        <a href="/news?page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn">{{$i}}</a>
+                        {{end}}
+                    {{end}}
+
+                    {{if lt .page .pages}}
+                    <a href="/news?page={{add .page 1}}&pageSize={{.pageSize}}" class="pagination-btn">Next →</a>
+                    {{else}}
+                    <span class="pagination-btn disabled">Next →</span>
+                    {{end}}
+                </div>
+                <div class="pagination-info">
+                    Showing {{mul (sub .page 1) .pageSize | add 1}} to {{if lt (mul .page .pageSize) .total}}{{mul .page .pageSize}}{{else}}{{.total}}{{end}} of {{.total}} articles
+                </div>
+            </div>
+            {{end}}
+            {{end}}
+        </div>
+    </section>
+
+    <section class="contact-cta">
+        <div class="container">
+            <h2>Stay Informed</h2>
+            <p>Subscribe to our newsletter for the latest industry news and product updates.</p>
+            <a href="/contact" class="btn btn-accent">Contact Us</a>
+        </div>
+    </section>
+
+    {{template "footer.html" .}}
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

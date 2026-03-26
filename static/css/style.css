@@ -250,7 +250,7 @@ header {
 }
 
 .logo img {
-    max-height: 56px;
+    max-height: 84px;
     width: auto;
 }
 
@@ -264,7 +264,7 @@ nav a {
     color: var(--dark-color);
     font-family: 'Outfit', sans-serif;
     font-weight: 500;
-    font-size: 15px;
+    font-size: 20px;
     padding: 10px 18px;
     border-radius: 4px;
     transition: all var(--transition-fast);
@@ -1581,7 +1581,7 @@ footer::before {
     }
     
     .logo img {
-        max-height: 44px;
+        max-height: 66px;
     }
     
     .hero {
@@ -1608,4 +1608,651 @@ footer::before {
     .footer-content {
         gap: 32px;
     }
+}
+
+/* News Section Styles */
+/* ============================================
+   NEWS SECTION - Industrial Editorial Design
+   ============================================ */
+
+/* News List */
+.news-list {
+    padding: 60px 0;
+    background: linear-gradient(180deg, var(--light-color) 0%, #ffffff 100%);
+}
+
+/* Article Title Section */
+.article-title-section {
+    padding: 40px 0 20px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.article-title-section h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--dark-color);
+    line-height: 1.3;
+    letter-spacing: -0.3px;
+    margin-bottom: 16px;
+}
+
+.article-date {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-color);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.article-date::before {
+    content: '🗓';
+    font-size: 14px;
+}
+
+/* Industrial Grid Pattern */
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    padding: 0 0 60px;
+}
+
+/* News Cards */
+.news-card {
+    background: white;
+    border-radius: 0;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    position: relative;
+}
+
+/* Industrial corner brackets */
+.news-card::after {
+    content: '';
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    width: 24px;
+    height: 24px;
+    border-right: 2px solid var(--border-color);
+    border-bottom: 2px solid var(--border-color);
+    transition: all 0.3s ease;
+    opacity: 0.5;
+}
+
+.news-card::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 24px;
+    height: 24px;
+    border-left: 2px solid var(--border-color);
+    border-top: 2px solid var(--border-color);
+    transition: all 0.3s ease;
+    opacity: 0.5;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.news-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl), 0 0 0 1px var(--primary-light);
+}
+
+.news-card:hover::before,
+.news-card:hover::after {
+    width: 32px;
+    height: 32px;
+    border-color: var(--accent-color);
+    opacity: 1;
+}
+
+.news-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* News Image with Industrial Overlay */
+.news-image {
+    height: 200px;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--light-color) 0%, var(--light-secondary) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.news-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(21, 28, 36, 0.1) 100%);
+    pointer-events: none;
+}
+
+.news-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.news-card:hover .news-image img {
+    transform: scale(1.08);
+}
+
+/* Industrial Placeholder Icon */
+.news-image-placeholder {
+    width: 80px;
+    height: 80px;
+    background: var(--steel-gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(30, 58, 95, 0.3);
+}
+
+.news-image-placeholder::before {
+    content: '⚡';
+    font-size: 36px;
+    color: var(--accent-light);
+}
+
+.news-image-placeholder::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border: 2px dashed var(--border-color);
+    border-radius: 50%;
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* News Content */
+.news-content {
+    padding: 28px 32px 32px;
+    position: relative;
+}
+
+/* Industrial Date Badge */
+.news-date {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding: 6px 12px;
+    background: linear-gradient(135deg, rgba(199, 123, 48, 0.1) 0%, rgba(199, 123, 48, 0.05) 100%);
+    border-left: 3px solid var(--accent-color);
+}
+
+.news-date::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--accent-color);
+    border-radius: 50%;
+}
+
+.news-content h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 12px;
+    line-height: 1.35;
+    transition: color 0.3s ease;
+}
+
+.news-card:hover .news-content h3 {
+    color: var(--primary-color);
+}
+
+.news-content p {
+    font-size: 14px;
+    color: var(--gray-color);
+    line-height: 1.75;
+    margin-bottom: 18px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Read More Link */
+.read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary-color);
+    letter-spacing: 0.3px;
+    transition: all 0.3s ease;
+}
+
+.read-more::after {
+    content: '→';
+    transition: transform 0.3s ease;
+}
+
+.news-card:hover .read-more {
+    color: var(--accent-color);
+}
+
+.news-card:hover .read-more::after {
+    transform: translateX(4px);
+}
+
+/* ============================================
+   NEWS DETAIL PAGE - Industrial Editorial
+   ============================================ */
+
+.news-detail {
+    padding: 40px 0 60px;
+    background: linear-gradient(180deg, var(--light-color) 0%, #ffffff 200px);
+}
+
+.article-detail {
+    max-width: 840px;
+    margin: 0 auto;
+}
+
+/* Article Cover */
+.article-cover {
+    margin: 0 0 50px;
+    position: relative;
+    overflow: hidden;
+}
+
+.article-cover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--primary-color));
+    z-index: 2;
+}
+
+.article-cover::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: linear-gradient(180deg, transparent, rgba(21, 28, 36, 0.05));
+    pointer-events: none;
+}
+
+.article-cover img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 0;
+    box-shadow: var(--shadow-xl);
+}
+
+/* Article Body - Editorial Reading Experience */
+.article-body {
+    font-size: 17px;
+    line-height: 1.85;
+    color: var(--dark-color);
+    padding: 0 40px;
+}
+
+/* Article Summary */
+.article-summary {
+    margin-bottom: 40px;
+    padding: 28px 32px;
+    background: linear-gradient(135deg, var(--light-color) 0%, var(--light-secondary) 100%);
+    border-left: 4px solid var(--accent-color);
+    border-radius: 0 8px 8px 0;
+}
+
+.article-summary p {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--dark-color);
+    line-height: 1.7;
+}
+
+.article-content::first-letter {
+    font-size: 56px;
+    font-weight: 700;
+    float: left;
+    line-height: 1;
+    margin: 8px 16px 0 0;
+    color: var(--primary-color);
+    font-family: 'Outfit', sans-serif;
+}
+
+.article-body p {
+    margin-bottom: 28px;
+}
+
+.article-body h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--dark-color);
+    margin: 56px 0 24px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid var(--accent-color);
+    display: inline-block;
+}
+
+.article-body h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin: 40px 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.article-body h3::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: var(--primary-color);
+    border-radius: 2px;
+    transform: rotate(45deg);
+}
+
+.article-body ul,
+.article-body ol {
+    margin: 28px 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+.article-body li {
+    margin-bottom: 14px;
+    padding-left: 28px;
+    position: relative;
+}
+
+.article-body li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 8px;
+    height: 8px;
+    background: var(--steel-gradient);
+    border-radius: 2px;
+}
+
+.article-body blockquote {
+    margin: 40px 0;
+    padding: 32px 40px;
+    background: linear-gradient(135deg, var(--light-color) 0%, var(--light-secondary) 100%);
+    border-left: 4px solid var(--accent-color);
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: var(--gray-color);
+    position: relative;
+}
+
+.article-body blockquote::before {
+    content: '"';
+    position: absolute;
+    top: 10px;
+    left: 16px;
+    font-size: 64px;
+    font-family: Georgia, serif;
+    color: var(--accent-color);
+    opacity: 0.3;
+    line-height: 1;
+}
+
+/* Article Footer */
+.article-footer {
+    margin-top: 64px;
+    padding: 40px;
+    text-align: center;
+    background: linear-gradient(135deg, var(--light-color) 0%, var(--light-secondary) 100%);
+    border-top: 4px solid var(--primary-color);
+    position: relative;
+}
+
+.article-footer::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: var(--accent-color);
+}
+
+/* ============================================
+   RESPONSIVE NEWS STYLES
+   ============================================ */
+
+@media (max-width: 1024px) {
+    .news-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .article-title-section {
+        padding: 30px 20px 15px;
+    }
+    
+    .article-title-section h1 {
+        font-size: 26px;
+    }
+    
+    .article-date {
+        font-size: 12px;
+    }
+    
+    .news-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    /* Hide corner brackets on mobile */
+    .news-card::before,
+    .news-card::after {
+        display: none;
+    }
+    
+    .news-content {
+        padding: 20px 24px 24px;
+    }
+    
+    .news-content h3 {
+        font-size: 18px;
+    }
+    
+    .article-cover {
+        margin: 0 0 28px;
+    }
+    
+    .article-body {
+        padding: 0 20px;
+        font-size: 16px;
+        line-height: 1.75;
+    }
+    
+    .article-summary {
+        margin-bottom: 32px;
+        padding: 20px 24px;
+    }
+    
+    .article-summary p {
+        font-size: 16px;
+    }
+    
+    /* Disable drop-cap on mobile */
+    .article-content::first-letter {
+        font-size: inherit;
+        float: none;
+        margin: 0;
+        color: inherit;
+    }
+    
+    .article-body h2 {
+        font-size: 24px;
+        margin: 40px 0 20px;
+    }
+    
+    .article-body h3 {
+        font-size: 20px;
+    }
+    
+    .article-footer {
+        margin-top: 48px;
+        padding: 32px 20px;
+    }
+    
+    .pagination-wrapper {
+        padding: 8px;
+        gap: 4px;
+    }
+    
+    .pagination-btn {
+        min-width: 36px;
+        height: 36px;
+        padding: 0 12px;
+        font-size: 13px;
+    }
+}
+
+/* Category Filter Styles */
+.category-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.filter-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark-color);
+    letter-spacing: 0.3px;
+}
+
+.category-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.category-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--dark-color);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.category-tag:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.category-tag.active {
+    background: var(--steel-gradient);
+    color: white;
+    border-color: transparent;
+}
+
+/* Pagination Styles */
+.pagination {
+    margin-top: 48px;
+    text-align: center;
+}
+
+.pagination-wrapper {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 12px;
+    background: var(--light-color);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.pagination-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 14px;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--dark-color);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.pagination-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.pagination-btn.active {
+    background: var(--steel-gradient);
+    color: white;
+    border-color: transparent;
+}
+
+.pagination-btn.disabled {
+    background: var(--light-secondary);
+    color: var(--gray-light);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.pagination-info {
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--gray-color);
 }

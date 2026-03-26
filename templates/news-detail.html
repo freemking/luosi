@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{if .news}}{{.news.Title}} - News | Fastener Pro{{else}}News | Fastener Pro{{end}}</title>
+    <meta name="description" content="{{if .news}}{{.news.Summary}}{{else}}News article{{end}}">
+    <meta name="keywords" content="fastener news, industrial fastener, bolt industry news">
+    <meta property="og:title" content="{{if .news}}{{.news.Title}} - News | Fastener Pro{{else}}News | Fastener Pro{{end}}">
+    <meta property="og:description" content="{{if .news}}{{.news.Summary}}{{else}}News article{{end}}">
+    <meta property="og:type" content="article">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    {{template "header.html" .}}
+
+    <div class="breadcrumb">
+        <div class="container">
+            <ol>
+                <li><a href="/">Home</a></li>
+                <li><a href="/news">News</a></li>
+                <li>{{if .news}}{{.news.Title}}{{else}}Article{{end}}</li>
+            </ol>
+        </div>
+    </div>
+
+    {{if .news}}
+    <div class="article-title-section">
+        <div class="container">
+            <h1>{{.news.Title}}</h1>
+            <time class="article-date">{{.news.PublishDate.Format "January 02, 2006"}}</time>
+        </div>
+    </div>
+    {{end}}
+
+    <section class="news-detail">
+        <div class="container">
+            {{if .error}}
+            <div class="error-message" style="text-align: center; padding: 80px 40px;">
+                <div style="max-width: 400px; margin: 0 auto;">
+                    <div style="width: 80px; height: 80px; background: var(--steel-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;">
+                        <span style="font-size: 36px;">⚠</span>
+                    </div>
+                    <h2 style="font-family: 'Outfit', sans-serif; color: var(--dark-color); margin-bottom: 12px; font-size: 28px;">Article Not Found</h2>
+                    <p style="color: var(--gray-color); margin-bottom: 32px;">{{.error}}</p>
+                    <a href="/news" class="btn btn-primary">Back to News</a>
+                </div>
+            </div>
+            {{else if .news}}
+            <article class="article-detail">
+                {{if .news.CoverImage}}
+                <div class="article-cover">
+                    <img src="{{.news.CoverImage}}" alt="{{.news.Title}}">
+                </div>
+                {{end}}
+
+                <div class="article-body">
+                    <!-- Summary Section -->
+                    <div class="article-summary">
+                        <p>{{.news.Summary}}</p>
+                    </div>
+                    
+                    <!-- Content Section -->
+                    <div class="article-content">
+                        {{.news.Content | safe}}
+                    </div>
+                </div>
+
+                <footer class="article-footer">
+                    <a href="/news" class="btn btn-outline">← Back to News</a>
+                </footer>
+            </article>
+            {{end}}
+        </div>
+    </section>
+
+    <section class="contact-cta">
+        <div class="container">
+            <h2>Have Questions?</h2>
+            <p>Contact us for more information about our products and services.</p>
+            <a href="/contact" class="btn btn-accent">Get In Touch</a>
+        </div>
+    </section>
+
+    {{template "footer.html" .}}
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
