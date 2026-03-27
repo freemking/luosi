@@ -26,6 +26,9 @@ func main() {
 		log.Fatalf("Failed to initialize database: %v", err)
 	}
 
+	// 设置CDN URL
+	models.SetCDNURL(cfg.CDN.URL)
+
 	// 设置定时任务
 	cron.SetupCron(cfg)
 

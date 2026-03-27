@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 	"time"
 
 	"gorm.io/driver/mysql"
@@ -12,6 +13,25 @@ import (
 )
 
 var DB *gorm.DB
+var CDNURL string
+
+// SetCDNURL 设置CDN URL
+func SetCDNURL(url string) {
+	CDNURL = url
+}
+
+// prependCDN 为相对路径添加CDN前缀
+func prependCDN(path string) string {
+	if path == "" {
+		return ""
+	}
+	// 如果已经是完整URL，直接返回
+	if strings.HasPrefix(path, "http://") || strings.HasPrefix(path, "https://") {
+		return path
+	}
+	// 添加CDN前缀
+	return CDNURL + path
+}
 
 // Product 产品模型
 type Product struct {
@@ -130,6 +150,13 @@ func GetProductsByCategoryWithPagination(category string, page, pageSize int) ([
 	}
 	result := query.Find(&products)
 
+	// 为图片URL添加CDN前缀
+	for i := range products {
+		for j := range products[i].Images {
+			products[i].Images[j].ImageURL = prependCDN(products[i].Images[j].ImageURL)
+		}
+	}
+
 	return products, total, result.Error
 }
 
@@ -137,6 +164,12 @@ func GetProductsByCategoryWithPagination(category string, page, pageSize int) ([
 func GetProductByID(id uint) (Product, error) {
 	var product Product
 	result := DB.Preload("Images").First(&product, id)
+
+	// 为图片URL添加CDN前缀
+	for i := range product.Images {
+		product.Images[i].ImageURL = prependCDN(product.Images[i].ImageURL)
+	}
+
 	return product, result.Error
 }
 
@@ -172,6 +205,11 @@ func GetNewsList(page, pageSize int) ([]News, int64, error) {
 	offset := (page - 1) * pageSize
 	result := DB.Where("status = ?", 1).Order("publish_date DESC").Offset(offset).Limit(pageSize).Find(&newsList)
 
+	// 为封面图片URL添加CDN前缀
+	for i := range newsList {
+		newsList[i].CoverImage = prependCDN(newsList[i].CoverImage)
+	}
+
 	return newsList, total, result.Error
 }
 
@@ -187,6 +225,11 @@ func GetAllNews(page, pageSize int) ([]News, int64, error) {
 	offset := (page - 1) * pageSize
 	result := DB.Order("created_at DESC").Offset(offset).Limit(pageSize).Find(&newsList)
 
+	// 为封面图片URL添加CDN前缀
+	for i := range newsList {
+		newsList[i].CoverImage = prependCDN(newsList[i].CoverImage)
+	}
+
 	return newsList, total, result.Error
 }
 
@@ -194,6 +237,10 @@ func GetAllNews(page, pageSize int) ([]News, int64, error) {
 func GetNewsByID(id uint) (News, error) {
 	var news News
 	result := DB.First(&news, id)
+
+	// 为封面图片URL添加CDN前缀
+	news.CoverImage = prependCDN(news.CoverImage)
+
 	return news, result.Error
 }
 

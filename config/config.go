@@ -10,6 +10,7 @@ import (
 // Config 配置结构
 type Config struct {
 	Database DatabaseConfig `yaml:"database"`
+	CDN      CDNConfig      `yaml:"cdn"`
 	Mail     MailConfig     `yaml:"mail"`
 }
 
@@ -24,6 +25,11 @@ type DatabaseConfig struct {
 	Charset   string `yaml:"charset"`
 	ParseTime bool   `yaml:"parseTime"`
 	Loc       string `yaml:"loc"`
+}
+
+// CDNConfig CDN配置
+type CDNConfig struct {
+	URL string `yaml:"url"`
 }
 
 // MailConfig 邮件配置
