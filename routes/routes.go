@@ -2,6 +2,7 @@ package routes
 
 import (
 	"fastener-pro/models"
+	"html/template"
 	"net/http"
 	"strconv"
 
@@ -136,9 +137,13 @@ func ProductDetailHandler(c *gin.Context) {
 		return
 	}
 
+	// 创建HTML内容字段，避免HTML标签被转义
+	htmlDescription := template.HTML(product.Description)
+
 	c.HTML(200, "product-detail.html", gin.H{
 		"title":   "Product | Yuanmao Fastener",
 		"product": product,
+		"htmlDescription": htmlDescription,
 		"active":   "products",
 	})
 }

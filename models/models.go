@@ -2,6 +2,7 @@ package models
 
 import (
 	"fmt"
+	"html/template"
 	"log"
 	"os"
 	"strings"
@@ -35,14 +36,15 @@ func prependCDN(path string) string {
 
 // Product 产品模型
 type Product struct {
-	ID          uint      `json:"id" gorm:"primaryKey"`
-	Name        string    `json:"name" gorm:"size:255;not null"`
-	Description string    `json:"description" gorm:"type:text"`
-	Category    string    `json:"category" gorm:"size:100;not null"`
-	Standard    string    `json:"standard" gorm:"size:100"`
-	Material    string    `json:"material" gorm:"size:100"`
-	CreatedAt   time.Time `json:"created_at" gorm:"autoCreateTime"`
-	UpdatedAt   time.Time `json:"updated_at" gorm:"autoUpdateTime"`
+	ID          uint           `json:"id" gorm:"primaryKey"`
+	Name        string         `json:"name" gorm:"size:255;not null"`
+	Description template.HTML  `json:"description" gorm:"type:text"`
+	Category    string         `json:"category" gorm:"size:100;not null"`
+	Standard    string         `json:"standard" gorm:"size:100"`
+	Material    string         `json:"material" gorm:"size:100"`
+	CreatedAt   time.Time      `json:"created_at" gorm:"autoCreateTime"`
+	UpdatedAt   time.Time      `json:"updated_at" gorm:"autoUpdateTime"`
+	DeletedAt   gorm.DeletedAt `json:"-" gorm:"index"`
 	Images      []ProductImage `json:"images" gorm:"foreignKey:ProductID"`
 }
 

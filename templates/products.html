@@ -60,24 +60,18 @@
 
             <div class="products-grid">
                 {{range .products}}
-                <div class="product-card">
+                <a href="/product/{{.ID}}" class="product-card">
                     <div class="product-image">
                         {{if gt (len .Images) 0}}
                         <img src="{{(index .Images 0).ImageURL}}" alt="{{.Name}}">
                         {{else}}
-                        🔩
+                        <img src="/static/images/default-product.svg" alt="{{.Name}}" class="default-image">
                         {{end}}
                     </div>
                     <div class="product-content">
                         <h3>{{.Name}}</h3>
-                        <p>{{.Description}}</p>
-                        <div class="product-standards">
-                            <span class="standard-tag">{{.Standard}}</span>
-                            <span class="standard-tag">{{.Material}}</span>
-                        </div>
-                        <a href="/product/{{.ID}}" class="btn">View Details</a>
                     </div>
-                </div>
+                </a>
                 {{end}}
             </div>
 

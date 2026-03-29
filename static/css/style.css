@@ -608,6 +608,8 @@ section {
 }
 
 .product-card {
+    display: block;
+    text-decoration: none;
     background-color: white;
     border-radius: 8px;
     overflow: hidden;
@@ -629,7 +631,6 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 90px;
     position: relative;
 }
 
@@ -640,27 +641,28 @@ section {
     transition: transform var(--transition-smooth);
 }
 
+.product-image img.default-image {
+    width: 60%;
+    height: 60%;
+    object-fit: contain;
+    opacity: 0.6;
+}
+
 .product-card:hover .product-image img {
     transform: scale(1.05);
 }
 
 .product-content {
-    padding: 28px;
+    padding: 20px;
+    text-align: center;
 }
 
 .product-content h3 {
     font-family: 'Outfit', sans-serif;
-    font-size: 18px;
-    margin-bottom: 10px;
+    font-size: 16px;
+    margin: 0;
     color: var(--dark-color);
     font-weight: 600;
-}
-
-.product-content p {
-    color: var(--gray-color);
-    margin-bottom: 18px;
-    font-size: 14px;
-    line-height: 1.6;
 }
 
 .product-standards {
