@@ -90,24 +90,18 @@
             <p class="section-subtitle">Explore our most popular fastener products trusted by global customers</p>
             <div class="products-grid">
                 {{range .products}}
-                <div class="product-card">
+                <a href="/product/{{.ID}}" class="product-card">
                     <div class="product-image">
                         {{if gt (len .Images) 0}}
                         <img src="{{(index .Images 0).ImageURL}}" alt="{{.Name}}">
                         {{else}}
-                        🔩
+                        <img src="/static/images/default-product.svg" alt="{{.Name}}" class="default-image">
                         {{end}}
                     </div>
                     <div class="product-content">
                         <h3>{{.Name}}</h3>
-                        <p>{{.Description}}</p>
-                        <div class="product-standards">
-                            <span class="standard-tag">{{.Standard}}</span>
-                            <span class="standard-tag">{{.Material}}</span>
-                        </div>
-                        <a href="/product/{{.ID}}" class="btn">View Details</a>
                     </div>
-                </div>
+                </a>
                 {{end}}
             </div>
             <div class="view-all">
@@ -152,14 +146,6 @@
                     <p>Capability to produce custom and non-standard fasteners according to your drawings and specific requirements.</p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <section class="contact-cta">
-        <div class="container">
-            <h2>Ready to Place Your Order?</h2>
-            <p>Contact us today for a competitive quote and professional service. We look forward to working with you.</p>
-            <a href="contact" class="btn btn-accent">Contact Us Now</a>
         </div>
     </section>
 

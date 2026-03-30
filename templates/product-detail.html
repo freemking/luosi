@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{if .product}}{{.product.Name}} - High Quality Industrial Fasteners | Yuanmao Fastener{{else}}Product | Yuanmao Fastener{{end}}</title>
-    <meta name="description" content="{{if .product}}{{.product.Description}}{{else}}Product description{{end}}">
-    <meta name="keywords" content="{{if .product}}{{.product.Name}}, {{.product.Category}}, {{.product.Standard}}{{else}}fasteners, bolts, industrial{{end}}">
-    <meta property="og:title" content="{{if .product}}{{.product.Name}} - High Quality Industrial Fasteners{{else}}Product | Yuanmao Fastener{{end}}">
-    <meta property="og:description" content="{{if .product}}{{.product.Description}}{{else}}Product description{{end}}">
+    <title>{{if .product}}{{.product.Name}} - Yuanmao Fastener{{else}}Product | Yuanmao Fastener{{end}}</title>
+    <meta name="description" content="{{if .product}}{{.product.Name}} - High quality industrial fasteners. {{.product.Material}} construction, {{.product.Standard}} standard.{{else}}Product description{{end}}">
+    <meta name="keywords" content="{{if .product}}{{.product.Name}}, {{.product.Category}}, {{.product.Standard}}, {{.product.Material}}, industrial fasteners{{else}}fasteners, bolts, industrial{{end}}">
+    <meta property="og:title" content="{{if .product}}{{.product.Name}} - Yuanmao Fastener{{else}}Product | Yuanmao Fastener{{end}}">
+    <meta property="og:description" content="{{if .product}}{{.product.Name}} - High quality industrial fasteners.{{else}}Product description{{end}}">
     <meta property="og:type" content="product">
-    <link rel="canonical" href="https://www.yourdomain.com/product-detail.html">
+    <link rel="canonical" href="https://www.yourdomain.com/product/{{if .product}}{{.product.ID}}{{end}}">
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
@@ -28,177 +28,202 @@
     <section class="product-detail">
         <div class="container">
             {{if .error}}
-            <div class="error-message">
+            <div class="error-state">
+                <div class="error-icon">⚠</div>
+                <h2>Product Not Found</h2>
                 <p>{{.error}}</p>
+                <a href="/products" class="btn btn-primary">Browse Products</a>
             </div>
             {{else if .product}}
-            <div class="product-detail-container">
+            
+            <!-- Product Header -->
+            <div class="product-header">
+                <div class="product-title-section">
+                    <h2>{{.product.Name}}</h2>
+                </div>
+            </div>
+
+            <!-- Product Main Content -->
+            <div class="product-main">
+                <!-- Product Gallery -->
                 <div class="product-gallery">
-                    <div class="main-image">
+                    <div class="gallery-main">
                         {{if gt (len .product.Images) 0}}
-                        <img src="{{(index .product.Images 0).ImageURL}}" alt="{{.product.Name}}">
+                        <img src="{{(index .product.Images 0).ImageURL}}" alt="{{.product.Name}}" id="mainImage">
                         {{else}}
-                        🔩
+                        <div class="placeholder-image">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M8 12h8M12 8v8"/>
+                            </svg>
+                            <span>Product Image</span>
+                        </div>
                         {{end}}
                     </div>
-                    <div class="thumbnail-grid">
+                    {{if gt (len .product.Images) 1}}
+                    <div class="gallery-thumbs">
                         {{range $index, $image := .product.Images}}
-                        <div class="thumbnail {{if eq $index 0}}active{{end}}">
+                        <button class="thumb-btn {{if eq $index 0}}active{{end}}" onclick="changeImage('{{$image.ImageURL}}', this)">
                             <img src="{{$image.ImageURL}}" alt="{{$.product.Name}}">
-                        </div>
+                        </button>
                         {{end}}
                     </div>
+                    {{end}}
                 </div>
+
+                <!-- Product Info -->
                 <div class="product-info">
-                    <h1>{{.product.Name}}</h1>
-                    <div class="product-standard">{{.product.Standard}}</div>
-                    <p>{{.product.Description}}</p>
-                    
-                    <div class="available-standards">
-                        <h3>Available Standards</h3>
-                        <div class="standards-list">
-                            <span class="standard-item">{{.product.Standard}}</span>
+                    <!-- Key Specifications -->
+                    <div class="key-specs">
+                        <div class="spec-row">
+                            <span class="spec-label">Material</span>
+                            <span class="spec-value">{{if .product.Material}}{{.product.Material}}{{else}}Carbon Steel, Stainless Steel{{end}}</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Standard</span>
+                            <span class="spec-value">{{if .product.Standard}}{{.product.Standard}}{{else}}DIN / ISO{{end}}</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Finish</span>
+                            <span class="spec-value">Zinc Plated, HDG, Black, Plain</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Brand</span>
+                            <span class="spec-value">Yuanmao</span>
                         </div>
                     </div>
 
-                    <div class="product-specs">
-                        <h3>Product Specifications</h3>
-                        <table class="spec-table">
-                            <tr>
-                                <td>Category:</td>
-                                <td>{{.product.Category}}</td>
-                            </tr>
-                            <tr>
-                                <td>Standard:</td>
-                                <td>{{.product.Standard}}</td>
-                            </tr>
-                            <tr>
-                                <td>Material:</td>
-                                <td>{{.product.Material}}</td>
-                            </tr>
-                        </table>
+                    <!-- Product Tags -->
+                    <div class="product-tags">
+                        <a href="/products?category={{.product.Category}}" class="product-tag">{{.product.Category}}</a>
+                        <span class="product-tag">{{.product.Name}}</span>
+                        {{if .product.Standard}}
+                        <span class="product-tag">{{.product.Standard}}</span>
+                        {{end}}
                     </div>
 
-                    <a href="/contact" class="btn">Request Quote & Inquire</a>
+                    <!-- Action Buttons -->
+                    <div class="product-actions">
+                        <a href="/contact?product={{.product.Name}}" class="btn btn-primary btn-lg">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            </svg>
+                            Inquiry Now
+                        </a>
+                        <a href="mailto:sales@yuanmaosh.com?subject={{.product.Name}} Inquiry" class="btn btn-outline btn-lg">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                            Send Email
+                        </a>
+                    </div>
                 </div>
             </div>
 
-            <div class="product-detail-bottom">
-                <div class="tabs">
-                    <ul class="tab-list">
-                        <li><button class="tab-btn active" data-tab="description">Description</button></li>
-                        <li><button class="tab-btn" data-tab="specifications">Specifications</button></li>
-                        <li><button class="tab-btn" data-tab="applications">Applications</button></li>
-                        <li><button class="tab-btn" data-tab="packaging">Packaging & Delivery</button></li>
-                    </ul>
-                </div>
-
-                <div class="tab-content active" id="description">
-                    <h3 style="font-size: 24px; margin-bottom: 20px; color: var(--dark-color);">Product Description</h3>
-                    <div style="color: var(--gray-color); line-height: 1.8; margin-bottom: 16px;">{{.product.Description}}</div>
-                </div>
-
-                <div class="tab-content" id="specifications">
-                    <h3 style="font-size: 24px; margin-bottom: 20px; color: var(--dark-color);">Technical Specifications</h3>
-                    <div class="product-specs" style="margin-top: 0;">
-                        <table class="spec-table">
-                            <tr>
-                                <td>Standard:</td>
-                                <td>{{.product.Standard}}</td>
-                            </tr>
-                            <tr>
-                                <td>Product Name:</td>
-                                <td>{{.product.Name}}</td>
-                            </tr>
-                            <tr>
-                                <td>Category:</td>
-                                <td>{{.product.Category}}</td>
-                            </tr>
-                            <tr>
-                                <td>Material:</td>
-                                <td>{{.product.Material}}</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="tab-content" id="applications">
-                    <h3 style="font-size: 24px; margin-bottom: 20px; color: var(--dark-color);">Common Applications</h3>
-                    <p style="color: var(--gray-color); line-height: 1.8; margin-bottom: 20px;">{{.product.Name}} are widely used in various industrial applications. Some common applications include:</p>
-                    <div class="application-list">
-                        <div class="application-item">
-                            <span>🏭</span>
-                            <span>Industrial Machinery</span>
-                        </div>
-                        <div class="application-item">
-                            <span>🏗️</span>
-                            <span>Construction</span>
-                        </div>
-                        <div class="application-item">
-                            <span>🚗</span>
-                            <span>Automotive Industry</span>
-                        </div>
-                        <div class="application-item">
-                            <span>⚙️</span>
-                            <span>Equipment Manufacturing</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="tab-content" id="packaging">
-                    <h3 style="font-size: 24px; margin-bottom: 20px; color: var(--dark-color);">Packaging & Delivery</h3>
-                    <p style="color: var(--gray-color); line-height: 1.8; margin-bottom: 16px;"><strong>Standard Packaging:</strong> Small items are packed in carton boxes, then into wooden pallets. Larger sizes are packed in wooden cases or according to customer requirements.</p>
-                    <p style="color: var(--gray-color); line-height: 1.8; margin-bottom: 16px;"><strong>Delivery Time:</strong></p>
-                    <ul style="color: var(--gray-color); line-height: 1.8; margin-left: 20px;">
-                        <li>Standard items in stock: 7-15 days</li>
-                        <li>Custom production: 20-35 days depending on quantity</li>
-                        <li>Urgent orders can be accommodated</li>
-                    </ul>
+            <!-- Product Description -->
+            <div class="product-description">
+                <h2>Product Description</h2>
+                <div class="description-content">
+                    {{.htmlDescription}}
                 </div>
             </div>
+
+            <!-- Company Information -->
+            <div class="company-info-section">
+                <h2>Company Information</h2>
+                <div class="company-promo">
+                    <div class="promo-slogan">
+                        <strong>Right Product!</strong> 
+                        <strong>Reasonable Price!</strong> 
+                        <strong>Reliable Service!</strong>
+                    </div>
+                    <p>Thank you for clicking our product, and if you have any needs or requirements, please kindly contact us, we will reply ASAP.</p>
+                    <p class="contact-email">E-mail: <a href="mailto:sales@yuanmaosh.com">sales@yuanmaosh.com</a></p>
+                </div>
+            </div>
+
+            <!-- Packing & Delivery -->
+            <div class="packing-delivery">
+                <h2>Packing & Delivery</h2>
+                <div class="packing-content">
+                    <div class="packing-item">
+                        <h3>Packing</h3>
+                        <p>Small items are packed in carton boxes, then into wooden pallets. Larger sizes are packed in wooden cases or according to customer requirements.</p>
+                    </div>
+                    <div class="packing-item">
+                        <h3>Delivery</h3>
+                        <ul>
+                            <li>Standard items in stock: 7-15 days</li>
+                            <li>Custom production: 20-35 days depending on quantity</li>
+                            <li>Urgent orders can be accommodated</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
             {{end}}
         </div>
     </section>
 
-    <section class="featured-products">
+    {{if .product}}
+    <!-- Inquiry Form Section -->
+    <section class="inquiry-section">
         <div class="container">
-            <h2 class="section-title">Related Products</h2>
-            <p class="section-subtitle">You may also be interested in these complementary products</p>
-            <div class="products-grid">
-                {{range .products}}
-                <div class="product-card">
-                    <div class="product-image">
-                        {{if .ImageURL}}
-                        <img src="{{.ImageURL}}" alt="{{.Name}}">
-                        {{else}}
-                        🔩
-                        {{end}}
+            <h2>Quick Inquiry</h2>
+            <p class="inquiry-subtitle">Fill out the form below and we'll get back to you within 24 hours</p>
+            
+            <form class="inquiry-form" action="/contact" method="POST">
+                <input type="hidden" name="product" value="{{.product.Name}}">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Your Name *</label>
+                        <input type="text" id="name" name="name" required placeholder="Enter your name">
                     </div>
-                    <div class="product-content">
-                        <h3>{{.Name}}</h3>
-                        <p>{{.Description}}</p>
-                        <div class="product-standards">
-                            <span class="standard-tag">{{.Standard}}</span>
-                            <span class="standard-tag">{{.Material}}</span>
-                        </div>
-                        <a href="/product/{{.ID}}" class="btn btn-outline">View Details</a>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required placeholder="Enter your email">
                     </div>
                 </div>
-                {{end}}
-            </div>
-        </div>
-    </section>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Enter your phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company Name</label>
+                        <input type="text" id="company" name="company" placeholder="Enter your company">
+                    </div>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label for="message">Your Message *</label>
+                    <textarea id="message" name="message" rows="5" required placeholder="Please describe your requirements, quantity, specifications, etc.">Product: {{.product.Name}}
+Category: {{.product.Category}}
+Standard: {{if .product.Standard}}{{.product.Standard}}{{else}}N/A{{end}}
+Material: {{if .product.Material}}{{.product.Material}}{{else}}N/A{{end}}
 
-    <section class="contact-cta">
-        <div class="container">
-            <h2>Ready to Place Your Order?</h2>
-            <p>Contact us today for a competitive quote. We offer factory direct pricing with high quality standards.</p>
-            <a href="/contact" class="btn btn-accent">Send Inquiry Now</a>
+I am interested in this product. Please send me more details and pricing information.</textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-lg">Submit Inquiry</button>
+                </div>
+            </form>
         </div>
     </section>
+    {{end}}
 
     {{template "footer.html" .}}
 
-    <script src="/static/js/main.js"></script>
+    <script>
+        function changeImage(src, btn) {
+            document.getElementById('mainImage').src = src;
+            document.querySelectorAll('.thumb-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+    </script>
 </body>
 </html>

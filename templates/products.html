@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="page-title">Our Products - Industrial Fasteners, Bolts, Nuts, Screws | Yuanmao Fastener</title>
-    <meta name="description" id="page-description" content="Browse our complete range of industrial fasteners including bolts, nuts, washers, screws, threaded rods and custom parts. All international standards available.">
-    <meta name="keywords" content="industrial fasteners products, bolts for sale, nuts supplier, screws, washers, threaded rods">
-    <meta property="og:title" content="Our Products - Industrial Fasteners | Yuanmao Fastener">
-    <meta property="og:description" content="Browse our complete range of industrial fasteners including bolts, nuts, washers, screws and more.">
+    <title id="page-title">Our Products - Blind Rivets, Insert Nuts, Fasteners | Yuanmao</title>
+    <meta name="description" id="page-description" content="Browse our complete range of fasteners including Blind Rivets, Insert Nuts, Self Clinching Fasteners, Tools and custom parts. All international standards available.">
+    <meta name="keywords" content="blind rivets, insert nuts, self clinching fasteners, industrial fasteners, fastener tools">
+    <meta property="og:title" content="Our Products - Industrial Fasteners | Yuanmao">
+    <meta property="og:description" content="Browse our complete range of fasteners including Blind Rivets, Insert Nuts, Self Clinching Fasteners and more.">
     <meta property="og:type" content="website">
     <link rel="canonical" href="https://www.yourdomain.com/products">
     <link rel="stylesheet" href="/static/css/style.css">
@@ -33,29 +33,13 @@
 
     <section class="product-list">
         <div class="container">
-            <div class="product-filter">
-                <div class="filter-group">
-                    <label for="category">Category:</label>
-                    <select id="category" onchange="window.location.href='/products?category='+this.value">
-                        <option value="" {{if eq .category ""}}selected{{end}}>All Categories</option>
-                        <option value="bolts" {{if eq .category "bolts"}}selected{{end}}>Bolts</option>
-                        <option value="nuts" {{if eq .category "nuts"}}selected{{end}}>Nuts</option>
-                        <option value="washers" {{if eq .category "washers"}}selected{{end}}>Washers</option>
-                        <option value="screws" {{if eq .category "screws"}}selected{{end}}>Screws</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="standard">Standard:</label>
-                    <select id="standard">
-                        <option value="">All Standards</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="material">Material:</label>
-                    <select id="material">
-                        <option value="">All Materials</option>
-                    </select>
-                </div>
+            <div class="category-filter">
+                <a href="/products" class="category-tag {{if eq .category ""}}active{{end}}">All</a>
+                <a href="/products?category=Blind Rivet" class="category-tag {{if eq .category "Blind Rivet"}}active{{end}}">Blind Rivet</a>
+                <a href="/products?category=Insert Nut" class="category-tag {{if eq .category "Insert Nut"}}active{{end}}">Insert Nut</a>
+                <a href="/products?category=Self Clinching Fasteners" class="category-tag {{if eq .category "Self Clinching Fasteners"}}active{{end}}">Self Clinching Fasteners</a>
+                <a href="/products?category=Other Products" class="category-tag {{if eq .category "Other Products"}}active{{end}}">Other Products</a>
+                <a href="/products?category=Tools" class="category-tag {{if eq .category "Tools"}}active{{end}}">Tools</a>
             </div>
 
             <div class="products-grid">
@@ -104,14 +88,6 @@
                 </div>
             </div>
             {{end}}
-        </div>
-    </section>
-
-    <section class="contact-cta">
-        <div class="container">
-            <h2>Can't Find What You Need?</h2>
-            <p>Contact us for special requirements or custom fastener solutions. We can manufacture according to your specifications.</p>
-            <a href="contact" class="btn btn-accent">Send Inquiry</a>
         </div>
     </section>
 

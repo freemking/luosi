@@ -10,7 +10,7 @@ database:
   loc: Local
 
 cdn:
-  url: http://s.nexfasten.com
+  url: https://s.nexfasten.com/
 
 mail:
   smtp_host: smtp.gmail.com

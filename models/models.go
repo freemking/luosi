@@ -117,7 +117,7 @@ func GetProducts() ([]Product, error) {
 	return products, result.Error
 }
 
-// GetProductsWithPagination 分页获取产品
+// GetProductsWithPagination 分页获取产品（用于首页，只获取名称和图片）
 func GetProductsWithPagination(page, pageSize int) ([]Product, int64, error) {
 	var products []Product
 	var total int64
@@ -125,14 +125,43 @@ func GetProductsWithPagination(page, pageSize int) ([]Product, int64, error) {
 	// 计算总数
 	DB.Model(&Product{}).Count(&total)
 
-	// 分页查询
+	// 分页查询 - 只选择需要的字段
 	offset := (page - 1) * pageSize
-	result := DB.Preload("Images").Offset(offset).Limit(pageSize).Find(&products)
+	result := DB.Select("id, name").Offset(offset).Limit(pageSize).Find(&products)
+	if result.Error != nil {
+		return products, total, result.Error
+	}
 
-	return products, total, result.Error
+	// 批量查询图片
+	if len(products) > 0 {
+		productIDs := make([]uint, len(products))
+		for i, p := range products {
+			productIDs[i] = p.ID
+		}
+
+		var images []ProductImage
+		DB.Select("id, product_id, image_url, `order`").
+			Where("product_id IN ?", productIDs).
+			Order("`order` ASC").
+			Find(&images)
+
+		// 为图片URL添加CDN前缀并按product_id分组
+		imageMap := make(map[uint][]ProductImage)
+		for i := range images {
+			images[i].ImageURL = prependCDN(images[i].ImageURL)
+			imageMap[images[i].ProductID] = append(imageMap[images[i].ProductID], images[i])
+		}
+
+		// 关联图片到产品
+		for i := range products {
+			products[i].Images = imageMap[products[i].ID]
+		}
+	}
+
+	return products, total, nil
 }
 
-// GetProductsByCategoryWithPagination 分页根据分类获取产品
+// GetProductsByCategoryWithPagination 分页根据分类获取产品（用于列表页，只获取名称和图片）
 func GetProductsByCategoryWithPagination(category string, page, pageSize int) ([]Product, int64, error) {
 	var products []Product
 	var total int64
@@ -144,22 +173,44 @@ func GetProductsByCategoryWithPagination(category string, page, pageSize int) ([
 		DB.Model(&Product{}).Count(&total)
 	}
 
-	// 分页查询
+	// 分页查询 - 只选择需要的字段
 	offset := (page - 1) * pageSize
-	query := DB.Preload("Images").Offset(offset).Limit(pageSize)
+	query := DB.Select("id, name").Offset(offset).Limit(pageSize)
 	if category != "" {
 		query = query.Where("category = ?", category)
 	}
 	result := query.Find(&products)
+	if result.Error != nil {
+		return products, total, result.Error
+	}
 
-	// 为图片URL添加CDN前缀
-	for i := range products {
-		for j := range products[i].Images {
-			products[i].Images[j].ImageURL = prependCDN(products[i].Images[j].ImageURL)
+	// 批量查询图片
+	if len(products) > 0 {
+		productIDs := make([]uint, len(products))
+		for i, p := range products {
+			productIDs[i] = p.ID
+		}
+
+		var images []ProductImage
+		DB.Select("id, product_id, image_url, `order`").
+			Where("product_id IN ?", productIDs).
+			Order("`order` ASC").
+			Find(&images)
+
+		// 为图片URL添加CDN前缀并按product_id分组
+		imageMap := make(map[uint][]ProductImage)
+		for i := range images {
+			images[i].ImageURL = prependCDN(images[i].ImageURL)
+			imageMap[images[i].ProductID] = append(imageMap[images[i].ProductID], images[i])
+		}
+
+		// 关联图片到产品
+		for i := range products {
+			products[i].Images = imageMap[products[i].ID]
 		}
 	}
 
-	return products, total, result.Error
+	return products, total, nil
 }
 
 // GetProductByID 根据ID获取产品
@@ -195,7 +246,7 @@ func GetContacts() ([]Contact, error) {
 	return contacts, result.Error
 }
 
-// GetNewsList 获取新闻列表（分页）
+// GetNewsList 获取新闻列表（分页，只获取列表页需要的字段）
 func GetNewsList(page, pageSize int) ([]News, int64, error) {
 	var newsList []News
 	var total int64
@@ -203,9 +254,14 @@ func GetNewsList(page, pageSize int) ([]News, int64, error) {
 	// 计算总数
 	DB.Model(&News{}).Where("status = ?", 1).Count(&total)
 
-	// 分页查询
+	// 分页查询 - 只选择列表页需要的字段
 	offset := (page - 1) * pageSize
-	result := DB.Where("status = ?", 1).Order("publish_date DESC").Offset(offset).Limit(pageSize).Find(&newsList)
+	result := DB.Select("id, title, cover_image, publish_date, summary, status").
+		Where("status = ?", 1).
+		Order("publish_date DESC").
+		Offset(offset).
+		Limit(pageSize).
+		Find(&newsList)
 
 	// 为封面图片URL添加CDN前缀
 	for i := range newsList {
@@ -215,7 +271,7 @@ func GetNewsList(page, pageSize int) ([]News, int64, error) {
 	return newsList, total, result.Error
 }
 
-// GetAllNews 获取所有新闻（管理用）
+// GetAllNews 获取所有新闻（管理用，只获取列表需要的字段）
 func GetAllNews(page, pageSize int) ([]News, int64, error) {
 	var newsList []News
 	var total int64
@@ -223,9 +279,13 @@ func GetAllNews(page, pageSize int) ([]News, int64, error) {
 	// 计算总数
 	DB.Model(&News{}).Count(&total)
 
-	// 分页查询
+	// 分页查询 - 只选择列表需要的字段
 	offset := (page - 1) * pageSize
-	result := DB.Order("created_at DESC").Offset(offset).Limit(pageSize).Find(&newsList)
+	result := DB.Select("id, title, cover_image, publish_date, summary, status, created_at").
+		Order("created_at DESC").
+		Offset(offset).
+		Limit(pageSize).
+		Find(&newsList)
 
 	// 为封面图片URL添加CDN前缀
 	for i := range newsList {
@@ -235,7 +295,7 @@ func GetAllNews(page, pageSize int) ([]News, int64, error) {
 	return newsList, total, result.Error
 }
 
-// GetNewsByID 根据ID获取新闻
+// GetNewsByID 根据ID获取新闻（详情页需要完整内容）
 func GetNewsByID(id uint) (News, error) {
 	var news News
 	result := DB.First(&news, id)
