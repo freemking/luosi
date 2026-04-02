@@ -15,6 +15,18 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // Mobile dropdown toggle
+    const hasDropdown = document.querySelector('.has-dropdown');
+    if (hasDropdown) {
+        const dropdownLink = hasDropdown.querySelector('a');
+        dropdownLink.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                hasDropdown.classList.toggle('active');
+            }
+        });
+    }
+    
     const thumbnails = document.querySelectorAll('.thumbnail');
     const mainImage = document.querySelector('.main-image');
     

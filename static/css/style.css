@@ -270,6 +270,136 @@ nav a {
     transition: all var(--transition-fast);
     position: relative;
     letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Dropdown Menu Styles */
+.has-dropdown {
+    position: relative;
+}
+
+.dropdown-arrow {
+    width: 16px;
+    height: 16px;
+    transition: transform var(--transition-fast);
+}
+
+.has-dropdown:hover .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: white;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    min-width: 380px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-fast);
+    z-index: 1000;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.has-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-container {
+    padding: 16px;
+}
+
+.dropdown-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px;
+    border-radius: 4px;
+    transition: all var(--transition-fast);
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--dark-color);
+    margin: 2px 0;
+}
+
+.dropdown-item::after {
+    display: none;
+}
+
+.dropdown-item:hover {
+    background: var(--light-color);
+    border-left-color: var(--primary-color);
+    border-radius: 4px;
+}
+
+.dropdown-icon {
+    font-size: 28px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.dropdown-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.dropdown-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--dark-color);
+    letter-spacing: 0.3px;
+}
+
+.dropdown-desc {
+    font-size: 13px;
+    color: var(--gray-color);
+    line-height: 1.5;
+}
+
+.dropdown-footer {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+}
+
+.dropdown-view-all {
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--primary-color);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: gap var(--transition-fast);
+    padding: 8px 16px;
+}
+
+.dropdown-view-all::after {
+    display: none;
+}
+
+.dropdown-view-all:hover {
+    gap: 12px;
 }
 
 nav a::after {
@@ -1861,6 +1991,72 @@ footer::before {
     nav a.active {
         border-bottom-color: var(--border-color);
         background-color: var(--light-color);
+    }
+    
+    /* Mobile Dropdown Styles */
+    .has-dropdown {
+        position: relative;
+    }
+    
+    .dropdown-arrow {
+        margin-left: auto;
+    }
+    
+    .dropdown-menu {
+        position: static;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+        box-shadow: none;
+        border: none;
+        border-left: 3px solid var(--primary-color);
+        min-width: auto;
+        background: var(--light-color);
+        padding: 0;
+        display: none;
+        border-radius: 0;
+    }
+    
+    .has-dropdown.active .dropdown-menu {
+        display: block;
+    }
+    
+    .has-dropdown.active .dropdown-arrow {
+        transform: rotate(180deg);
+    }
+    
+    .dropdown-container {
+        padding: 8px 0;
+    }
+    
+    .dropdown-item {
+        padding: 12px 16px;
+        border-left: none;
+        border-radius: 0;
+        margin: 0;
+    }
+    
+    .dropdown-item:hover {
+        background: white;
+        border-radius: 0;
+    }
+    
+    .dropdown-icon {
+        font-size: 20px;
+    }
+    
+    .dropdown-title {
+        font-size: 14px;
+    }
+    
+    .dropdown-desc {
+        font-size: 12px;
+    }
+    
+    .dropdown-footer {
+        margin-top: 8px;
+        padding-top: 8px;
+        border-top: 1px solid var(--border-color);
     }
     
     .mobile-menu-btn {
