@@ -76,8 +76,442 @@
                     <li><a href="/about.html" {{if eq .active "about"}}class="active"{{end}}>About Us</a></li>
                     <li><a href="/contact.html" {{if eq .active "contact"}}class="active"{{end}}>Contact Us</a></li>
                     <li><a href="/faq.html" {{if eq .active "faq"}}class="active"{{end}}>FAQ</a></li>
+                    <li class="search-icon">
+                        <button id="search-toggle" class="search-toggle-btn" aria-label="Search">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                            </svg>
+                        </button>
+                    </li>
                 </ul>
             </nav>
         </div>
     </div>
 </header>
+
+<!-- Search Overlay Panel -->
+<div id="search-overlay" class="search-overlay">
+    <div class="search-overlay-backdrop"></div>
+    <div class="search-panel">
+        <div class="search-panel-header">
+            <h3>Search Products</h3>
+            <button id="search-close" class="search-close-btn" aria-label="Close search">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 6L6 18M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="search-panel-body">
+            <div class="search-input-wrapper">
+                <svg class="search-input-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" id="search-input" class="search-input" placeholder="Search by product name or description..." autocomplete="off">
+                <div id="search-loading" class="search-loading" style="display: none;">
+                    <svg class="spinner" viewBox="0 0 24 24" width="20" height="20">
+                        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="31.4 31.4"></circle>
+                    </svg>
+                </div>
+            </div>
+            <div id="search-results" class="search-results"></div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Search Icon Button - matches nav a styling */
+.search-icon {
+    display: flex;
+    align-items: center;
+}
+
+.search-toggle-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px 18px;
+    color: var(--dark-color, #151c24);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    position: relative;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.search-toggle-btn:hover {
+    color: var(--primary-color, #00DEEA);
+    background-color: var(--light-color, #f4f6f8);
+}
+
+.search-toggle-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Search Overlay */
+.search-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.search-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+.search-overlay-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(21, 28, 36, 0.9);
+}
+
+/* Search Panel */
+.search-panel {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 700px;
+    background: #ffffff;
+    border: 1px solid var(--border-color, #d1d9e0);
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+}
+
+.search-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border-color, #d1d9e0);
+    background: linear-gradient(135deg, var(--light-color, #f4f6f8) 0%, #ffffff 100%);
+}
+
+.search-panel-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--dark-color, #151c24);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Outfit', sans-serif;
+}
+
+.search-close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    color: var(--gray-color, #5a6572);
+    transition: color 0.2s, transform 0.2s;
+}
+
+.search-close-btn:hover {
+    color: var(--dark-color, #151c24);
+    transform: rotate(90deg);
+}
+
+.search-panel-body {
+    padding: 20px 24px;
+    background: #ffffff;
+}
+
+/* Search Input */
+.search-input-wrapper {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.search-input-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-color, #5a6572);
+    pointer-events: none;
+}
+
+.search-input {
+    width: 100%;
+    padding: 16px 16px 16px 48px;
+    font-size: 16px;
+    background: var(--light-color, #f4f6f8);
+    border: 2px solid var(--border-color, #d1d9e0);
+    border-radius: 6px;
+    color: var(--dark-color, #151c24);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+    font-family: 'Source Sans 3', sans-serif;
+}
+
+.search-input::placeholder {
+    color: var(--gray-color, #5a6572);
+}
+
+.search-input:focus {
+    border-color: var(--primary-color, #00DEEA);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(0, 222, 234, 0.1);
+}
+
+.search-loading {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary-color, #00DEEA);
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Search Results */
+.search-results {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.search-results::-webkit-scrollbar {
+    width: 6px;
+}
+
+.search-results::-webkit-scrollbar-track {
+    background: var(--light-color, #f4f6f8);
+}
+
+.search-results::-webkit-scrollbar-thumb {
+    background: var(--border-color, #d1d9e0);
+    border-radius: 3px;
+}
+
+.search-result-item {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid var(--border-color, #d1d9e0);
+    text-decoration: none;
+    color: var(--dark-color, #151c24);
+    transition: background-color 0.2s;
+}
+
+.search-result-item:hover {
+    background: var(--light-color, #f4f6f8);
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 16px;
+    background: var(--light-color, #f4f6f8);
+    border: 1px solid var(--border-color, #d1d9e0);
+}
+
+.search-result-info {
+    flex: 1;
+}
+
+.search-result-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--dark-color, #151c24);
+    font-family: 'Outfit', sans-serif;
+}
+
+.search-result-item:hover .search-result-name {
+    color: var(--primary-color, #00DEEA);
+}
+
+.search-result-category {
+    font-size: 12px;
+    color: var(--gray-color, #5a6572);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.search-no-results {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--gray-color, #5a6572);
+}
+
+.search-no-results svg {
+    margin-bottom: 16px;
+    opacity: 0.5;
+    color: var(--gray-color, #5a6572);
+}
+
+.search-no-results p {
+    margin: 0;
+    font-size: 16px;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .search-panel {
+        top: 80px;
+        width: 95%;
+    }
+
+    .search-panel-header {
+        padding: 16px 20px;
+    }
+
+    .search-panel-body {
+        padding: 16px 20px;
+    }
+
+    .search-result-image {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .search-toggle-btn {
+        padding: 14px 18px;
+    }
+}
+</style>
+
+<script>
+(function() {
+    const searchToggle = document.getElementById('search-toggle');
+    const searchOverlay = document.getElementById('search-overlay');
+    const searchClose = document.getElementById('search-close');
+    const searchInput = document.getElementById('search-input');
+    const searchResults = document.getElementById('search-results');
+    const searchLoading = document.getElementById('search-loading');
+    const searchBackdrop = document.querySelector('.search-overlay-backdrop');
+
+    let searchTimeout = null;
+
+    // Open search panel
+    searchToggle.addEventListener('click', function() {
+        searchOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        setTimeout(function() {
+            searchInput.focus();
+        }, 100);
+    });
+
+    // Close search panel
+    function closeSearch() {
+        searchOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+        searchInput.value = '';
+        searchResults.innerHTML = '';
+    }
+
+    searchClose.addEventListener('click', closeSearch);
+    searchBackdrop.addEventListener('click', closeSearch);
+
+    // Close on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && searchOverlay.classList.contains('active')) {
+            closeSearch();
+        }
+    });
+
+    // Search input handler with debounce
+    searchInput.addEventListener('input', function() {
+        const keyword = this.value.trim();
+
+        if (searchTimeout) {
+            clearTimeout(searchTimeout);
+        }
+
+        if (keyword.length < 2) {
+            searchResults.innerHTML = '';
+            return;
+        }
+
+        searchTimeout = setTimeout(function() {
+            performSearch(keyword);
+        }, 300);
+    });
+
+    function performSearch(keyword) {
+        searchLoading.style.display = 'block';
+        searchResults.innerHTML = '';
+
+        fetch('/api/search?q=' + encodeURIComponent(keyword) + '&limit=10')
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                searchLoading.style.display = 'none';
+
+                if (data.products && data.products.length > 0) {
+                    renderResults(data.products);
+                } else {
+                    renderNoResults();
+                }
+            })
+            .catch(function(error) {
+                searchLoading.style.display = 'none';
+                searchResults.innerHTML = '<div class="search-no-results"><p>Search failed. Please try again.</p></div>';
+            });
+    }
+
+    function renderResults(products) {
+        let html = '';
+
+        products.forEach(function(product) {
+            const imageUrl = product.images && product.images.length > 0
+                ? product.images[0].image_url
+                : '/static/images/placeholder.png';
+
+            html += '<a href="/product-' + product.id + '.html" class="search-result-item" onclick="closeSearchPanel()">';
+            html += '<img src="' + imageUrl + '" alt="' + product.name + '" class="search-result-image" onerror="this.src=\'/static/images/placeholder.png\'">';
+            html += '<div class="search-result-info">';
+            html += '<div class="search-result-name">' + product.name + '</div>';
+            html += '<div class="search-result-category">' + (product.category || 'General') + '</div>';
+            html += '</div>';
+            html += '</a>';
+        });
+
+        searchResults.innerHTML = html;
+    }
+
+    function renderNoResults() {
+        searchResults.innerHTML = '<div class="search-no-results">' +
+            '<svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5">' +
+            '<circle cx="11" cy="11" r="8"></circle>' +
+            '<path d="m21 21-4.35-4.35"></path>' +
+            '</svg>' +
+            '<p>No products found</p>' +
+            '</div>';
+    }
+
+    // Global function for closing after clicking result
+    window.closeSearchPanel = closeSearch;
+})();
+</script>

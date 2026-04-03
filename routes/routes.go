@@ -10,6 +10,9 @@ func SetupRoutes(r *gin.Engine) {
 	// 首页
 	r.GET("/", controllers.HomeHandler)
 
+	// 搜索API
+	r.GET("/api/search", controllers.SearchHandler)
+
 	// 产品页
 	r.GET("/products.html", controllers.ProductsHandler)
 	// 产品分类页

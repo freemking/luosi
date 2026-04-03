@@ -216,12 +216,22 @@ func GetProductsByCategoryWithPagination(category string, page, pageSize int) ([
 // GetProductByID 根据ID获取产品
 func GetProductByID(id uint) (Product, error) {
 	var product Product
-	result := DB.Preload("Images").First(&product, id)
+	result := DB.Preload("Images", func(db *gorm.DB) *gorm.DB {
+		return db.Order("`order` ASC")
+	}).First(&product, id)
 
-	// 为图片URL添加CDN前缀
+	// 为图片URL添加CDN前缀并去重
+	seen := make(map[string]bool)
+	var uniqueImages []ProductImage
 	for i := range product.Images {
 		product.Images[i].ImageURL = prependCDN(product.Images[i].ImageURL)
+		// 去重：只保留第一次出现的图片URL
+		if !seen[product.Images[i].ImageURL] {
+			seen[product.Images[i].ImageURL] = true
+			uniqueImages = append(uniqueImages, product.Images[i])
+		}
 	}
+	product.Images = uniqueImages
 
 	return product, result.Error
 }
@@ -329,4 +339,54 @@ func GetNewsCount() (int64, error) {
 	var count int64
 	result := DB.Model(&News{}).Where("status = ?", 1).Count(&count)
 	return count, result.Error
+}
+
+// SearchProducts searches products by name or description using LIKE query
+func SearchProducts(keyword string, limit int) ([]Product, error) {
+	var products []Product
+
+	if keyword == "" {
+		return products, nil
+	}
+
+	// Use LIKE query to search in name and description fields
+	searchPattern := "%" + keyword + "%"
+	query := DB.Where("name LIKE ? OR mini_description LIKE ?", searchPattern, searchPattern)
+
+	if limit > 0 {
+		query = query.Limit(limit)
+	}
+
+	result := query.Find(&products)
+	if result.Error != nil {
+		return products, result.Error
+	}
+
+	// Batch query images
+	if len(products) > 0 {
+		productIDs := make([]uint, len(products))
+		for i, p := range products {
+			productIDs[i] = p.ID
+		}
+
+		var images []ProductImage
+		DB.Select("id, product_id, image_url, `order`").
+			Where("product_id IN ?", productIDs).
+			Order("`order` ASC").
+			Find(&images)
+
+		// Add CDN prefix and group by product_id
+		imageMap := make(map[uint][]ProductImage)
+		for i := range images {
+			images[i].ImageURL = prependCDN(images[i].ImageURL)
+			imageMap[images[i].ProductID] = append(imageMap[images[i].ProductID], images[i])
+		}
+
+		// Associate images with products
+		for i := range products {
+			products[i].Images = imageMap[products[i].ID]
+		}
+	}
+
+	return products, nil
 }
