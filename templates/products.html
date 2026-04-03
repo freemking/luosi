@@ -33,13 +33,16 @@
 
     <section class="product-list">
         <div class="container">
-            <div class="category-filter">
-                <a href="/products" class="category-tag {{if eq .category ""}}active{{end}}">All</a>
-                <a href="/products?category=Blind Rivet" class="category-tag {{if eq .category "Blind Rivet"}}active{{end}}">Blind Rivet</a>
-                <a href="/products?category=Insert Nut" class="category-tag {{if eq .category "Insert Nut"}}active{{end}}">Insert Nut</a>
-                <a href="/products?category=Self Clinching Fasteners" class="category-tag {{if eq .category "Self Clinching Fasteners"}}active{{end}}">Self Clinching Fasteners</a>
-                <a href="/products?category=Other Products" class="category-tag {{if eq .category "Other Products"}}active{{end}}">Other Products</a>
-                <a href="/products?category=Tools" class="category-tag {{if eq .category "Tools"}}active{{end}}">Tools</a>
+            <div class="category-filter-wrapper">
+                <div class="category-filter-label">Browse by Category</div>
+                <div class="category-filter">
+                    <a href="/products" class="category-tag {{if eq .category ""}}active{{end}}">All</a>
+                    <a href="/products?category=Blind Rivet" class="category-tag {{if eq .category "Blind Rivet"}}active{{end}}">Blind Rivet</a>
+                    <a href="/products?category=Insert Nut" class="category-tag {{if eq .category "Insert Nut"}}active{{end}}">Insert Nut</a>
+                    <a href="/products?category=Self Clinching Fasteners" class="category-tag {{if eq .category "Self Clinching Fasteners"}}active{{end}}">Self Clinching Fasteners</a>
+                    <a href="/products?category=Other Products" class="category-tag {{if eq .category "Other Products"}}active{{end}}">Other Products</a>
+                    <a href="/products?category=Tools" class="category-tag {{if eq .category "Tools"}}active{{end}}">Tools</a>
+                </div>
             </div>
 
             <div class="products-grid">
