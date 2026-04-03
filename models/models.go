@@ -84,11 +84,11 @@ type News struct {
 
 // InitDB 初始化数据库连接
 func InitDB(dsn string) error {
-	// 配置GORM日志
+	// 配置GORM日志 - 只在出错时打印
 	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags),
 		logger.Config{
-			LogLevel: logger.Info,
+			LogLevel: logger.Warn, // 只打印警告和错误，避免启动时大量日志
 		},
 	)
 
@@ -100,7 +100,7 @@ func InitDB(dsn string) error {
 		return fmt.Errorf("failed to connect to database: %w", err)
 	}
 
-	// 自动迁移表结构
+	// 自动迁移表结构（静默执行）
 	err = db.AutoMigrate(&Product{}, &Contact{}, &ProductImage{}, &News{})
 	if err != nil {
 		return fmt.Errorf("failed to migrate database: %w", err)
