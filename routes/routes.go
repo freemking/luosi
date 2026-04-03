@@ -11,25 +11,27 @@ func SetupRoutes(r *gin.Engine) {
 	r.GET("/", controllers.HomeHandler)
 
 	// 产品页
-	r.GET("/products", controllers.ProductsHandler)
+	r.GET("/products.html", controllers.ProductsHandler)
+	// 产品分类页
+	r.GET("/products-:category", controllers.ProductsHandler)
 
 	// 产品详情页
-	r.GET("/product/:id", controllers.ProductDetailHandler)
+	r.GET("/product-:id", controllers.ProductDetailHandler)
 
 	// 新闻页
-	r.GET("/news", controllers.NewsListHandler)
+	r.GET("/news.html", controllers.NewsListHandler)
 
 	// 新闻详情页
-	r.GET("/news/:id", controllers.NewsDetailHandler)
+	r.GET("/news-:id", controllers.NewsDetailHandler)
 
 	// 关于我们
-	r.GET("/about", controllers.AboutHandler)
+	r.GET("/about.html", controllers.AboutHandler)
 
 	// 联系我们
-	r.GET("/contact", controllers.ContactHandler)
+	r.GET("/contact.html", controllers.ContactHandler)
 	// 提交联系表单
-	r.POST("/contact", controllers.ContactSubmitHandler)
+	r.POST("/contact.html", controllers.ContactSubmitHandler)
 
 	// FAQ页面
-	r.GET("/faq", controllers.FAQHandler)
+	r.GET("/faq.html", controllers.FAQHandler)
 }

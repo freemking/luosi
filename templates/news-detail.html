@@ -18,7 +18,7 @@
         <div class="container">
             <ol>
                 <li><a href="/">Home</a></li>
-                <li><a href="/news">News</a></li>
+                <li><a href="/news.html">News</a></li>
                 <li>{{if .news}}{{.news.Title}}{{else}}Article{{end}}</li>
             </ol>
         </div>
@@ -43,7 +43,7 @@
                     </div>
                     <h2 style="font-family: 'Outfit', sans-serif; color: var(--dark-color); margin-bottom: 12px; font-size: 28px;">Article Not Found</h2>
                     <p style="color: var(--gray-color); margin-bottom: 32px;">{{.error}}</p>
-                    <a href="/news" class="btn btn-primary">Back to News</a>
+                    <a href="/news.html" class="btn btn-primary">Back to News</a>
                 </div>
             </div>
             {{else if .news}}
@@ -67,7 +67,7 @@
                 </div>
 
                 <footer class="article-footer">
-                    <a href="/news" class="btn btn-outline">← Back to News</a>
+                    <a href="/news.html" class="btn btn-outline">← Back to News</a>
                 </footer>
             </article>
             {{end}}

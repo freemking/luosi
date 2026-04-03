@@ -28,8 +28,8 @@
                 <h1>Your Trusted Source for Premium Industrial Fasteners</h1>
                 <p>High-quality bolts, nuts, screws, washers and custom fastener solutions for industries worldwide. Serving global customers with DIN, BS, JIS, and ISO standard products.</p>
                 <div class="hero-buttons">
-                    <a href="/products" class="btn">Browse Products</a>
-                    <a href="/contact" class="btn btn-outline">Get a Quote</a>
+                    <a href="/products.html" class="btn">Browse Products</a>
+                    <a href="/contact.html" class="btn btn-outline">Get a Quote</a>
                 </div>
                 <div class="hero-stats">
                     <div class="hero-stat">
@@ -54,7 +54,7 @@
             <h2 class="section-title">Our Product Categories</h2>
             <p class="section-subtitle">Comprehensive range of industrial fasteners to meet your every requirement</p>
             <div class="categories-grid">
-                <a href="/products?category=Blind Rivet" class="category-card">
+                <a href="/products-Blind%20Rivet.html" class="category-card">
                     <div class="category-image" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);">
                         <svg viewBox="0 0 100 100" width="80" height="80" fill="none" stroke="#00C2CC" stroke-width="2">
                             <circle cx="50" cy="35" r="18"/>
@@ -70,7 +70,7 @@
                         <span class="category-link">Explore Products →</span>
                     </div>
                 </a>
-                <a href="/products?category=Insert Nut" class="category-card">
+                <a href="/products-Insert%20Nut.html" class="category-card">
                     <div class="category-image" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);">
                         <svg viewBox="0 0 100 100" width="80" height="80" fill="none" stroke="#00C2CC" stroke-width="2">
                             <rect x="30" y="25" width="40" height="50" rx="3"/>
@@ -87,7 +87,7 @@
                         <span class="category-link">Explore Products →</span>
                     </div>
                 </a>
-                <a href="/products?category=Self Clinching Fasteners" class="category-card">
+                <a href="/products-Self%20Clinching%20Fasteners.html" class="category-card">
                     <div class="category-image" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);">
                         <svg viewBox="0 0 100 100" width="80" height="80" fill="none" stroke="#00C2CC" stroke-width="2">
                             <rect x="25" y="40" width="50" height="8" rx="1"/>
@@ -104,7 +104,7 @@
                         <span class="category-link">Explore Products →</span>
                     </div>
                 </a>
-                <a href="/products?category=Other Products" class="category-card">
+                <a href="/products-Other%20Products.html" class="category-card">
                     <div class="category-image" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);">
                         <svg viewBox="0 0 100 100" width="80" height="80" fill="none" stroke="#00C2CC" stroke-width="2">
                             <circle cx="50" cy="50" r="25"/>
@@ -123,7 +123,7 @@
                         <span class="category-link">Explore Products →</span>
                     </div>
                 </a>
-                <a href="/products?category=Tools" class="category-card">
+                <a href="/products-Tools.html" class="category-card">
                     <div class="category-image" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);">
                         <svg viewBox="0 0 100 100" width="80" height="80" fill="none" stroke="#00C2CC" stroke-width="2">
                             <rect x="35" y="20" width="30" height="60" rx="4"/>
@@ -150,7 +150,7 @@
             <p class="section-subtitle">Explore our most popular fastener products trusted by global customers</p>
             <div class="products-grid">
                 {{range .products}}
-                <a href="/product/{{.ID}}" class="product-card">
+                <a href="/product-{{.ID}}.html" class="product-card">
                     <div class="product-image">
                         {{if gt (len .Images) 0}}
                         <img src="{{(index .Images 0).ImageURL}}" alt="{{.Name}}">
@@ -165,7 +165,7 @@
                 {{end}}
             </div>
             <div class="view-all">
-                <a href="/products" class="btn btn-outline">View All Products</a>
+                <a href="/products.html" class="btn btn-outline">View All Products</a>
             </div>
         </div>
     </section>
@@ -222,7 +222,7 @@
                             </div>
                         </div>
                     </div>
-                    <a href="/about" class="btn">Learn More About Us</a>
+                    <a href="/about.html" class="btn">Learn More About Us</a>
                 </div>
                 <div class="about-preview-visual">
                     <div class="visual-placeholder">
@@ -298,8 +298,8 @@
             <h2>Ready to Get Started?</h2>
             <p>Contact us today for a free quote and discover how SYM Fastener can support your business with high-quality products and professional service.</p>
             <div class="cta-buttons">
-                <a href="/contact" class="btn">Contact Us Now</a>
-                <a href="/products" class="btn btn-outline">Browse Catalog</a>
+                <a href="/contact.html" class="btn">Contact Us Now</a>
+                <a href="/products.html" class="btn btn-outline">Browse Catalog</a>
             </div>
         </div>
     </section>

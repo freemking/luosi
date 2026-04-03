@@ -7,6 +7,7 @@ import (
 	"fastener-pro/routes"
 	"html/template"
 	"log"
+	"net/url"
 	"reflect"
 
 	"github.com/gin-gonic/gin"
@@ -79,6 +80,9 @@ func main() {
 		},
 		"safe": func(s string) template.HTML {
 			return template.HTML(s)
+		},
+		"urlquery": func(s string) string {
+			return url.QueryEscape(s)
 		},
 	})
 

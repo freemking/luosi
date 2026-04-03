@@ -5,14 +5,22 @@ import (
 	"html/template"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
 
 // ProductsHandler 产品页处理器
 func ProductsHandler(c *gin.Context) {
-	// 获取分类参数
-	category := c.Query("category")
+	// 获取分类参数 - 优先从URL路径获取，其次从查询参数获取
+	category := c.Param("category")
+	if category == "" {
+		category = c.Query("category")
+	}
+	// Remove .html extension if present
+	if strings.HasSuffix(category, ".html") {
+		category = strings.TrimSuffix(category, ".html")
+	}
 
 	// 获取分页参数
 	pageStr := c.DefaultQuery("page", "1")
@@ -66,6 +74,12 @@ func ProductsHandler(c *gin.Context) {
 func ProductDetailHandler(c *gin.Context) {
 	// 获取产品ID
 	idStr := c.Param("id")
+
+	// Handle .html extension if present
+	if strings.HasSuffix(idStr, ".html") {
+		idStr = strings.TrimSuffix(idStr, ".html")
+	}
+
 	id, err := strconv.ParseUint(idStr, 10, 32)
 	if err != nil {
 		c.HTML(http.StatusBadRequest, "product-detail.html", gin.H{

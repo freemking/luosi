@@ -4,6 +4,7 @@ import (
 	"fastener-pro/models"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -61,11 +62,27 @@ func NewsListHandler(c *gin.Context) {
 func NewsDetailHandler(c *gin.Context) {
 	// 获取新闻ID
 	idStr := c.Param("id")
+
+	// Gin automatically strips the .html in this route pattern, but handle it if present
+	if strings.HasSuffix(idStr, ".html") {
+		idStr = strings.TrimSuffix(idStr, ".html")
+	}
+	idStr = strings.TrimSpace(idStr)
+
+	if idStr == "" {
+		c.HTML(http.StatusBadRequest, "news-detail.html", gin.H{
+			"title":  "News | Yuanmao Fastener",
+			"error":  "Invalid news ID: parameter is empty",
+			"active": "news",
+		})
+		return
+	}
+
 	id, err := strconv.ParseUint(idStr, 10, 32)
 	if err != nil {
 		c.HTML(http.StatusBadRequest, "news-detail.html", gin.H{
 			"title":  "News | Yuanmao Fastener",
-			"error":  "Invalid news ID",
+			"error":  "Invalid news ID: '" + idStr + "' - " + err.Error(),
 			"active": "news",
 		})
 		return

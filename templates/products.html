@@ -36,18 +36,18 @@
             <div class="category-filter-wrapper">
                 <div class="category-filter-label">Browse by Category</div>
                 <div class="category-filter">
-                    <a href="/products" class="category-tag {{if eq .category ""}}active{{end}}">All</a>
-                    <a href="/products?category=Blind Rivet" class="category-tag {{if eq .category "Blind Rivet"}}active{{end}}">Blind Rivet</a>
-                    <a href="/products?category=Insert Nut" class="category-tag {{if eq .category "Insert Nut"}}active{{end}}">Insert Nut</a>
-                    <a href="/products?category=Self Clinching Fasteners" class="category-tag {{if eq .category "Self Clinching Fasteners"}}active{{end}}">Self Clinching Fasteners</a>
-                    <a href="/products?category=Other Products" class="category-tag {{if eq .category "Other Products"}}active{{end}}">Other Products</a>
-                    <a href="/products?category=Tools" class="category-tag {{if eq .category "Tools"}}active{{end}}">Tools</a>
+                    <a href="/products.html" class="category-tag {{if eq .category ""}}active{{end}}">All</a>
+                    <a href="/products-Blind%20Rivet.html" class="category-tag {{if eq .category "Blind Rivet"}}active{{end}}">Blind Rivet</a>
+                    <a href="/products-Insert%20Nut.html" class="category-tag {{if eq .category "Insert Nut"}}active{{end}}">Insert Nut</a>
+                    <a href="/products-Self%20Clinching%20Fasteners.html" class="category-tag {{if eq .category "Self Clinching Fasteners"}}active{{end}}">Self Clinching Fasteners</a>
+                    <a href="/products-Other%20Products.html" class="category-tag {{if eq .category "Other Products"}}active{{end}}">Other Products</a>
+                    <a href="/products-Tools.html" class="category-tag {{if eq .category "Tools"}}active{{end}}">Tools</a>
                 </div>
             </div>
 
             <div class="products-grid">
                 {{range .products}}
-                <a href="/product/{{.ID}}" class="product-card">
+                <a href="/product-{{.ID}}.html" class="product-card">
                     <div class="product-image">
                         {{if gt (len .Images) 0}}
                         <img src="{{(index .Images 0).ImageURL}}" alt="{{.Name}}">
@@ -67,21 +67,37 @@
             <div class="pagination">
                 <div class="pagination-wrapper">
                     {{if gt $.page 1}}
-                    <a href="/products?category={{$.category}}&page={{sub $.page 1}}&pageSize={{$.pageSize}}" class="pagination-btn">← Prev</a>
+                    {{if eq $.category ""}}
+                    <a href="/products.html?page={{sub $.page 1}}&pageSize={{$.pageSize}}" class="pagination-btn">← Prev</a>
+                    {{else}}
+                    <a href="/products-{{urlquery $.category}}.html?page={{sub $.page 1}}&pageSize={{$.pageSize}}" class="pagination-btn">← Prev</a>
+                    {{end}}
                     {{else}}
                     <span class="pagination-btn disabled">← Prev</span>
                     {{end}}
 
                     {{range $i := seq 1 .pages}}
                         {{if eq $i $.page}}
-                        <a href="/products?category={{$.category}}&page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn active">{{$i}}</a>
+                        {{if eq $.category ""}}
+                        <a href="/products.html?page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn active">{{$i}}</a>
                         {{else}}
-                        <a href="/products?category={{$.category}}&page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn">{{$i}}</a>
+                        <a href="/products-{{urlquery $.category}}.html?page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn active">{{$i}}</a>
+                        {{end}}
+                        {{else}}
+                        {{if eq $.category ""}}
+                        <a href="/products.html?page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn">{{$i}}</a>
+                        {{else}}
+                        <a href="/products-{{urlquery $.category}}.html?page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn">{{$i}}</a>
+                        {{end}}
                         {{end}}
                     {{end}}
 
                     {{if lt $.page $.pages}}
-                    <a href="/products?category={{$.category}}&page={{add $.page 1}}&pageSize={{$.pageSize}}" class="pagination-btn">Next →</a>
+                    {{if eq $.category ""}}
+                    <a href="/products.html?page={{add $.page 1}}&pageSize={{$.pageSize}}" class="pagination-btn">Next →</a>
+                    {{else}}
+                    <a href="/products-{{urlquery $.category}}.html?page={{add $.page 1}}&pageSize={{$.pageSize}}" class="pagination-btn">Next →</a>
+                    {{end}}
                     {{else}}
                     <span class="pagination-btn disabled">Next →</span>
                     {{end}}
