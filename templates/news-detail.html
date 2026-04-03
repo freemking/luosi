@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{if .news}}{{.news.Title}} - News | Fastener Pro{{else}}News | Fastener Pro{{end}}</title>
-    <meta name="description" content="{{if .news}}{{.news.Summary}}{{else}}News article{{end}}">
-    <meta name="keywords" content="fastener news, industrial fastener, bolt industry news">
-    <meta property="og:title" content="{{if .news}}{{.news.Title}} - News | Fastener Pro{{else}}News | Fastener Pro{{end}}">
-    <meta property="og:description" content="{{if .news}}{{.news.Summary}}{{else}}News article{{end}}">
+    <title>{{if .news}}{{.news.Title}} | Yuanmao Fastener Blog{{else}}News Article | Yuanmao Fastener{{end}}</title>
+    <meta name="description" content="{{if .news}}{{.news.Summary}} - Read more fastener industry insights from Yuanmao.{{else}}Fastener industry news and insights from Yuanmao.{{end}}">
+    <meta name="keywords" content="{{if .news}}{{.news.Title}}, fastener news, fastener industry, Yuanmao blog{{else}}fastener news, fastener industry, Yuanmao blog{{end}}">
+    <meta property="og:title" content="{{if .news}}{{.news.Title}} | Yuanmao Blog{{else}}News | Yuanmao{{end}}">
+    <meta property="og:description" content="{{if .news}}{{.news.Summary}}{{else}}Fastener industry news{{end}}">
     <meta property="og:type" content="article">
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
