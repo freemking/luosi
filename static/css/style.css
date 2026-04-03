@@ -22,6 +22,7 @@
     --gray-color: #5a6572;
     --gray-light: #8b95a3;
     --border-color: #d1d9e0;
+    --black-color: #000000;
     --steel-gradient: linear-gradient(135deg, #2d3e50 0%, #1e3a5f 50%, #0f2538 100%);
     --metallic-shine: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0) 100%);
     --shadow-sm: 0 2px 4px rgba(21, 28, 36, 0.08);
@@ -176,11 +177,11 @@ header {
 }
 
 .header-top {
-    background: var(--steel-gradient);
-    color: white;
-    padding: 10px 0;
-    font-size: 13px;
-    letter-spacing: 0.3px;
+    background: var(--black-color);
+    color: rgba(255, 255, 255, 0.9);
+    padding: 12px 0;
+    font-size: 14px;
+    letter-spacing: 0.5px;
     position: relative;
 }
 
@@ -191,7 +192,7 @@ header {
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
 }
 
 .header-top .container {
@@ -204,7 +205,7 @@ header {
 
 .header-contact {
     display: flex;
-    gap: 28px;
+    gap: 32px;
     flex-wrap: wrap;
 }
 
@@ -220,12 +221,13 @@ header {
 }
 
 .header-contact a {
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.95);
     transition: color var(--transition-fast);
+    font-weight: 500;
 }
 
 .header-contact a:hover {
-    color: var(--accent-light);
+    color: #4da8da;
 }
 
 .header-main {
@@ -931,8 +933,8 @@ section {
 }
 
 footer {
-    background: var(--steel-gradient);
-    color: white;
+    background: var(--black-color);
+    color: rgba(255, 255, 255, 0.85);
     padding: 80px 0 24px;
     position: relative;
 }
@@ -944,7 +946,7 @@ footer::before {
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
 }
 
 .footer-content {
@@ -956,19 +958,19 @@ footer::before {
 
 .footer-col h3 {
     font-family: 'Outfit', sans-serif;
-    font-size: 16px;
+    font-size: 15px;
     margin-bottom: 24px;
-    color: white;
-    font-weight: 600;
-    letter-spacing: 1px;
+    color: #ffffff;
+    font-weight: 700;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
 }
 
 .footer-col p {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.75);
     margin-bottom: 16px;
     font-size: 14px;
-    line-height: 1.7;
+    line-height: 1.8;
 }
 
 .footer-col ul {
@@ -980,13 +982,13 @@ footer::before {
 }
 
 .footer-col ul li a {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.75);
     transition: all var(--transition-fast);
     font-size: 14px;
 }
 
 .footer-col ul li a:hover {
-    color: var(--accent-light);
+    color: #4da8da;
     padding-left: 6px;
 }
 
@@ -996,12 +998,26 @@ footer::before {
     align-items: flex-start;
 }
 
+.contact-info li span:first-child {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.contact-info a {
+    color: rgba(255, 255, 255, 0.85);
+    transition: color var(--transition-fast);
+}
+
+.contact-info a:hover {
+    color: #4da8da;
+}
+
 .footer-bottom {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding-top: 24px;
     text-align: center;
     color: rgba(255, 255, 255, 0.5);
     font-size: 13px;
+    letter-spacing: 0.3px;
 }
 
 .page-header {
@@ -1820,6 +1836,14 @@ footer::before {
     box-shadow: var(--shadow-md);
 }
 
+.social-link.social-whatsapp:hover {
+    background: #25D366;
+}
+
+.social-link svg {
+    display: block;
+}
+
 .contact-form {
     background: linear-gradient(135deg, var(--light-color) 0%, var(--light-secondary) 100%);
     padding: 40px;
@@ -2149,8 +2173,8 @@ footer::before {
     }
     
     .header-top {
-        font-size: 12px;
-        padding: 8px 0;
+        font-size: 13px;
+        padding: 10px 0;
     }
     
     .header-contact {
