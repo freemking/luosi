@@ -1,5 +1,5 @@
-# robots.txt for Yuanmao Fastener / SYM Fastener
-# https://www.nexfasten.com/
+# robots.txt for SYM Fastener
+# https://nexfasten.com/
 
 User-agent: *
 Allow: /
@@ -15,7 +15,7 @@ Allow: /static/js/
 Allow: /static/images/
 
 # Sitemap location
-Sitemap: https://www.nexfasten.com/sitemap.xml
+Sitemap: https://nexfasten.com/sitemap.xml
 
 # Crawl delay (optional, be nice to the server)
 Crawl-delay: 1
