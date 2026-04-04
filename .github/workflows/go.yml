@@ -50,11 +50,14 @@ jobs:
           # 3. 上传二进制文件
           scp -o StrictHostKeyChecking=no -P ${{ secrets.SERVER_PORT }} app ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_DIR }}/
           
-          # 4. 上传 static
+          # 4. 上传SEO文件
+          scp -o StrictHostKeyChecking=no -P ${{ secrets.SERVER_PORT }} robots.txt sitemap.xml ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_DIR }}/
+
+          # 5. 上传 static
           scp -o StrictHostKeyChecking=no -P ${{ secrets.SERVER_PORT }} -r static ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_DIR }}/
           
-          # 5. 上传 templates
+          # 6. 上传 templates
           scp -o StrictHostKeyChecking=no -P ${{ secrets.SERVER_PORT }} -r templates ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_DIR }}/
           
-          # 6. 授权 + 重启服务（加了 sudo！）+ 删除重命名的二进制文件
+          # 7. 授权 + 重启服务（加了 sudo！）+ 删除重命名的二进制文件
           ssh -p ${{ secrets.SERVER_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd ${{ secrets.DEPLOY_DIR }} && chmod +x app && sudo systemctl restart go-luosi && rm -rf ${{ secrets.DEPLOY_DIR }}/app_old"
