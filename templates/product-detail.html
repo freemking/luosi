@@ -3,6 +3,7 @@
 <head>
     {{template "google-analytics.html" .}}
     <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{if .product}}{{.product.Name}} | {{.product.Category}} | Yuanmao Fastener{{else}}Product Details | Yuanmao Fastener{{end}}</title>
     <meta name="description" content="{{if .product}}{{.product.Name}} - High quality {{.product.Category}} from Yuanmao. {{if .product.Material}}{{.product.Material}} material.{{end}} {{if .product.Standard}}{{.product.Standard}} standard.{{end}} Factory direct, competitive pricing, fast delivery.{{else}}Product details - Yuanmao Fastener{{end}}">
