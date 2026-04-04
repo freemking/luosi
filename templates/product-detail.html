@@ -11,6 +11,7 @@
     <meta property="og:type" content="product">
     <link rel="canonical" href="https://www.yourdomain.com/product/{{if .product}}{{.product.ID}}{{end}}">
     <link rel="stylesheet" href="/static/css/style.css">
+    {{template "google-analytics.html" .}}
 </head>
 <body>
     {{template "header.html" .}}

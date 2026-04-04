@@ -10,6 +10,7 @@
     <meta property="og:description" content="{{if .news}}{{.news.Summary}}{{else}}Fastener industry news{{end}}">
     <meta property="og:type" content="article">
     <link rel="stylesheet" href="/static/css/style.css">
+    {{template "google-analytics.html" .}}
 </head>
 <body>
     {{template "header.html" .}}
