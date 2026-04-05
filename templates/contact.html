@@ -25,8 +25,8 @@
         </div>
         {{end}}
         <div class="container">
-            <h1>Contact Us</h1>
-            <p>We're here to help. Send us your inquiry and we'll respond within 24 hours.</p>
+            <h1 id="page-header-title">{{if .pageHeaderAd.Title}}{{.pageHeaderAd.Title}}{{else}}Contact Us{{end}}</h1>
+            <p id="page-header-subtitle">{{if .pageHeaderAd.Subtitle}}{{.pageHeaderAd.Subtitle}}{{else}}We're here to help. Send us your inquiry and we'll respond within 24 hours.{{end}}</p>
         </div>
     </div>
 

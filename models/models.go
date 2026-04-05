@@ -100,6 +100,7 @@ type AdPosition struct {
 
 // Ad 广告模型
 type Ad struct {
+<<<<<<< HEAD
 	ID         uint           `json:"id" gorm:"primaryKey"`
 	PositionID uint           `json:"position_id" gorm:"not null;index"`
 	Title      string         `json:"title" gorm:"size:255"`
@@ -112,6 +113,21 @@ type Ad struct {
 	CreatedAt  time.Time      `json:"created_at" gorm:"autoCreateTime"`
 	UpdatedAt  time.Time      `json:"updated_at" gorm:"autoUpdateTime"`
 	DeletedAt  gorm.DeletedAt `json:"-" gorm:"index"`
+=======
+	ID          uint           `json:"id" gorm:"primaryKey"`
+	PositionID  uint           `json:"position_id" gorm:"not null;index"`
+	Title       string         `json:"title" gorm:"size:255"`
+	Subtitle    string         `json:"subtitle" gorm:"size:500"`
+	ImageURL    string         `json:"image_url" gorm:"size:255;not null"`
+	LinkURL     string         `json:"link_url" gorm:"size:255"`
+	Order       int            `json:"order" gorm:"default:0"`
+	Status      int            `json:"status" gorm:"default:1"`
+	StartTime   *time.Time     `json:"start_time"`
+	EndTime     *time.Time     `json:"end_time"`
+	CreatedAt   time.Time      `json:"created_at" gorm:"autoCreateTime"`
+	UpdatedAt   time.Time      `json:"updated_at" gorm:"autoUpdateTime"`
+	DeletedAt   gorm.DeletedAt `json:"-" gorm:"index"`
+>>>>>>> 69e741f (新增广告)
 }
 
 // InitDB 初始化数据库连接

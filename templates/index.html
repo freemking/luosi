@@ -48,8 +48,8 @@
                     </svg>
                     <span>Trusted by 1000+ Global Customers</span>
                 </div>
-                <h1>Your Trusted Source for Premium Industrial Fasteners</h1>
-                <p>High-quality bolts, nuts, screws, washers and custom fastener solutions for industries worldwide. Serving global customers with DIN, BS, JIS, and ISO standard products.</p>
+                <h1 id="hero-title">{{if .heroAds}}{{if (index .heroAds 0).Title}}{{(index .heroAds 0).Title}}{{else}}Your Trusted Source for Premium Industrial Fasteners{{end}}{{else}}Your Trusted Source for Premium Industrial Fasteners{{end}}</h1>
+                <p id="hero-subtitle">{{if .heroAds}}{{if (index .heroAds 0).Subtitle}}{{(index .heroAds 0).Subtitle}}{{else}}High-quality bolts, nuts, screws, washers and custom fastener solutions for industries worldwide. Serving global customers with DIN, BS, JIS, and ISO standard products.{{end}}{{else}}High-quality bolts, nuts, screws, washers and custom fastener solutions for industries worldwide. Serving global customers with DIN, BS, JIS, and ISO standard products.{{end}}</p>
                 <div class="hero-buttons">
                     <a href="/products.html" class="btn">Browse Products</a>
                     <a href="/contact.html" class="btn btn-outline">Get a Quote</a>
