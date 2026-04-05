@@ -13,7 +13,7 @@
     <meta property="og:description" content="Leading China fastener manufacturer. Blind rivets, insert nuts, self-clinching fasteners. ISO, DIN, JIS standards. OEM/ODM available.">
     <meta property="og:type" content="website">
     <link rel="canonical" href="https://www.yourdomain.com/">
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css?2026040509">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/renderers/CSS2DRenderer.js"></script>
@@ -23,6 +23,23 @@
     {{template "header.html" .}}
 
     <section class="hero">
+        {{if .heroAds}}
+        <div class="hero-slider">
+            {{range $index, $ad := .heroAds}}
+            <div class="slide {{if eq $index 0}}active{{end}}">
+                <img src="{{$ad.ImageURL}}" alt="{{$ad.Title}}">
+                <div class="slide-overlay"></div>
+            </div>
+            {{end}}
+        </div>
+        {{if gt (len .heroAds) 1}}
+        <div class="hero-dots">
+            {{range $index, $ad := .heroAds}}
+            <span class="dot {{if eq $index 0}}active{{end}}" data-index="{{$index}}"></span>
+            {{end}}
+        </div>
+        {{end}}
+        {{end}}
         <div class="container">
             <div class="hero-content">
                 <div class="hero-badge">
@@ -1626,6 +1643,48 @@
             });
         });
     })();
+
+    {{if gt (len .heroAds) 1}}
+    // Hero Slider
+    (function() {
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.hero-slider .slide');
+        const dots = document.querySelectorAll('.hero-dots .dot');
+        const totalSlides = slides.length;
+        let interval;
+
+        function goToSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            currentSlide = (index + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            goToSlide(currentSlide + 1);
+        }
+
+        // Auto play
+        function startAutoPlay() {
+            interval = setInterval(nextSlide, 5000);
+        }
+
+        // Click dot
+        dots.forEach(function(dot, index) {
+            dot.addEventListener('click', function() {
+                goToSlide(index);
+                clearInterval(interval);
+                startAutoPlay();
+            });
+        });
+
+        // Start
+        if (totalSlides > 1) {
+            startAutoPlay();
+        }
+    })();
+    {{end}}
     </script>
 </body>
 </html>

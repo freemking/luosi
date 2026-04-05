@@ -12,12 +12,18 @@
     <meta property="og:description" content="Fastener industry news, market trends, exhibition info, and technical insights from Yuanmao.">
     <meta property="og:type" content="website">
     <link rel="canonical" href="https://www.yourdomain.com/news">
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css?2026040509">
 </head>
 <body>
     {{template "header.html" .}}
 
     <div class="page-header">
+        {{if .pageHeaderAd}}
+        <div class="page-header-bg">
+            <img src="{{.pageHeaderAd.ImageURL}}" alt="{{.pageHeaderAd.Title}}">
+            <div class="bg-overlay"></div>
+        </div>
+        {{end}}
         <div class="container">
             <h1>Industry News</h1>
             <p>Exhibitions, market insights, and innovations shaping the fastener industry</p>

@@ -9,17 +9,33 @@ import (
 
 // AboutHandler 关于我们处理器
 func AboutHandler(c *gin.Context) {
+	// 获取page header广告
+	pageHeaderAd, _ := models.GetAdsByPositionCode("about")
+	var firstAd *models.Ad
+	if len(pageHeaderAd) > 0 {
+		firstAd = &pageHeaderAd[0]
+	}
+
 	c.HTML(200, "about.html", gin.H{
-		"title":  "About Us - Professional Fastener Manufacturer | Yuanmao Fastener",
-		"active": "about",
+		"title":         "About Us - Professional Fastener Manufacturer | Yuanmao Fastener",
+		"pageHeaderAd":  firstAd,
+		"active":        "about",
 	})
 }
 
 // ContactHandler 联系我们处理器
 func ContactHandler(c *gin.Context) {
+	// 获取page header广告
+	pageHeaderAd, _ := models.GetAdsByPositionCode("contact")
+	var firstAd *models.Ad
+	if len(pageHeaderAd) > 0 {
+		firstAd = &pageHeaderAd[0]
+	}
+
 	c.HTML(200, "contact.html", gin.H{
-		"title":  "Contact Us - Yuanmao Fastener | Get Quote for Industrial Fasteners",
-		"active": "contact",
+		"title":         "Contact Us - Yuanmao Fastener | Get Quote for Industrial Fasteners",
+		"pageHeaderAd":  firstAd,
+		"active":        "contact",
 	})
 }
 
@@ -86,8 +102,16 @@ func ContactSubmitHandler(c *gin.Context) {
 
 // FAQHandler FAQ页面处理器
 func FAQHandler(c *gin.Context) {
+	// 获取page header广告
+	pageHeaderAd, _ := models.GetAdsByPositionCode("faq")
+	var firstAd *models.Ad
+	if len(pageHeaderAd) > 0 {
+		firstAd = &pageHeaderAd[0]
+	}
+
 	c.HTML(200, "faq.html", gin.H{
-		"title":  "FAQ - Yuanmao Fastener | Frequently Asked Questions",
-		"active": "faq",
+		"title":         "FAQ - Yuanmao Fastener | Frequently Asked Questions",
+		"pageHeaderAd":  firstAd,
+		"active":        "faq",
 	})
 }

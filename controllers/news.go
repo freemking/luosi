@@ -47,14 +47,22 @@ func NewsListHandler(c *gin.Context) {
 		pages++
 	}
 
+	// 获取page header广告
+	pageHeaderAd, _ := models.GetAdsByPositionCode("news")
+	var firstAd *models.Ad
+	if len(pageHeaderAd) > 0 {
+		firstAd = &pageHeaderAd[0]
+	}
+
 	c.HTML(200, "news.html", gin.H{
-		"title":    "News - Industrial Fastener Industry Updates",
-		"newsList": newsList,
-		"page":     page,
-		"pageSize": pageSize,
-		"total":    total,
-		"pages":    pages,
-		"active":   "news",
+		"title":         "News - Industrial Fastener Industry Updates",
+		"newsList":      newsList,
+		"page":          page,
+		"pageSize":      pageSize,
+		"total":         total,
+		"pages":         pages,
+		"pageHeaderAd":  firstAd,
+		"active":        "news",
 	})
 }
 

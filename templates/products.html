@@ -12,12 +12,18 @@
     <meta property="og:description" content="Browse our complete fastener catalog: blind rivets, insert nuts, self-clinching fasteners. DIN, ISO, JIS standards available.">
     <meta property="og:type" content="website">
     <link rel="canonical" href="https://www.yourdomain.com/products">
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css?2026040509">
 </head>
 <body>
     {{template "header.html" .}}
 
     <div class="page-header">
+        {{if .pageHeaderAd}}
+        <div class="page-header-bg">
+            <img src="{{.pageHeaderAd.ImageURL}}" alt="{{.pageHeaderAd.Title}}">
+            <div class="bg-overlay"></div>
+        </div>
+        {{end}}
         <div class="container">
             <h1 id="page-header-title">Our Products</h1>
             <p id="page-header-subtitle">Comprehensive selection of high-quality industrial fasteners</p>

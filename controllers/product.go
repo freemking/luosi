@@ -58,15 +58,23 @@ func ProductsHandler(c *gin.Context) {
 		pages++
 	}
 
+	// 获取page header广告
+	pageHeaderAd, _ := models.GetAdsByPositionCode("products")
+	var firstAd *models.Ad
+	if len(pageHeaderAd) > 0 {
+		firstAd = &pageHeaderAd[0]
+	}
+
 	c.HTML(200, "products.html", gin.H{
-		"title":    "Our Products - Industrial Fasteners, Bolts, Nuts, Screws | Yuanmao Fastener",
-		"products": products,
-		"category": category,
-		"page":     page,
-		"pageSize": pageSize,
-		"total":    total,
-		"pages":    pages,
-		"active":   "products",
+		"title":         "Our Products - Industrial Fasteners, Bolts, Nuts, Screws | Yuanmao Fastener",
+		"products":      products,
+		"category":      category,
+		"page":          page,
+		"pageSize":      pageSize,
+		"total":         total,
+		"pages":         pages,
+		"pageHeaderAd":  firstAd,
+		"active":        "products",
 	})
 }
 

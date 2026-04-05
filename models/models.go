@@ -50,11 +50,12 @@ type Product struct {
 
 // ProductImage 产品图片模型
 type ProductImage struct {
-	ID        uint      `json:"id" gorm:"primaryKey"`
-	ProductID uint      `json:"product_id" gorm:"not null"`
-	ImageURL  string    `json:"image_url" gorm:"size:255;not null"`
-	Order     int       `json:"order" gorm:"default:0"`
-	CreatedAt time.Time `json:"created_at" gorm:"autoCreateTime"`
+	ID        uint           `json:"id" gorm:"primaryKey"`
+	ProductID uint           `json:"product_id" gorm:"not null"`
+	ImageURL  string         `json:"image_url" gorm:"size:255;not null"`
+	Order     int            `json:"order" gorm:"default:0"`
+	CreatedAt time.Time      `json:"created_at" gorm:"autoCreateTime"`
+	DeletedAt gorm.DeletedAt `json:"-" gorm:"index"`
 }
 
 // Contact 联系表单模型
@@ -82,6 +83,37 @@ type News struct {
 	UpdatedAt   time.Time `json:"updated_at" gorm:"autoUpdateTime"`
 }
 
+// AdPosition 广告位模型
+type AdPosition struct {
+	ID          uint           `json:"id" gorm:"primaryKey"`
+	Code        string         `json:"code" gorm:"size:50;not null"`
+	Name        string         `json:"name" gorm:"size:100;not null"`
+	Description string         `json:"description" gorm:"size:255"`
+	Width       int            `json:"width"`
+	Height      int            `json:"height"`
+	Status      int            `json:"status" gorm:"default:1"`
+	CreatedAt   time.Time      `json:"created_at" gorm:"autoCreateTime"`
+	UpdatedAt   time.Time      `json:"updated_at" gorm:"autoUpdateTime"`
+	DeletedAt   gorm.DeletedAt `json:"-" gorm:"index"`
+	Ads         []Ad           `json:"ads" gorm:"foreignKey:PositionID"`
+}
+
+// Ad 广告模型
+type Ad struct {
+	ID         uint           `json:"id" gorm:"primaryKey"`
+	PositionID uint           `json:"position_id" gorm:"not null;index"`
+	Title      string         `json:"title" gorm:"size:255"`
+	ImageURL   string         `json:"image_url" gorm:"size:255;not null"`
+	LinkURL    string         `json:"link_url" gorm:"size:255"`
+	Order      int            `json:"order" gorm:"default:0"`
+	Status     int            `json:"status" gorm:"default:1"`
+	StartTime  *time.Time     `json:"start_time"`
+	EndTime    *time.Time     `json:"end_time"`
+	CreatedAt  time.Time      `json:"created_at" gorm:"autoCreateTime"`
+	UpdatedAt  time.Time      `json:"updated_at" gorm:"autoUpdateTime"`
+	DeletedAt  gorm.DeletedAt `json:"-" gorm:"index"`
+}
+
 // InitDB 初始化数据库连接
 func InitDB(dsn string) error {
 	// 配置GORM日志 - 只在出错时打印
@@ -101,7 +133,9 @@ func InitDB(dsn string) error {
 	}
 
 	// 自动迁移表结构（静默执行）
+	// Note: AdPosition and Ad tables need to be created manually due to index migration issue
 	err = db.AutoMigrate(&Product{}, &Contact{}, &ProductImage{}, &News{})
+	// err = db.AutoMigrate(&Product{}, &Contact{}, &ProductImage{}, &News{}, &AdPosition{}, &Ad{})
 	if err != nil {
 		return fmt.Errorf("failed to migrate database: %w", err)
 	}
@@ -145,9 +179,13 @@ func GetProductsWithPagination(page, pageSize int) ([]Product, int64, error) {
 			Order("`order` ASC").
 			Find(&images)
 
-		// 为图片URL添加CDN前缀并按product_id分组
+		// 为图片URL添加CDN前缀并按product_id分组，过滤掉空图片
 		imageMap := make(map[uint][]ProductImage)
 		for i := range images {
+			// 跳过空的图片URL（已删除的图片）
+			if images[i].ImageURL == "" {
+				continue
+			}
 			images[i].ImageURL = prependCDN(images[i].ImageURL)
 			imageMap[images[i].ProductID] = append(imageMap[images[i].ProductID], images[i])
 		}
@@ -197,9 +235,13 @@ func GetProductsByCategoryWithPagination(category string, page, pageSize int) ([
 			Order("`order` ASC").
 			Find(&images)
 
-		// 为图片URL添加CDN前缀并按product_id分组
+		// 为图片URL添加CDN前缀并按product_id分组，过滤掉空图片
 		imageMap := make(map[uint][]ProductImage)
 		for i := range images {
+			// 跳过空的图片URL（已删除的图片）
+			if images[i].ImageURL == "" {
+				continue
+			}
 			images[i].ImageURL = prependCDN(images[i].ImageURL)
 			imageMap[images[i].ProductID] = append(imageMap[images[i].ProductID], images[i])
 		}
@@ -220,10 +262,14 @@ func GetProductByID(id uint) (Product, error) {
 		return db.Order("`order` ASC")
 	}).First(&product, id)
 
-	// 为图片URL添加CDN前缀并去重
+	// 为图片URL添加CDN前缀并去重，过滤掉空图片
 	seen := make(map[string]bool)
 	var uniqueImages []ProductImage
 	for i := range product.Images {
+		// 跳过空的图片URL（已删除的图片）
+		if product.Images[i].ImageURL == "" {
+			continue
+		}
 		product.Images[i].ImageURL = prependCDN(product.Images[i].ImageURL)
 		// 去重：只保留第一次出现的图片URL
 		if !seen[product.Images[i].ImageURL] {
@@ -375,9 +421,13 @@ func SearchProducts(keyword string, limit int) ([]Product, error) {
 			Order("`order` ASC").
 			Find(&images)
 
-		// Add CDN prefix and group by product_id
+		// Add CDN prefix and group by product_id, filter out empty images
 		imageMap := make(map[uint][]ProductImage)
 		for i := range images {
+			// Skip empty image URLs (deleted images)
+			if images[i].ImageURL == "" {
+				continue
+			}
 			images[i].ImageURL = prependCDN(images[i].ImageURL)
 			imageMap[images[i].ProductID] = append(imageMap[images[i].ProductID], images[i])
 		}
@@ -389,4 +439,27 @@ func SearchProducts(keyword string, limit int) ([]Product, error) {
 	}
 
 	return products, nil
+}
+
+// GetAdsByPositionCode 根据广告位代码获取广告列表
+func GetAdsByPositionCode(code string) ([]Ad, error) {
+	var position AdPosition
+	result := DB.Where("code = ? AND status = 1", code).First(&position)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	var ads []Ad
+	now := time.Now()
+	result = DB.Where("position_id = ? AND status = 1", position.ID).
+		Where("(start_time IS NULL OR start_time <= ?)", now).
+		Where("(end_time IS NULL OR end_time >= ?)", now).
+		Order("`order` ASC").
+		Find(&ads)
+
+	for i := range ads {
+		ads[i].ImageURL = prependCDN(ads[i].ImageURL)
+	}
+
+	return ads, result.Error
 }
