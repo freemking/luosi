@@ -30,41 +30,14 @@
                         <div class="dropdown-menu">
                             <div class="dropdown-container">
                                 <div class="dropdown-categories">
-                                    <a href="/products-Blind%20Rivet.html" class="dropdown-item">
-                                        <span class="dropdown-icon">🔩</span>
+                                    {{range .categories}}
+                                    <a href="/products-{{.Name}}.html" class="dropdown-item">
+                                        <span class="dropdown-icon">{{if .Icon}}<img src="{{.Icon}}" alt="{{.Name}}" style="width:24px;height:24px;object-fit:contain;">{{else}}🔩{{end}}</span>
                                         <div class="dropdown-content">
-                                            <span class="dropdown-title">Blind Rivet</span>
-                                            <span class="dropdown-desc">Open type, closed type, multi-grip rivets</span>
+                                            <span class="dropdown-title">{{.Name}}</span>
                                         </div>
                                     </a>
-                                    <a href="/products-Insert%20Nut.html" class="dropdown-item">
-                                        <span class="dropdown-icon">🔧</span>
-                                        <div class="dropdown-content">
-                                            <span class="dropdown-title">Insert Nut</span>
-                                            <span class="dropdown-desc">Threaded inserts for various applications</span>
-                                        </div>
-                                    </a>
-                                    <a href="/products-Self%20Clinching%20Fasteners.html" class="dropdown-item">
-                                        <span class="dropdown-icon">⚙️</span>
-                                        <div class="dropdown-content">
-                                            <span class="dropdown-title">Self Clinching Fasteners</span>
-                                            <span class="dropdown-desc">Nuts, studs, standoffs for metal sheets</span>
-                                        </div>
-                                    </a>
-                                    <a href="/products-Other%20Products.html" class="dropdown-item">
-                                        <span class="dropdown-icon">📦</span>
-                                        <div class="dropdown-content">
-                                            <span class="dropdown-title">Other Products</span>
-                                            <span class="dropdown-desc">Custom fasteners and special parts</span>
-                                        </div>
-                                    </a>
-                                    <a href="/products-Tools.html" class="dropdown-item">
-                                        <span class="dropdown-icon">🛠️</span>
-                                        <div class="dropdown-content">
-                                            <span class="dropdown-title">Tools</span>
-                                            <span class="dropdown-desc">Rivet guns, installation tools</span>
-                                        </div>
-                                    </a>
+                                    {{end}}
                                 </div>
                                 <div class="dropdown-footer">
                                     <a href="/products.html" class="dropdown-view-all">View All Products →</a>

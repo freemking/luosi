@@ -19,6 +19,7 @@ func AboutHandler(c *gin.Context) {
 	c.HTML(200, "about.html", gin.H{
 		"title":         "About Us - Professional Fastener Manufacturer | Yuanmao Fastener",
 		"pageHeaderAd":  firstAd,
+		"categories":    models.GetCategories(),
 		"active":        "about",
 	})
 }
@@ -35,6 +36,7 @@ func ContactHandler(c *gin.Context) {
 	c.HTML(200, "contact.html", gin.H{
 		"title":         "Contact Us - Yuanmao Fastener | Get Quote for Industrial Fasteners",
 		"pageHeaderAd":  firstAd,
+		"categories":    models.GetCategories(),
 		"active":        "contact",
 	})
 }
@@ -52,15 +54,16 @@ func ContactSubmitHandler(c *gin.Context) {
 	// 验证必填字段
 	if name == "" || email == "" || message == "" {
 		c.HTML(http.StatusBadRequest, "contact.html", gin.H{
-			"title":   "Contact Us - Yuanmao Fastener | Get Quote for Industrial Fasteners",
-			"error":   "Name, email, and message are required",
-			"name":    name,
-			"email":   email,
-			"phone":   phone,
-			"company": company,
-			"product": product,
-			"message": message,
-			"active":  "contact",
+			"title":      "Contact Us - Yuanmao Fastener | Get Quote for Industrial Fasteners",
+			"error":      "Name, email, and message are required",
+			"name":       name,
+			"email":      email,
+			"phone":      phone,
+			"company":    company,
+			"product":    product,
+			"message":    message,
+			"categories": models.GetCategories(),
+			"active":     "contact",
 		})
 		return
 	}
@@ -79,24 +82,26 @@ func ContactSubmitHandler(c *gin.Context) {
 	err := models.CreateContact(contact)
 	if err != nil {
 		c.HTML(http.StatusInternalServerError, "contact.html", gin.H{
-			"title":   "Contact Us - Yuanmao Fastener | Get Quote for Industrial Fasteners",
-			"error":   "Failed to submit form",
-			"name":    name,
-			"email":   email,
-			"phone":   phone,
-			"company": company,
-			"product": product,
-			"message": message,
-			"active":  "contact",
+			"title":      "Contact Us - Yuanmao Fastener | Get Quote for Industrial Fasteners",
+			"error":      "Failed to submit form",
+			"name":       name,
+			"email":      email,
+			"phone":      phone,
+			"company":    company,
+			"product":    product,
+			"message":    message,
+			"categories": models.GetCategories(),
+			"active":     "contact",
 		})
 		return
 	}
 
 	// 提交成功
 	c.HTML(200, "contact.html", gin.H{
-		"title":   "Contact Us - Yuanmao Fastener | Get Quote for Industrial Fasteners",
-		"success": "Form submitted successfully",
-		"active":  "contact",
+		"title":      "Contact Us - Yuanmao Fastener | Get Quote for Industrial Fasteners",
+		"success":    "Form submitted successfully",
+		"categories": models.GetCategories(),
+		"active":     "contact",
 	})
 }
 
@@ -112,6 +117,7 @@ func FAQHandler(c *gin.Context) {
 	c.HTML(200, "faq.html", gin.H{
 		"title":        "FAQ - Yuanmao Fastener | Frequently Asked Questions",
 		"pageHeaderAd": firstAd,
+		"categories":   models.GetCategories(),
 		"active":       "faq",
 	})
 }

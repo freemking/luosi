@@ -20,6 +20,7 @@ func HomeHandler(c *gin.Context) {
 		"heroAds":              heroAds,
 		"internationalSalesAd": internationalSalesAds,
 		"aboutAd":              aboutAds,
+		"categories":           models.GetCategories(),
 		"active":               "home",
 	})
 }

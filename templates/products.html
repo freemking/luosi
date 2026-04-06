@@ -45,11 +45,9 @@
                 <div class="category-filter-label">Browse by Category</div>
                 <div class="category-filter">
                     <a href="/products.html" class="category-tag {{if eq .category ""}}active{{end}}">All</a>
-                    <a href="/products-Blind%20Rivet.html" class="category-tag {{if eq .category "Blind Rivet"}}active{{end}}">Blind Rivet</a>
-                    <a href="/products-Insert%20Nut.html" class="category-tag {{if eq .category "Insert Nut"}}active{{end}}">Insert Nut</a>
-                    <a href="/products-Self%20Clinching%20Fasteners.html" class="category-tag {{if eq .category "Self Clinching Fasteners"}}active{{end}}">Self Clinching Fasteners</a>
-                    <a href="/products-Other%20Products.html" class="category-tag {{if eq .category "Other Products"}}active{{end}}">Other Products</a>
-                    <a href="/products-Tools.html" class="category-tag {{if eq .category "Tools"}}active{{end}}">Tools</a>
+                    {{range .categories}}
+                    <a href="/products-{{.Name}}.html" class="category-tag {{if eq $.category .Name}}active{{end}}">{{.Name}}</a>
+                    {{end}}
                 </div>
             </div>
 

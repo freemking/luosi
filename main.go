@@ -30,6 +30,11 @@ func main() {
 	// 设置CDN URL
 	models.SetCDNURL(cfg.CDN.URL)
 
+	// 加载分类缓存
+	if err := models.LoadCategoriesCache(); err != nil {
+		log.Printf("Warning: Failed to load categories cache: %v", err)
+	}
+
 	// 设置定时任务
 	cron.SetupCron(cfg)
 
@@ -56,6 +61,9 @@ func main() {
 		"eq": func(a, b interface{}) bool {
 			return a == b
 		},
+		"gt": func(a, b int) bool {
+			return a > b
+		},
 		"seq": func(start, end int) []int {
 			seq := make([]int, end-start+1)
 			for i := range seq {
@@ -77,6 +85,15 @@ func main() {
 				}
 				return 0
 			}
+		},
+		"slice": func(s string, start, end int) string {
+			if start > len(s) {
+				return ""
+			}
+			if end > len(s) {
+				end = len(s)
+			}
+			return s[start:end]
 		},
 		"safe": func(s string) template.HTML {
 			return template.HTML(s)

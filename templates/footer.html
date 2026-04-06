@@ -40,11 +40,9 @@
                 <div class="footer-col">
                     <h3>Product Categories</h3>
                     <ul class="footer-links">
-                        <li><a href="/products-Blind%20Rivet.html">Blind Rivet</a></li>
-                        <li><a href="/products-Insert%20Nut.html">Insert Nut</a></li>
-                        <li><a href="/products-Self%20Clinching%20Fasteners.html">Self Clinching Fasteners</a></li>
-                        <li><a href="/products-Other%20Products.html">Other Products</a></li>
-                        <li><a href="/products-Tools.html">Tools</a></li>
+                        {{range .categories}}
+                        <li><a href="/products-{{.Name}}.html">{{.Name}}</a></li>
+                        {{end}}
                     </ul>
                 </div>
                 

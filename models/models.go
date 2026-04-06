@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"strings"
+	"sync"
 	"time"
 
 	"gorm.io/driver/mysql"
@@ -15,6 +16,12 @@ import (
 
 var DB *gorm.DB
 var CDNURL string
+
+var (
+	categoriesCache     []Category
+	categoriesCacheMu   sync.RWMutex
+	categoriesCacheOnce sync.Once
+)
 
 // SetCDNURL 设置CDN URL
 func SetCDNURL(url string) {
@@ -32,6 +39,21 @@ func prependCDN(path string) string {
 	}
 	// 添加CDN前缀
 	return CDNURL + path
+}
+
+// Category 产品分类模型
+type Category struct {
+	ID          uint           `json:"id" gorm:"primaryKey"`
+	Name        string         `json:"name" gorm:"size:100;not null"`
+	Slug        string         `json:"slug" gorm:"size:100;not null"`
+	Description string         `json:"description" gorm:"size:500"`
+	Icon        string         `json:"icon" gorm:"size:255"`
+	ImageURL    string         `json:"image_url" gorm:"size:255"`
+	Order       int            `json:"order" gorm:"default:0"`
+	Status      int            `json:"status" gorm:"default:1"`
+	CreatedAt   time.Time      `json:"created_at" gorm:"autoCreateTime"`
+	UpdatedAt   time.Time      `json:"updated_at" gorm:"autoUpdateTime"`
+	DeletedAt   gorm.DeletedAt `json:"-" gorm:"index"`
 }
 
 // Product 产品模型
@@ -131,14 +153,6 @@ func InitDB(dsn string) error {
 	})
 	if err != nil {
 		return fmt.Errorf("failed to connect to database: %w", err)
-	}
-
-	// 自动迁移表结构（静默执行）
-	// Note: AdPosition and Ad tables need to be created manually due to index migration issue
-	err = db.AutoMigrate(&Product{}, &Contact{}, &ProductImage{}, &News{})
-	// err = db.AutoMigrate(&Product{}, &Contact{}, &ProductImage{}, &News{}, &AdPosition{}, &Ad{})
-	if err != nil {
-		return fmt.Errorf("failed to migrate database: %w", err)
 	}
 
 	DB = db
@@ -463,4 +477,52 @@ func GetAdsByPositionCode(code string) ([]Ad, error) {
 	}
 
 	return ads, result.Error
+}
+
+// LoadCategoriesCache 加载分类缓存
+func LoadCategoriesCache() error {
+	var categories []Category
+	result := DB.Where("status = 1").Order("`order` ASC, id ASC").Find(&categories)
+	if result.Error != nil {
+		return result.Error
+	}
+
+	for i := range categories {
+		categories[i].Icon = prependCDN(categories[i].Icon)
+		categories[i].ImageURL = prependCDN(categories[i].ImageURL)
+	}
+
+	categoriesCacheMu.Lock()
+	categoriesCache = categories
+	categoriesCacheMu.Unlock()
+
+	return nil
+}
+
+// GetCategories 获取所有分类（从缓存）
+func GetCategories() []Category {
+	categoriesCacheMu.RLock()
+	defer categoriesCacheMu.RUnlock()
+
+	result := make([]Category, len(categoriesCache))
+	copy(result, categoriesCache)
+	return result
+}
+
+// GetCategoryBySlug 根据 Slug 获取分类（从缓存）
+func GetCategoryBySlug(slug string) *Category {
+	categoriesCacheMu.RLock()
+	defer categoriesCacheMu.RUnlock()
+
+	for i := range categoriesCache {
+		if categoriesCache[i].Slug == slug {
+			return &categoriesCache[i]
+		}
+	}
+	return nil
+}
+
+// RefreshCategoriesCache 刷新分类缓存
+func RefreshCategoriesCache() error {
+	return LoadCategoriesCache()
 }

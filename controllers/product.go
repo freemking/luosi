@@ -40,14 +40,15 @@ func ProductsHandler(c *gin.Context) {
 	products, total, err := models.GetProductsByCategoryWithPagination(category, page, pageSize)
 	if err != nil {
 		c.HTML(http.StatusInternalServerError, "products.html", gin.H{
-			"title":    "Our Products - Industrial Fasteners, Bolts, Nuts, Screws | Yuanmao Fastener",
-			"error":    "Failed to load products",
-			"products": []models.Product{},
-			"category": category,
-			"page":     page,
-			"pageSize": pageSize,
-			"total":    0,
-			"pages":    0,
+			"title":      "Our Products - Industrial Fasteners, Bolts, Nuts, Screws | Yuanmao Fastener",
+			"error":      "Failed to load products",
+			"products":   []models.Product{},
+			"category":   category,
+			"page":       page,
+			"pageSize":   pageSize,
+			"total":      0,
+			"pages":      0,
+			"categories": models.GetCategories(),
 		})
 		return
 	}
@@ -74,6 +75,7 @@ func ProductsHandler(c *gin.Context) {
 		"total":         total,
 		"pages":         pages,
 		"pageHeaderAd":  firstAd,
+		"categories":    models.GetCategories(),
 		"active":        "products",
 	})
 }
