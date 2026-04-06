@@ -37,4 +37,7 @@ func SetupRoutes(r *gin.Engine) {
 
 	// FAQ页面
 	r.GET("/faq.html", controllers.FAQHandler)
+
+	// 3D设计器页面
+	r.GET("/3d.html", controllers.ThreeDHandler)
 }

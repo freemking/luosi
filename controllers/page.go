@@ -110,8 +110,16 @@ func FAQHandler(c *gin.Context) {
 	}
 
 	c.HTML(200, "faq.html", gin.H{
-		"title":         "FAQ - Yuanmao Fastener | Frequently Asked Questions",
-		"pageHeaderAd":  firstAd,
-		"active":        "faq",
+		"title":        "FAQ - Yuanmao Fastener | Frequently Asked Questions",
+		"pageHeaderAd": firstAd,
+		"active":       "faq",
+	})
+}
+
+// ThreeDHandler 3D设计器页面处理器
+func ThreeDHandler(c *gin.Context) {
+	c.HTML(200, "3d.html", gin.H{
+		"title":  "3D Fastener Designer - Visualize & Customize | Yuanmao",
+		"active": "products",
 	})
 }

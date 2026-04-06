@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{template "google-analytics.html" .}}
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Fastener Designer - Visualize & Customize | Yuanmao</title>
+    <meta name="description" content="Interactive 3D fastener designer tool. Visualize and customize screws, bolts, and nuts in real-time with ISO standard specifications.">
+    <meta name="keywords" content="3D fastener designer, bolt visualizer, nut designer, screw configurator, ISO fastener, metric thread">
+    <link rel="stylesheet" href="/static/css/style.css?2026040601">
+    <link rel="stylesheet" href="/static/css/3d.css?2026040601">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/renderers/CSS2DRenderer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/exporters/GLTFExporter.js"></script>
+</head>
+<body>
+    {{template "header.html" .}}
+
+    <div class="page-header">
+        <div class="container">
+            <h1>3D Fastener Designer</h1>
+            <p>Visualize and customize your fastener specifications in real-time</p>
+        </div>
+    </div>
+
+    <div class="breadcrumb">
+        <div class="container">
+            <ol>
+                <li><a href="/">Home</a></li>
+                <li><a href="/products.html">Products</a></li>
+                <li>3D Designer</li>
+            </ol>
+        </div>
+    </div>
+
+    <section class="fastener-designer">
+        <div class="container">
+            <div class="designer-wrapper">
+                <div class="designer-viewer">
+                    <div id="three-container"></div>
+                    <div class="viewer-controls">
+                        <button id="reset-view" class="viewer-btn" title="Reset View">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 4v6h6M23 20v-6h-6"/>
+                                <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+                            </svg>
+                        </button>
+                        <button id="toggle-wireframe" class="viewer-btn" title="Toggle Wireframe">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                <line x1="3" y1="12" x2="21" y2="12"/>
+                                <line x1="12" y1="3" x2="12" y2="21"/>
+                            </svg>
+                        </button>
+                        <button id="export-model" class="viewer-btn" title="Export GLB">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7 10 12 15 17 10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="viewer-info">
+                        <span id="model-type-display">SYM FASTENER</span>
+                    </div>
+                    <div id="dimension-labels"></div>
+                </div>
+                
+                <div class="designer-controls">
+                    <div class="control-header">
+                        <div class="model-toggle">
+                            <button id="show-screw" class="toggle-btn active">Screw (Bolt)</button>
+                            <button id="show-nut" class="toggle-btn">Nut</button>
+                        </div>
+                        <div class="unit-toggle">
+                            <button id="unit-metric" class="unit-btn active">Metric (mm)</button>
+                            <button id="unit-imperial" class="unit-btn">Imperial (inch)</button>
+                        </div>
+                    </div>
+                    
+                    <div id="screw-controls" class="control-panel">
+                        <h3>Screw Parameters</h3>
+                        
+                        <div class="control-group">
+                            <label>Thread Size</label>
+                            <div class="input-row">
+                                <input type="range" id="screw-diameter" min="3" max="24" value="8" step="0.5">
+                                <span class="value-display" id="screw-diameter-val">M8</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>Length</label>
+                            <div class="input-row">
+                                <input type="range" id="screw-length" min="10" max="100" value="30" step="5">
+                                <span class="value-display" id="screw-length-val">30mm</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>Thread Pitch</label>
+                            <div class="input-row">
+                                <select id="screw-pitch">
+                                    <option value="1.25">1.25mm (Standard)</option>
+                                    <option value="1.0">1.0mm (Fine)</option>
+                                    <option value="0.75">0.75mm (Extra Fine)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>Head Type</label>
+                            <div class="input-row">
+                                <select id="screw-head">
+                                    <option value="hex">Hex Head</option>
+                                    <option value="socket">Socket Head</option>
+                                    <option value="flat">Flat Head</option>
+                                    <option value="pan">Pan Head</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>Material Finish</label>
+                            <div class="color-options">
+                                <button class="color-btn active" data-color="#B8C0C8" title="Zinc Plated" style="background-color: #B8C0C8;"></button>
+                                <button class="color-btn" data-color="#D0D4D8" title="Stainless Steel" style="background-color: #D0D4D8;"></button>
+                                <button class="color-btn" data-color="#D4A017" title="Yellow Zinc" style="background-color: #D4A017;"></button>
+                                <button class="color-btn" data-color="#2A2A2A" title="Black Oxide" style="background-color: #2A2A2A;"></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="nut-controls" class="control-panel" style="display: none;">
+                        <h3>Nut Parameters</h3>
+                        
+                        <div class="control-group">
+                            <label>Thread Size</label>
+                            <div class="input-row">
+                                <input type="range" id="nut-diameter" min="3" max="24" value="8" step="0.5">
+                                <span class="value-display" id="nut-diameter-val">M8</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>Height</label>
+                            <div class="input-row">
+                                <input type="range" id="nut-height" min="3" max="20" value="6.8" step="0.1">
+                                <span class="value-display" id="nut-height-val">6.8mm</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>Thread Pitch</label>
+                            <div class="input-row">
+                                <select id="nut-pitch">
+                                    <option value="1.25">1.25mm (Standard)</option>
+                                    <option value="1.0">1.0mm (Fine)</option>
+                                    <option value="0.75">0.75mm (Extra Fine)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>Nut Type</label>
+                            <div class="input-row">
+                                <select id="nut-type">
+                                    <option value="hex">Hex Nut</option>
+                                    <option value="nylon">Nylon Lock Nut</option>
+                                    <option value="flange">Flange Nut</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>Material Finish</label>
+                            <div class="color-options">
+                                <button class="color-btn active" data-color="#B8C0C8" title="Zinc Plated" style="background-color: #B8C0C8;"></button>
+                                <button class="color-btn" data-color="#D0D4D8" title="Stainless Steel" style="background-color: #D0D4D8;"></button>
+                                <button class="color-btn" data-color="#D4A017" title="Yellow Zinc" style="background-color: #D4A017;"></button>
+                                <button class="color-btn" data-color="#2A2A2A" title="Black Oxide" style="background-color: #2A2A2A;"></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="designer-output">
+                        <div class="output-label">Specification:</div>
+                        <div id="spec-output" class="spec-text">M8 × 30 × 1.25 Hex Head Screw</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{template "footer.html" .}}
+
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/3d-designer.js"></script>
+</body>
+</html>
