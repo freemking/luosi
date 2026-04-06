@@ -18,7 +18,7 @@ func SetupCron(cfg config.Config) {
 
 	// 每天发送一次联系表单数据到邮箱
 	_, err := c.AddFunc("0 0 * * *", func() {
-		SendContactEmails(cfg)
+		SendFeedbackEmails(cfg)
 	})
 	if err != nil {
 		log.Printf("Failed to add cron job: %v", err)
@@ -30,10 +30,10 @@ func SetupCron(cfg config.Config) {
 	log.Println("Cron jobs started")
 }
 
-// SendContactEmails 发送联系表单数据到邮箱
-func SendContactEmails(cfg config.Config) {
+// SendFeedbackEmails 发送联系表单数据到邮箱
+func SendFeedbackEmails(cfg config.Config) {
 	// 获取所有联系表单数据
-	contacts, err := models.GetContacts()
+	contacts, err := models.GetFeedbacks()
 	if err != nil {
 		log.Printf("Failed to get contacts: %v", err)
 		return

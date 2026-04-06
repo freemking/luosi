@@ -2256,6 +2256,135 @@ footer::before {
     padding: 40px;
 }
 
+.form-message {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border-radius: 6px;
+    margin-bottom: 24px;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.form-message svg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.form-error {
+    background-color: #fef2f2;
+    border: 1px solid #fca5a5;
+    color: #dc2626;
+}
+
+.form-error svg {
+    stroke: #dc2626;
+}
+
+.form-success {
+    background-color: #f0fdf4;
+    border: 1px solid #86efac;
+    color: #166534;
+}
+
+.form-success svg {
+    stroke: #166534;
+}
+
+/* Result Page Styles */
+.result-page {
+    padding: 80px 0;
+    background-color: var(--light-color);
+}
+
+.result-card {
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    padding: 60px 40px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.result-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.result-icon svg {
+    width: 40px;
+    height: 40px;
+}
+
+.result-success .result-icon {
+    background-color: #f0fdf4;
+    stroke: #166534;
+}
+
+.result-success .result-icon svg {
+    stroke: #166534;
+}
+
+.result-error .result-icon {
+    background-color: #fef2f2;
+    stroke: #dc2626;
+}
+
+.result-error .result-icon svg {
+    stroke: #dc2626;
+}
+
+.result-card h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--dark-color);
+}
+
+.result-card p {
+    font-size: 16px;
+    color: var(--gray-color);
+    line-height: 1.7;
+    margin-bottom: 32px;
+}
+
+.result-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    .result-page {
+        padding: 40px 0;
+    }
+    
+    .result-card {
+        padding: 40px 24px;
+    }
+    
+    .result-card h2 {
+        font-size: 24px;
+    }
+    
+    .result-actions {
+        flex-direction: column;
+    }
+    
+    .result-actions .btn {
+        width: 100%;
+    }
+}
+
 .contact-form-header {
     text-align: center;
     margin-bottom: 32px;

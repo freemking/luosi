@@ -53,23 +53,17 @@ func ContactSubmitHandler(c *gin.Context) {
 
 	// 验证必填字段
 	if name == "" || email == "" || message == "" {
-		c.HTML(http.StatusBadRequest, "contact.html", gin.H{
-			"title":      "Contact Us - Yuanmao Fastener | Get Quote for Industrial Fasteners",
-			"error":      "Name, email, and message are required",
-			"name":       name,
-			"email":      email,
-			"phone":      phone,
-			"company":    company,
-			"product":    product,
-			"message":    message,
-			"categories": models.GetCategories(),
-			"active":     "contact",
+		c.HTML(http.StatusBadRequest, "contact-error.html", gin.H{
+			"title":        "Submission Failed - Yuanmao Fastener",
+			"error":        "Name, email, and message are required",
+			"categories":   models.GetCategories(),
+			"active":       "contact",
 		})
 		return
 	}
 
-	// 创建联系表单记录
-	contact := models.Contact{
+	// 创建留言反馈记录
+	feedback := models.Feedback{
 		Name:    name,
 		Email:   email,
 		Phone:   phone,
@@ -79,29 +73,22 @@ func ContactSubmitHandler(c *gin.Context) {
 	}
 
 	// 保存到数据库
-	err := models.CreateContact(contact)
+	err := models.CreateFeedback(feedback)
 	if err != nil {
-		c.HTML(http.StatusInternalServerError, "contact.html", gin.H{
-			"title":      "Contact Us - Yuanmao Fastener | Get Quote for Industrial Fasteners",
-			"error":      "Failed to submit form",
-			"name":       name,
-			"email":      email,
-			"phone":      phone,
-			"company":    company,
-			"product":    product,
-			"message":    message,
-			"categories": models.GetCategories(),
-			"active":     "contact",
+		c.HTML(http.StatusInternalServerError, "contact-error.html", gin.H{
+			"title":        "Submission Failed - Yuanmao Fastener",
+			"error":        "Failed to submit form: " + err.Error(),
+			"categories":   models.GetCategories(),
+			"active":       "contact",
 		})
 		return
 	}
 
 	// 提交成功
-	c.HTML(200, "contact.html", gin.H{
-		"title":      "Contact Us - Yuanmao Fastener | Get Quote for Industrial Fasteners",
-		"success":    "Form submitted successfully",
-		"categories": models.GetCategories(),
-		"active":     "contact",
+	c.HTML(200, "contact-success.html", gin.H{
+		"title":        "Submission Successful - Yuanmao Fastener",
+		"categories":   models.GetCategories(),
+		"active":       "contact",
 	})
 }
 

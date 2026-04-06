@@ -33,7 +33,7 @@ func SetupRoutes(r *gin.Engine) {
 	// 联系我们
 	r.GET("/contact.html", controllers.ContactHandler)
 	// 提交联系表单
-	r.POST("/contact.html", controllers.ContactSubmitHandler)
+	r.POST("/contact/submit", controllers.ContactSubmitHandler)
 
 	// FAQ页面
 	r.GET("/faq.html", controllers.FAQHandler)

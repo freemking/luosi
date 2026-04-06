@@ -80,8 +80,8 @@ type ProductImage struct {
 	DeletedAt gorm.DeletedAt `json:"-" gorm:"index"`
 }
 
-// Contact 联系表单模型
-type Contact struct {
+// Feedback 留言反馈模型
+type Feedback struct {
 	ID        uint      `json:"id" gorm:"primaryKey"`
 	Name      string    `json:"name" gorm:"size:255;not null"`
 	Email     string    `json:"email" gorm:"size:255;not null"`
@@ -304,17 +304,17 @@ func GetProductsByCategory(category string) ([]Product, error) {
 	return products, result.Error
 }
 
-// CreateContact 创建联系表单
-func CreateContact(contact Contact) error {
-	result := DB.Create(&contact)
+// CreateFeedback 创建留言反馈
+func CreateFeedback(feedback Feedback) error {
+	result := DB.Create(&feedback)
 	return result.Error
 }
 
-// GetContacts 获取所有联系表单
-func GetContacts() ([]Contact, error) {
-	var contacts []Contact
-	result := DB.Find(&contacts)
-	return contacts, result.Error
+// GetFeedbacks 获取所有留言反馈
+func GetFeedbacks() ([]Feedback, error) {
+	var feedbacks []Feedback
+	result := DB.Find(&feedbacks)
+	return feedbacks, result.Error
 }
 
 // GetNewsList 获取新闻列表（分页，只获取列表页需要的字段）

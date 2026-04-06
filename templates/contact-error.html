@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{template "google-analytics.html" .}}
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission Failed - Yuanmao Fastener</title>
+    <meta name="description" content="There was an error submitting your inquiry. Please try again.">
+    <meta property="og:title" content="Submission Failed - Yuanmao Fastener">
+    <meta property="og:description" content="There was an error submitting your inquiry. Please try again.">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="https://nexfasten.com/contact/error">
+    <link rel="stylesheet" href="/static/css/style.css?2026040601">
+</head>
+<body>
+    {{template "header.html" .}}
+
+    <div class="page-header">
+        <div class="container">
+            <h1 id="page-header-title">Submission Failed</h1>
+            <p id="page-header-subtitle">Something went wrong. Please try again or contact us through other channels.</p>
+        </div>
+    </div>
+
+    <div class="breadcrumb">
+        <div class="container">
+            <ol>
+                <li><a href="/">Home</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+                <li>Error</li>
+            </ol>
+        </div>
+    </div>
+
+    <section class="result-page">
+        <div class="container">
+            <div class="result-card result-error">
+                <div class="result-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                </div>
+                <h2>Oops!</h2>
+                <p>{{.error}}</p>
+                <p>Please check your information and try again, or email us directly at info@yuanmao-fastener.com.</p>
+                <div class="result-actions">
+                    <a href="javascript:history.back()" class="btn btn-primary">Go Back and Try Again</a>
+                    <a href="/contact.html" class="btn btn-outline">Return to Contact</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{template "footer.html" .}}
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
