@@ -12,8 +12,8 @@
     <meta property="og:title" content="Blind Rivets, Insert Nuts, Self Clinching Fasteners Manufacturer | Yuanmao">
     <meta property="og:description" content="Leading China fastener manufacturer. Blind rivets, insert nuts, self-clinching fasteners. ISO, DIN, JIS standards. OEM/ODM available.">
     <meta property="og:type" content="website">
-    <link rel="canonical" href="https://www.yourdomain.com/">
-    <link rel="stylesheet" href="/static/css/style.css?2026040607">
+    <link rel="canonical" href="https://nexfasten.com/">
+    <link rel="stylesheet" href="/static/css/style.css?2026040609">
 </head>
 <body>
     {{template "header.html" .}}
@@ -166,8 +166,8 @@
     <section class="international-sales">
         <div class="container">
             <div class="sales-content-card">
-                <h2>International Sales</h2>
-                <p>The quality of our rivets has been recognized by customers from all over the world. With extensive experience in international trade, we are committed to providing you with high-quality products and services.</p>
+                <h2>{{if .internationalSalesAd}}{{if (index .internationalSalesAd 0).Title}}{{(index .internationalSalesAd 0).Title}}{{else}}International Sales{{end}}{{else}}International Sales{{end}}</h2>
+                <p>{{if .internationalSalesAd}}{{if (index .internationalSalesAd 0).Subtitle}}{{(index .internationalSalesAd 0).Subtitle}}{{else}}The quality of our rivets has been recognized by customers from all over the world. With extensive experience in international trade, we are committed to providing you with high-quality products and services.{{end}}{{else}}The quality of our rivets has been recognized by customers from all over the world. With extensive experience in international trade, we are committed to providing you with high-quality products and services.{{end}}</p>
                 <div class="sales-stats">
                     <div class="sales-stat">
                         <span class="sales-stat-value">50+</span>
@@ -180,7 +180,7 @@
                 </div>
             </div>
             <div class="sales-map-wrapper">
-                <img src="/static/images/sales.png" alt="Global Sales Network" class="sales-map-image">
+                <img src="{{if .internationalSalesAd}}{{if (index .internationalSalesAd 0).ImageURL}}{{(index .internationalSalesAd 0).ImageURL}}{{else}}/static/images/sales.png{{end}}{{else}}/static/images/sales.png{{end}}" alt="Global Sales Network" class="sales-map-image">
             </div>
         </div>
     </section>
@@ -189,10 +189,8 @@
         <div class="container">
             <div class="about-preview-grid">
                 <div class="about-preview-content">
-                    <h2>About SYM Fastener</h2>
-                    <p class="lead-text">Your reliable partner in industrial fastening solutions with over 10 years of export experience</p>
-                    <p>We are a specialist in the supply of all standard DIN, BS, JIS and ISO fasteners and other industrial parts. Our customer base has grown to consist of hundreds of both domestic and foreign companies, including some renowned global corporations for which we have worked our way to participate in their various programs as an approved vendor.</p>
-                    <p>Quality is our lifeline and the main reason of our repeat business. We offer products of high quality, competitive prices, prompt deliveries and excellent after sales service.</p>
+                    <h2>{{if .aboutAd}}{{if (index .aboutAd 0).Title}}{{(index .aboutAd 0).Title}}{{else}}About SYM Fastener{{end}}{{else}}About SYM Fastener{{end}}</h2>
+                    <p class="lead-text">{{if .aboutAd}}{{if (index .aboutAd 0).Subtitle}}{{(index .aboutAd 0).Subtitle}}{{else}}Your reliable partner in industrial fastening solutions with over 10 years of export experience{{end}}{{else}}Your reliable partner in industrial fastening solutions with over 10 years of export experience{{end}}</p>
                     <div class="about-features-mini">
                         <div class="feature-mini">
                             <svg class="feature-mini-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -240,13 +238,7 @@
                     <a href="/about.html" class="btn">Learn More About Us</a>
                 </div>
                 <div class="about-preview-visual">
-                    <div class="visual-placeholder">
-                        <svg class="visual-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                        </svg>
-                        <p>Professional Manufacturing</p>
-                    </div>
+                    <img src="{{if .aboutAd}}{{if (index .aboutAd 0).ImageURL}}{{(index .aboutAd 0).ImageURL}}{{else}}/static/images/about-preview.jpg{{end}}{{else}}/static/images/about-preview.jpg{{end}}" alt="About Us" class="about-preview-image">
                 </div>
             </div>
         </div>
