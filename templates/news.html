@@ -84,10 +84,10 @@
                     {{end}}
             
                     {{range $i := seq 1 .pages}}
-                        {{if eq $i .page}}
-                        <a href="/news.html?page={{$i}}&pageSize={{.pageSize}}" class="pagination-btn active">{{$i}}</a>
+                        {{if eq $i $.page}}
+                        <a href="/news.html?page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn active">{{$i}}</a>
                         {{else}}
-                        <a href="/news.html?page={{$i}}&pageSize={{.pageSize}}" class="pagination-btn">{{$i}}</a>
+                        <a href="/news.html?page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn">{{$i}}</a>
                         {{end}}
                     {{end}}
             
