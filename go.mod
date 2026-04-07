@@ -1,4 +1,4 @@
-module fastener-pro
+module nexfasten
 
 go 1.20
 

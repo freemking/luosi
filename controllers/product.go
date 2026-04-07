@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"fastener-pro/models"
 	"html/template"
 	"net/http"
+	"nexfasten/models"
 	"strconv"
 	"strings"
 

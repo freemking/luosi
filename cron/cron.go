@@ -1,11 +1,11 @@
 package cron
 
 import (
-	"fastener-pro/config"
-	"fastener-pro/mail"
-	"fastener-pro/models"
 	"fmt"
 	"log"
+	"nexfasten/config"
+	"nexfasten/mail"
+	"nexfasten/models"
 	"strings"
 	"time"
 

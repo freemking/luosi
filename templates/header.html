@@ -348,6 +348,30 @@
     font-size: 16px;
 }
 
+/* View All Products Link */
+.search-view-all {
+    padding: 16px 0 8px;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.search-view-all-link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--primary-color, #00DEEA);
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: 0.3px;
+}
+
+.search-view-all-link:hover {
+    color: var(--primary-dark, #00B4BD);
+    gap: 8px;
+}
+
 /* Mobile Styles */
 @media (max-width: 768px) {
     .search-panel {
@@ -470,6 +494,13 @@
             html += '</div>';
             html += '</a>';
         });
+
+        // Add View All Products link at the bottom
+        html += '<div class="search-view-all">';
+        html += '<a href="/products.html" class="search-view-all-link" onclick="closeSearchPanel()">';
+        html += 'View All Products →';
+        html += '</a>';
+        html += '</div>';
 
         searchResults.innerHTML = html;
     }

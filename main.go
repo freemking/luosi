@@ -1,13 +1,13 @@
 package main
 
 import (
-	"fastener-pro/config"
-	"fastener-pro/cron"
-	"fastener-pro/models"
-	"fastener-pro/routes"
 	"html/template"
 	"log"
 	"net/url"
+	"nexfasten/config"
+	"nexfasten/cron"
+	"nexfasten/models"
+	"nexfasten/routes"
 	"reflect"
 
 	"github.com/gin-gonic/gin"

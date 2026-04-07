@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"fastener-pro/controllers"
+	"nexfasten/controllers"
 
 	"github.com/gin-gonic/gin"
 )

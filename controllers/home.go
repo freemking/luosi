@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"fastener-pro/models"
+	"nexfasten/models"
 
 	"github.com/gin-gonic/gin"
 )

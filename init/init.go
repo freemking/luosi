@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fastener-pro/config"
-	"fastener-pro/models"
 	"log"
+	"nexfasten/config"
+	"nexfasten/models"
 )
 
 func main() {

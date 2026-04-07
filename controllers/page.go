@@ -1,8 +1,11 @@
 package controllers
 
 import (
-	"fastener-pro/models"
+	"html"
 	"net/http"
+	"nexfasten/models"
+	"regexp"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -16,11 +19,19 @@ func AboutHandler(c *gin.Context) {
 		firstAd = &pageHeaderAd[0]
 	}
 
+	// 获取 Our Story 广告
+	aboutOurStoryAds, _ := models.GetAdsByPositionCode("about-our-story")
+
+	// 获取 Our Production & Quality Control 广告
+	aboutOurProductAds, _ := models.GetAdsByPositionCode("about-our-product")
+
 	c.HTML(200, "about.html", gin.H{
-		"title":         "About Us - Professional Fastener Manufacturer | Yuanmao Fastener",
-		"pageHeaderAd":  firstAd,
-		"categories":    models.GetCategories(),
-		"active":        "about",
+		"title":              "About Us - Professional Fastener Manufacturer | Yuanmao Fastener",
+		"pageHeaderAd":       firstAd,
+		"aboutOurStoryAds":   aboutOurStoryAds,
+		"aboutOurProductAds": aboutOurProductAds,
+		"categories":         models.GetCategories(),
+		"active":             "about",
 	})
 }
 
@@ -44,12 +55,12 @@ func ContactHandler(c *gin.Context) {
 // ContactSubmitHandler 联系表单提交处理器
 func ContactSubmitHandler(c *gin.Context) {
 	// 解析表单数据
-	name := c.PostForm("name")
-	email := c.PostForm("email")
-	phone := c.PostForm("phone")
-	company := c.PostForm("company")
-	product := c.PostForm("product")
-	message := c.PostForm("message")
+	name := strings.TrimSpace(c.PostForm("name"))
+	email := strings.TrimSpace(c.PostForm("email"))
+	phone := strings.TrimSpace(c.PostForm("phone"))
+	company := strings.TrimSpace(c.PostForm("company"))
+	product := strings.TrimSpace(c.PostForm("product"))
+	message := strings.TrimSpace(c.PostForm("message"))
 
 	// 验证必填字段
 	if name == "" || email == "" || message == "" {
@@ -61,6 +72,46 @@ func ContactSubmitHandler(c *gin.Context) {
 		})
 		return
 	}
+
+	// 长度限制 - 防止超大内容注入
+	if len(name) > 255 {
+		name = name[:255]
+	}
+	if len(email) > 255 {
+		email = email[:255]
+	}
+	if len(phone) > 50 {
+		phone = phone[:50]
+	}
+	if len(company) > 255 {
+		company = company[:255]
+	}
+	if len(product) > 255 {
+		product = product[:255]
+	}
+	if len(message) > 2000 {
+		message = message[:2000]
+	}
+
+	// Email 格式验证
+	emailRegex := regexp.MustCompile(`^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$`)
+	if !emailRegex.MatchString(email) {
+		c.HTML(http.StatusBadRequest, "contact-error.html", gin.H{
+			"title":        "Submission Failed - Yuanmao Fastener",
+			"error":        "Please enter a valid email address",
+			"categories":   models.GetCategories(),
+			"active":       "contact",
+		})
+		return
+	}
+
+	// 对所有输入进行 HTML 转义防止 XSS
+	name = html.EscapeString(name)
+	email = html.EscapeString(email)
+	phone = html.EscapeString(phone)
+	company = html.EscapeString(company)
+	product = html.EscapeString(product)
+	message = html.EscapeString(message)
 
 	// 创建留言反馈记录
 	feedback := models.Feedback{
