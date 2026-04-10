@@ -46,7 +46,7 @@
                 <div class="category-filter">
                     <a href="/products.html" class="category-tag {{if eq .category ""}}active{{end}}">All</a>
                     {{range .categories}}
-                    <a href="/products-{{.Name}}.html" class="category-tag {{if eq $.category .Name}}active{{end}}">{{.Name}}</a>
+                    <a href="/products-{{.Slug}}.html" class="category-tag {{if eq $.category .Name}}active{{end}}">{{.Name}}</a>
                     {{end}}
                 </div>
             </div>
@@ -73,10 +73,10 @@
             <div class="pagination">
                 <div class="pagination-wrapper">
                     {{if gt $.page 1}}
-                    {{if eq $.category ""}}
+                    {{if eq $.slug ""}}
                     <a href="/products.html?page={{sub $.page 1}}&pageSize={{$.pageSize}}" class="pagination-btn">← Prev</a>
                     {{else}}
-                    <a href="/products-{{urlquery $.category}}.html?page={{sub $.page 1}}&pageSize={{$.pageSize}}" class="pagination-btn">← Prev</a>
+                    <a href="/products-{{$.slug}}.html?page={{sub $.page 1}}&pageSize={{$.pageSize}}" class="pagination-btn">← Prev</a>
                     {{end}}
                     {{else}}
                     <span class="pagination-btn disabled">← Prev</span>
@@ -84,25 +84,25 @@
 
                     {{range $i := seq 1 .pages}}
                         {{if eq $i $.page}}
-                        {{if eq $.category ""}}
+                        {{if eq $.slug ""}}
                         <a href="/products.html?page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn active">{{$i}}</a>
                         {{else}}
-                        <a href="/products-{{urlquery $.category}}.html?page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn active">{{$i}}</a>
+                        <a href="/products-{{$.slug}}.html?page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn active">{{$i}}</a>
                         {{end}}
                         {{else}}
-                        {{if eq $.category ""}}
+                        {{if eq $.slug ""}}
                         <a href="/products.html?page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn">{{$i}}</a>
                         {{else}}
-                        <a href="/products-{{urlquery $.category}}.html?page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn">{{$i}}</a>
+                        <a href="/products-{{$.slug}}.html?page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn">{{$i}}</a>
                         {{end}}
                         {{end}}
                     {{end}}
 
                     {{if lt $.page $.pages}}
-                    {{if eq $.category ""}}
+                    {{if eq $.slug ""}}
                     <a href="/products.html?page={{add $.page 1}}&pageSize={{$.pageSize}}" class="pagination-btn">Next →</a>
                     {{else}}
-                    <a href="/products-{{urlquery $.category}}.html?page={{add $.page 1}}&pageSize={{$.pageSize}}" class="pagination-btn">Next →</a>
+                    <a href="/products-{{$.slug}}.html?page={{add $.page 1}}&pageSize={{$.pageSize}}" class="pagination-btn">Next →</a>
                     {{end}}
                     {{else}}
                     <span class="pagination-btn disabled">Next →</span>

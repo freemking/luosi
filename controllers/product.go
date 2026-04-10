@@ -12,14 +12,22 @@ import (
 
 // ProductsHandler 产品页处理器
 func ProductsHandler(c *gin.Context) {
-	// 获取分类参数 - 优先从URL路径获取，其次从查询参数获取
-	category := c.Param("category")
-	if category == "" {
-		category = c.Query("category")
+	// 获取分类 slug 参数 - 优先从URL路径获取，其次从查询参数获取
+	slug := c.Param("category")
+	if slug == "" {
+		slug = c.Query("category")
 	}
 	// Remove .html extension if present
-	if strings.HasSuffix(category, ".html") {
-		category = strings.TrimSuffix(category, ".html")
+	if strings.HasSuffix(slug, ".html") {
+		slug = strings.TrimSuffix(slug, ".html")
+	}
+
+	// 通过 slug 获取分类信息
+	category := ""
+	if slug != "" {
+		if cat := models.GetCategoryBySlug(slug); cat != nil {
+			category = cat.Name
+		}
 	}
 
 	// 获取分页参数
@@ -70,6 +78,7 @@ func ProductsHandler(c *gin.Context) {
 		"title":         "Our Products - Industrial Fasteners, Bolts, Nuts, Screws | Yuanmao Fastener",
 		"products":      products,
 		"category":      category,
+		"slug":          slug,
 		"page":          page,
 		"pageSize":      pageSize,
 		"total":         total,
@@ -118,6 +127,7 @@ func ProductDetailHandler(c *gin.Context) {
 		"title":           "Product | Yuanmao Fastener",
 		"product":         product,
 		"htmlDescription": htmlDescription,
+		"categories":      models.GetCategories(),
 		"active":          "products",
 	})
 }

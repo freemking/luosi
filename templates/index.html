@@ -74,7 +74,7 @@
             <p class="section-subtitle">Comprehensive range of industrial fasteners to meet your every requirement</p>
             <div class="categories-grid">
                 {{range .categories}}
-                <a href="/products-{{.Name}}.html" class="category-card">
+                <a href="/products-{{.Slug}}.html" class="category-card">
                     <div class="category-image" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);">
                         {{if .ImageURL}}
                         <img src="{{.ImageURL}}" alt="{{.Name}}" >

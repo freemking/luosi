@@ -97,7 +97,13 @@
 
                     <!-- Product Tags -->
                     <div class="product-tags">
-                        <a href="/products-{{urlquery .product.Category}}.html" class="product-tag">{{.product.Category}}</a>
+                        {{$categorySlug := .product.Category}}
+                        {{range .categories}}
+                            {{if eq .Name $.product.Category}}
+                                {{$categorySlug = .Slug}}
+                            {{end}}
+                        {{end}}
+                        <a href="/products-{{$categorySlug}}.html" class="product-tag">{{.product.Category}}</a>
                         <span class="product-tag">{{.product.Name}}</span>
                         {{if .product.Standard}}
                         <span class="product-tag">{{.product.Standard}}</span>
