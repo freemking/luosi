@@ -750,9 +750,9 @@ section {
 }
 
 .category-image {
-    height: 180px;
+    height: 240px;
     overflow: hidden;
-    background: linear-gradient(135deg, var(--light-color) 0%, var(--light-secondary) 100%);
+    background: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
