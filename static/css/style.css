@@ -608,7 +608,7 @@ nav a.active::after {
 }
 
 section {
-    padding: 100px 0;
+    padding: 80px 0;
     position: relative;
 }
 
@@ -785,6 +785,7 @@ section {
 .featured-products {
     background-color: var(--light-color);
     position: relative;
+    padding: 80px 0 60px;
 }
 
 .featured-products::before {
@@ -4774,7 +4775,7 @@ footer::before {
    ============================================ */
 
 .international-sales {
-    padding: 100px 0;
+    padding: 60px 0;
     background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
     position: relative;
     overflow: hidden;
