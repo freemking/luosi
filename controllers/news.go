@@ -29,14 +29,15 @@ func NewsListHandler(c *gin.Context) {
 	newsList, total, err := models.GetNewsList(page, pageSize)
 	if err != nil {
 		c.HTML(http.StatusInternalServerError, "news.html", gin.H{
-			"title":    "News - Industrial Fastener Industry Updates",
-			"error":    "Failed to load news",
-			"newsList": []models.News{},
-			"page":     page,
-			"pageSize": pageSize,
-			"total":    0,
-			"pages":    0,
-			"active":   "news",
+			"title":      "News - Industrial Fastener Industry Updates",
+			"error":      "Failed to load news",
+			"newsList":   []models.News{},
+			"page":       page,
+			"pageSize":   pageSize,
+			"total":      0,
+			"pages":      0,
+			"categories": models.GetCategories(),
+			"active":     "news",
 		})
 		return
 	}
@@ -62,6 +63,7 @@ func NewsListHandler(c *gin.Context) {
 		"total":         total,
 		"pages":         pages,
 		"pageHeaderAd":  firstAd,
+		"categories":    models.GetCategories(),
 		"active":        "news",
 	})
 }
@@ -79,9 +81,10 @@ func NewsDetailHandler(c *gin.Context) {
 
 	if idStr == "" {
 		c.HTML(http.StatusBadRequest, "news-detail.html", gin.H{
-			"title":  "News | Yuanmao Fastener",
-			"error":  "Invalid news ID: parameter is empty",
-			"active": "news",
+			"title":      "News | Yuanmao Fastener",
+			"error":      "Invalid news ID: parameter is empty",
+			"categories": models.GetCategories(),
+			"active":     "news",
 		})
 		return
 	}
@@ -89,9 +92,10 @@ func NewsDetailHandler(c *gin.Context) {
 	id, err := strconv.ParseUint(idStr, 10, 32)
 	if err != nil {
 		c.HTML(http.StatusBadRequest, "news-detail.html", gin.H{
-			"title":  "News | Yuanmao Fastener",
-			"error":  "Invalid news ID: '" + idStr + "' - " + err.Error(),
-			"active": "news",
+			"title":      "News | Yuanmao Fastener",
+			"error":      "Invalid news ID: '" + idStr + "' - " + err.Error(),
+			"categories": models.GetCategories(),
+			"active":     "news",
 		})
 		return
 	}
@@ -100,16 +104,18 @@ func NewsDetailHandler(c *gin.Context) {
 	news, err := models.GetNewsByID(uint(id))
 	if err != nil {
 		c.HTML(http.StatusNotFound, "news-detail.html", gin.H{
-			"title":  "News | Yuanmao Fastener",
-			"error":  "News not found",
-			"active": "news",
+			"title":      "News | Yuanmao Fastener",
+			"error":      "News not found",
+			"categories": models.GetCategories(),
+			"active":     "news",
 		})
 		return
 	}
 
 	c.HTML(200, "news-detail.html", gin.H{
-		"title":  news.Title + " - Yuanmao Fastener News",
-		"news":   news,
-		"active": "news",
+		"title":      news.Title + " - Yuanmao Fastener News",
+		"news":       news,
+		"categories": models.GetCategories(),
+		"active":     "news",
 	})
 }
