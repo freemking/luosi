@@ -3769,6 +3769,7 @@ footer::before {
     color: var(--gray-color);
     line-height: 1.8;
     margin: 0 0 40px 0;
+    white-space: pre-line;
 }
 
 .about-hero-stats {
