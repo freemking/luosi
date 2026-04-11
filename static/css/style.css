@@ -3744,11 +3744,15 @@ footer::before {
 }
 
 .about-hero-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
 }
 
 .about-hero-image img {
     max-width: 600px;
+    width: 100%;
     height: auto;
     border-radius: 12px;
     box-shadow: var(--shadow-md);
