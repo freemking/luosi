@@ -469,6 +469,7 @@ nav a.active::after {
 .hero .container {
     position: relative;
     z-index: 1;
+    margin-top: -20px;
 }
 
 .hero h1 {
