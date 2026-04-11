@@ -4884,7 +4884,9 @@ footer::before {
 
 .sales-stats {
     display: flex;
-    4px;
+    justify-content: center;
+    gap: 32px;
+    padding-top: 24px;
     border-top: 1px solid #e5e7eb;
 }
 
