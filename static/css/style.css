@@ -460,7 +460,7 @@ nav a.active::after {
 .hero {
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f1525 100%);
     color: #ffffff;
-    padding: 100px 0;
+    padding: 80px 0;
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -1287,7 +1287,7 @@ footer::before {
 
 .page-header {
     background: var(--primary-color);
-    color: #000000;
+    color: #ffffff;
     padding: 72px 0;
     text-align: center;
     position: relative;
@@ -1301,12 +1301,12 @@ footer::before {
     font-weight: 700;
     letter-spacing: -0.5px;
     position: relative;
-    color: #000000;
+    color: #ffffff;
 }
 
 .page-header p {
     font-size: 17px;
-    color: #000000;
+    color: #ffffff;
     position: relative;
 }
 
