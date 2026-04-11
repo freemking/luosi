@@ -22,16 +22,16 @@ func AboutHandler(c *gin.Context) {
 	// 获取 Our Story 广告
 	aboutOurStoryAds, _ := models.GetAdsByPositionCode("about-our-story")
 
-	// 获取 Our Production & Quality Control 广告
-	aboutOurProductAds, _ := models.GetAdsByPositionCode("about-our-product")
+	// 获取 About Company 广告
+	aboutCompanyAds, _ := models.GetAdsByPositionCode("about-company")
 
 	c.HTML(200, "about.html", gin.H{
-		"title":              "About Us - Professional Fastener Manufacturer | Yuanmao Fastener",
-		"pageHeaderAd":       firstAd,
-		"aboutOurStoryAds":   aboutOurStoryAds,
-		"aboutOurProductAds": aboutOurProductAds,
-		"categories":         models.GetCategories(),
-		"active":             "about",
+		"title":            "About Us - Professional Fastener Manufacturer | Yuanmao Fastener",
+		"pageHeaderAd":     firstAd,
+		"aboutOurStoryAds": aboutOurStoryAds,
+		"aboutCompanyAds":  aboutCompanyAds,
+		"categories":       models.GetCategories(),
+		"active":           "about",
 	})
 }
 

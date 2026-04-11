@@ -3738,6 +3738,20 @@ footer::before {
 .about-hero-content {
     max-width: 1000px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.about-hero-image {
+    text-align: center;
+}
+
+.about-hero-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
 }
 
 .about-hero-text h2 {
@@ -3789,6 +3803,12 @@ footer::before {
 .stat-label {
     font-size: 14px;
     color: white;
+    font-weight: 600;
+}
+
+.stat-label-dark {
+    font-size: 14px;
+    color: var(--dark-color);
     font-weight: 600;
 }
 
@@ -4081,6 +4101,11 @@ footer::before {
 
 /* About Page Responsive */
 @media (max-width: 992px) {
+    .about-hero-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
     .about-hero-text h2 {
         font-size: 30px;
     }
