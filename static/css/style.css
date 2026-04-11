@@ -4318,7 +4318,7 @@ footer::before {
 
 .about-preview-grid {
     display: grid;
-    grid-template-columns: 1.3fr 0.7fr;
+    grid-template-columns: 1fr 1fr;
     gap: 60px;
     align-items: start;
 }
@@ -4845,7 +4845,7 @@ footer::before {
 
 .sales-content-card {
     flex-shrink: 0;
-    width: 400px;
+    width: 460px;
     background: white;
     padding: 48px 40px;
     border-radius: 16px;
@@ -4884,8 +4884,7 @@ footer::before {
 
 .sales-stats {
     display: flex;
-    gap: 32px;
-    padding-top: 24px;
+    4px;
     border-top: 1px solid #e5e7eb;
 }
 
