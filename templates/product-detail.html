@@ -12,7 +12,7 @@
     <meta property="og:description" content="{{if .product}}{{.product.Name}} - High quality {{.product.Category}}. {{if .product.Material}}{{.product.Material}}.{{end}} {{if .product.Standard}}{{.product.Standard}}.{{end}} Factory direct.{{else}}Product details{{end}}">
     <meta property="og:type" content="product">
     <link rel="canonical" href="https://nexfasten.com/product/{{if .product}}{{.product.ID}}{{end}}">
-    <link rel="stylesheet" href="/static/css/style.css?2026041109">
+    <link rel="stylesheet" href="/static/css/style.css?2026041301">
 </head>
 <body>
     {{template "header.html" .}}
@@ -112,7 +112,7 @@
 
                     <!-- Action Buttons -->
                     <div class="product-actions">
-                        <a href="/contact?product={{.product.Name}}" class="btn btn-primary btn-lg">
+                        <a href="#quick-inquiry" class="btn btn-primary btn-lg" onclick="scrollToInquiry(event)">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
                             </svg>
@@ -176,12 +176,12 @@
 
     {{if .product}}
     <!-- Inquiry Form Section -->
-    <section class="inquiry-section">
+    <section class="inquiry-section" id="quick-inquiry">
         <div class="container">
             <h2>Quick Inquiry</h2>
             <p class="inquiry-subtitle">Fill out the form below and we'll get back to you within 24 hours</p>
             
-            <form class="inquiry-form" action="/contact" method="POST">
+            <form class="inquiry-form" action="/contact/submit" method="POST">
                 <input type="hidden" name="product" value="{{.product.Name}}">
                 
                 <div class="form-row">
@@ -231,6 +231,17 @@ I am interested in this product. Please send me more details and pricing informa
             document.getElementById('mainImage').src = src;
             document.querySelectorAll('.thumb-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
+        }
+
+        function scrollToInquiry(event) {
+            event.preventDefault();
+            const inquirySection = document.getElementById('quick-inquiry');
+            if (inquirySection) {
+                inquirySection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
         }
     </script>
 </body>
