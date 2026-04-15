@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{if .product}}{{.product.Name}} | {{.product.Category}} | Yuanmao Fastener{{else}}Product Details | Yuanmao Fastener{{end}}</title>
-    <meta name="description" content="{{if .product}}{{.product.Name}} - High quality {{.product.Category}} from Yuanmao. {{if .product.Material}}{{.product.Material}} material.{{end}} {{if .product.Standard}}{{.product.Standard}} standard.{{end}} Factory direct, competitive pricing, fast delivery.{{else}}Product details - Yuanmao Fastener{{end}}">
-    <meta name="keywords" content="{{if .product}}{{.product.Name}}, {{.product.Category}}, {{if .product.Standard}}{{.product.Standard}}, {{end}}{{if .product.Material}}{{.product.Material}}, {{end}}fastener manufacturer, China fastener, industrial fastener{{else}}fasteners, industrial fasteners, fastener manufacturer{{end}}">
+    <title>{{if .product}}{{if .product.SEOTitle}}{{.product.SEOTitle}}{{else}}{{.product.Name}} | {{.product.Category}} | Yuanmao Fastener{{end}}{{else}}Product Details | Yuanmao Fastener{{end}}</title>
+    <meta name="description" content="{{if .product}}{{if .product.SEODescription}}{{.product.SEODescription}}{{else}}{{.product.Name}} - High quality {{.product.Category}} from Yuanmao. {{if .product.Material}}{{.product.Material}} material.{{end}} {{if .product.Standard}}{{.product.Standard}} standard.{{end}} Factory direct, competitive pricing, fast delivery.{{end}}{{else}}Product details - Yuanmao Fastener{{end}}">
+    <meta name="keywords" content="{{if .product}}{{if .product.SEOKeywords}}{{.product.SEOKeywords}}{{else}}{{.product.Name}}, {{.product.Category}}, {{if .product.Standard}}{{.product.Standard}}, {{end}}{{if .product.Material}}{{.product.Material}}, {{end}}fastener manufacturer, China fastener, industrial fastener{{end}}{{else}}fasteners, industrial fasteners, fastener manufacturer{{end}}">
     <meta property="og:title" content="{{if .product}}{{.product.Name}} | {{.product.Category}} | Yuanmao{{else}}Product | Yuanmao{{end}}">
     <meta property="og:description" content="{{if .product}}{{.product.Name}} - High quality {{.product.Category}}. {{if .product.Material}}{{.product.Material}}.{{end}} {{if .product.Standard}}{{.product.Standard}}.{{end}} Factory direct.{{else}}Product details{{end}}">
     <meta property="og:type" content="product">

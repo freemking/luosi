@@ -58,16 +58,19 @@ type Category struct {
 
 // Product 产品模型
 type Product struct {
-	ID          uint           `json:"id" gorm:"primaryKey"`
-	Name        string         `json:"name" gorm:"size:255;not null"`
-	Description template.HTML  `json:"description" gorm:"type:text"`
-	Category    string         `json:"category" gorm:"size:100;not null"`
-	Standard    string         `json:"standard" gorm:"size:100"`
-	Material    string         `json:"material" gorm:"size:100"`
-	CreatedAt   time.Time      `json:"created_at" gorm:"autoCreateTime"`
-	UpdatedAt   time.Time      `json:"updated_at" gorm:"autoUpdateTime"`
-	DeletedAt   gorm.DeletedAt `json:"-" gorm:"index"`
-	Images      []ProductImage `json:"images" gorm:"foreignKey:ProductID"`
+	ID            uint           `json:"id" gorm:"primaryKey"`
+	Name          string         `json:"name" gorm:"size:255;not null"`
+	SEOTitle      string         `json:"seo_title" gorm:"size:255;default:''"`
+	SEOKeywords   string         `json:"seo_keywords" gorm:"type:text;default:''"`
+	SEODescription string        `json:"seo_description" gorm:"type:text;default:''"`
+	Description   template.HTML  `json:"description" gorm:"type:text"`
+	Category      string         `json:"category" gorm:"size:100;not null"`
+	Standard      string         `json:"standard" gorm:"size:100"`
+	Material      string         `json:"material" gorm:"size:100"`
+	CreatedAt     time.Time      `json:"created_at" gorm:"autoCreateTime"`
+	UpdatedAt     time.Time      `json:"updated_at" gorm:"autoUpdateTime"`
+	DeletedAt     gorm.DeletedAt `json:"-" gorm:"index"`
+	Images        []ProductImage `json:"images" gorm:"foreignKey:ProductID"`
 }
 
 // ProductImage 产品图片模型
