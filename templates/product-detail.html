@@ -87,11 +87,11 @@
                         </div>
                         <div class="spec-row">
                             <span class="spec-label">Finish</span>
-                            <span class="spec-value">Zinc Plated, HDG, Black, Plain</span>
+                            <span class="spec-value">{{if .product.Finish}}{{.product.Finish}}{{else}}Zinc Plated, HDG, Black, Plain{{end}}</span>
                         </div>
                         <div class="spec-row">
                             <span class="spec-label">Brand</span>
-                            <span class="spec-value">Yuanmao</span>
+                            <span class="spec-value">{{if .product.Brand}}{{.product.Brand}}{{else}}Yuanmao{{end}}</span>
                         </div>
                     </div>
 
@@ -211,6 +211,8 @@
                     <textarea id="message" name="message" rows="5" required placeholder="Please describe your requirements, quantity, specifications, etc.">Product: {{.product.Name}}
 Category: {{.product.Category}}
 Standard: {{if .product.Standard}}{{.product.Standard}}{{else}}N/A{{end}}
+Finish: {{if .product.Finish}}{{.product.Finish}}{{else}}N/A{{end}}
+Brand: {{if .product.Brand}}{{.product.Brand}}{{else}}N/A{{end}}
 Material: {{if .product.Material}}{{.product.Material}}{{else}}N/A{{end}}
 
 I am interested in this product. Please send me more details and pricing information.</textarea>

@@ -66,6 +66,8 @@ type Product struct {
 	Description   template.HTML  `json:"description" gorm:"type:text"`
 	Category      string         `json:"category" gorm:"size:100;not null"`
 	Standard      string         `json:"standard" gorm:"size:100"`
+	Finish        string         `json:"finish" gorm:"size:100"`
+	Brand         string         `json:"brand" gorm:"size:100"`
 	Material      string         `json:"material" gorm:"size:100"`
 	CreatedAt     time.Time      `json:"created_at" gorm:"autoCreateTime"`
 	UpdatedAt     time.Time      `json:"updated_at" gorm:"autoUpdateTime"`
