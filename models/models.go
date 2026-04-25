@@ -359,7 +359,7 @@ func GetNewsList(page, pageSize int) ([]News, int64, error) {
 
 	// 分页查询 - 只选择列表页需要的字段
 	offset := (page - 1) * pageSize
-	result := DB.Select("id, title, cover_image, publish_date, summary, status").
+	result := DB.Select("id, title, slug, cover_image, publish_date, summary, status").
 		Where("status = ?", 1).
 		Order("publish_date DESC").
 		Offset(offset).
