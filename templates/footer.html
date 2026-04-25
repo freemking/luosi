@@ -29,11 +29,11 @@
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
                         <li><a href="/">Home</a></li>
-                        <li><a href="/products.html">Products</a></li>
-                        <li><a href="/news.html">News</a></li>
-                        <li><a href="/about.html">About Us</a></li>
-                        <li><a href="/contact.html">Contact Us</a></li>
-                        <li><a href="/faq.html">FAQ</a></li>
+                        <li><a href="/product">Products</a></li>
+                        <li><a href="/news">News</a></li>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/contact">Contact Us</a></li>
+                        <li><a href="/faq">FAQ</a></li>
                     </ul>
                 </div>
                 
@@ -41,7 +41,7 @@
                     <h3>Product Categories</h3>
                     <ul class="footer-links">
                         {{range .categories}}
-                        <li><a href="/products-{{.Slug}}.html">{{.Name}}</a></li>
+                        <li><a href="/product/{{.Slug}}">{{.Name}}</a></li>
                         {{end}}
                     </ul>
                 </div>

@@ -51,7 +51,7 @@ jobs:
           scp -o StrictHostKeyChecking=no -P ${{ secrets.SERVER_PORT }} app ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_DIR }}/
           
           # 4. 上传SEO文件
-          scp -o StrictHostKeyChecking=no -P ${{ secrets.SERVER_PORT }} robots.txt sitemap.xml ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_DIR }}/
+          scp -o StrictHostKeyChecking=no -P ${{ secrets.SERVER_PORT }} robots.txt ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_DIR }}/
 
           # 5. 上传 static
           scp -o StrictHostKeyChecking=no -P ${{ secrets.SERVER_PORT }} -r static ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.DEPLOY_DIR }}/

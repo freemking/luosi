@@ -60,11 +60,13 @@ type Category struct {
 type Product struct {
 	ID            uint           `json:"id" gorm:"primaryKey"`
 	Name          string         `json:"name" gorm:"size:255;not null"`
+	Slug          string         `json:"slug" gorm:"size:255;not null;uniqueIndex"`
 	SEOTitle      string         `json:"seo_title" gorm:"size:255;default:''"`
 	SEOKeywords   string         `json:"seo_keywords" gorm:"type:text;default:''"`
 	SEODescription string        `json:"seo_description" gorm:"type:text;default:''"`
 	Description   template.HTML  `json:"description" gorm:"type:text"`
-	Category      string         `json:"category" gorm:"size:100;not null"`
+	CategoryName  string         `json:"category_name" gorm:"size:100;not null"`
+	CategorySlug  string         `json:"category_slug" gorm:"size:100;not null;default:''"`
 	Standard      string         `json:"standard" gorm:"size:100"`
 	Finish        string         `json:"finish" gorm:"size:100"`
 	Brand         string         `json:"brand" gorm:"size:100"`
@@ -101,6 +103,7 @@ type Feedback struct {
 type News struct {
 	ID          uint      `json:"id" gorm:"primaryKey"`
 	Title       string    `json:"title" gorm:"size:255;not null"`
+	Slug        string    `json:"slug" gorm:"size:255;not null;uniqueIndex"`
 	CoverImage  string    `json:"cover_image" gorm:"size:255"`
 	PublishDate time.Time `json:"publish_date" gorm:"type:date"`
 	Summary     string    `json:"summary" gorm:"size:500"`
@@ -226,16 +229,16 @@ func GetProductsByCategoryWithPagination(category string, page, pageSize int) ([
 
 	// 计算总数
 	if category != "" {
-		DB.Model(&Product{}).Where("category = ?", category).Count(&total)
+		DB.Model(&Product{}).Where("category_name = ?", category).Count(&total)
 	} else {
 		DB.Model(&Product{}).Count(&total)
 	}
 
 	// 分页查询 - 只选择需要的字段
 	offset := (page - 1) * pageSize
-	query := DB.Select("id, name").Offset(offset).Limit(pageSize)
+	query := DB.Select("id, name, slug, category_slug").Offset(offset).Limit(pageSize)
 	if category != "" {
-		query = query.Where("category = ?", category)
+		query = query.Where("category_name = ?", category)
 	}
 	result := query.Find(&products)
 	if result.Error != nil {
@@ -292,6 +295,30 @@ func GetProductByID(id uint) (Product, error) {
 		}
 		product.Images[i].ImageURL = prependCDN(product.Images[i].ImageURL)
 		// 去重：只保留第一次出现的图片URL
+		if !seen[product.Images[i].ImageURL] {
+			seen[product.Images[i].ImageURL] = true
+			uniqueImages = append(uniqueImages, product.Images[i])
+		}
+	}
+	product.Images = uniqueImages
+
+	return product, result.Error
+}
+
+// GetProductBySlug 根据 Slug 获取产品
+func GetProductBySlug(slug string) (Product, error) {
+	var product Product
+	result := DB.Preload("Images", func(db *gorm.DB) *gorm.DB {
+		return db.Order("`order` ASC")
+	}).Where("slug = ?", slug).First(&product)
+
+	seen := make(map[string]bool)
+	var uniqueImages []ProductImage
+	for i := range product.Images {
+		if product.Images[i].ImageURL == "" {
+			continue
+		}
+		product.Images[i].ImageURL = prependCDN(product.Images[i].ImageURL)
 		if !seen[product.Images[i].ImageURL] {
 			seen[product.Images[i].ImageURL] = true
 			uniqueImages = append(uniqueImages, product.Images[i])
@@ -376,7 +403,15 @@ func GetNewsByID(id uint) (News, error) {
 	var news News
 	result := DB.First(&news, id)
 
-	// 为封面图片URL添加CDN前缀
+	news.CoverImage = prependCDN(news.CoverImage)
+
+	return news, result.Error
+}
+
+func GetNewsBySlug(slug string) (News, error) {
+	var news News
+	result := DB.Where("slug = ?", slug).First(&news)
+
 	news.CoverImage = prependCDN(news.CoverImage)
 
 	return news, result.Error
@@ -530,4 +565,56 @@ func GetCategoryBySlug(slug string) *Category {
 // RefreshCategoriesCache 刷新分类缓存
 func RefreshCategoriesCache() error {
 	return LoadCategoriesCache()
+}
+
+// SitemapProduct 用于sitemap的产品信息
+type SitemapProduct struct {
+	ID           uint      `json:"id"`
+	Slug         string    `json:"slug"`
+	CategorySlug string    `json:"category_slug"`
+	UpdatedAt    time.Time `json:"updated_at"`
+}
+
+// SitemapNews 用于sitemap的新闻信息
+type SitemapNews struct {
+	ID        uint      `json:"id"`
+	Slug      string    `json:"slug"`
+	UpdatedAt time.Time `json:"updated_at"`
+}
+
+// SitemapCategory 用于sitemap的分类信息
+type SitemapCategory struct {
+	ID        uint      `json:"id"`
+	Slug      string    `json:"slug"`
+	UpdatedAt time.Time `json:"updated_at"`
+}
+
+// GetSitemapProducts 获取sitemap用的产品列表
+func GetSitemapProducts() ([]SitemapProduct, error) {
+	var products []SitemapProduct
+	result := DB.Model(&Product{}).
+		Select("products.id, products.slug, products.category_slug, products.updated_at").
+		Where("products.deleted_at IS NULL AND products.category_slug != ''").
+		Find(&products)
+	return products, result.Error
+}
+
+// GetSitemapNews 获取sitemap用的新闻列表
+func GetSitemapNews() ([]SitemapNews, error) {
+	var newsList []SitemapNews
+	result := DB.Model(&News{}).
+		Select("id, slug, updated_at").
+		Where("status = ?", 1).
+		Find(&newsList)
+	return newsList, result.Error
+}
+
+// GetSitemapCategories 获取sitemap用的分类列表
+func GetSitemapCategories() ([]SitemapCategory, error) {
+	var categories []SitemapCategory
+	result := DB.Model(&Category{}).
+		Select("id, slug, updated_at").
+		Where("status = ?", 1).
+		Find(&categories)
+	return categories, result.Error
 }

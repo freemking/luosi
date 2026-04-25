@@ -14,30 +14,33 @@ func SetupRoutes(r *gin.Engine) {
 	r.GET("/api/search", controllers.SearchHandler)
 
 	// 产品页
-	r.GET("/products.html", controllers.ProductsHandler)
+	r.GET("/product", controllers.ProductsHandler)
 	// 产品分类页
-	r.GET("/products-:category", controllers.ProductsHandler)
+	r.GET("/product/:category_slug", controllers.ProductsHandler)
 
 	// 产品详情页
-	r.GET("/product-:id", controllers.ProductDetailHandler)
+	r.GET("/product/:category_slug/:slug", controllers.ProductDetailHandler)
 
 	// 新闻页
-	r.GET("/news.html", controllers.NewsListHandler)
+	r.GET("/news", controllers.NewsListHandler)
 
 	// 新闻详情页
-	r.GET("/news-:id", controllers.NewsDetailHandler)
+	r.GET("/news/:title_slug", controllers.NewsDetailHandler)
 
 	// 关于我们
-	r.GET("/about.html", controllers.AboutHandler)
+	r.GET("/about", controllers.AboutHandler)
 
 	// 联系我们
-	r.GET("/contact.html", controllers.ContactHandler)
+	r.GET("/contact", controllers.ContactHandler)
 	// 提交联系表单
 	r.POST("/contact/submit", controllers.ContactSubmitHandler)
 
 	// FAQ页面
-	r.GET("/faq.html", controllers.FAQHandler)
+	r.GET("/faq", controllers.FAQHandler)
 
 	// 3D设计器页面
-	r.GET("/3d.html", controllers.ThreeDHandler)
+	r.GET("/3d", controllers.ThreeDHandler)
+
+	// 站点地图
+	r.GET("/sitemap.xml", controllers.SitemapHandler)
 }

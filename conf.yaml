@@ -12,6 +12,9 @@ database:
 cdn:
   url: https://s.nexfasten.com/
 
+site:
+  url: http://localhost:8080
+
 mail:
   smtp_host: smtp.gmail.com
   smtp_port: 587

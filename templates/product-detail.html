@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{if .product}}{{if .product.SEOTitle}}{{.product.SEOTitle}}{{else}}{{.product.Name}} | {{.product.Category}} | Yuanmao Fastener{{end}}{{else}}Product Details | Yuanmao Fastener{{end}}</title>
-    <meta name="description" content="{{if .product}}{{if .product.SEODescription}}{{.product.SEODescription}}{{else}}{{.product.Name}} - High quality {{.product.Category}} from Yuanmao. {{if .product.Material}}{{.product.Material}} material.{{end}} {{if .product.Standard}}{{.product.Standard}} standard.{{end}} Factory direct, competitive pricing, fast delivery.{{end}}{{else}}Product details - Yuanmao Fastener{{end}}">
-    <meta name="keywords" content="{{if .product}}{{if .product.SEOKeywords}}{{.product.SEOKeywords}}{{else}}{{.product.Name}}, {{.product.Category}}, {{if .product.Standard}}{{.product.Standard}}, {{end}}{{if .product.Material}}{{.product.Material}}, {{end}}fastener manufacturer, China fastener, industrial fastener{{end}}{{else}}fasteners, industrial fasteners, fastener manufacturer{{end}}">
-    <meta property="og:title" content="{{if .product}}{{.product.Name}} | {{.product.Category}} | Yuanmao{{else}}Product | Yuanmao{{end}}">
-    <meta property="og:description" content="{{if .product}}{{.product.Name}} - High quality {{.product.Category}}. {{if .product.Material}}{{.product.Material}}.{{end}} {{if .product.Standard}}{{.product.Standard}}.{{end}} Factory direct.{{else}}Product details{{end}}">
+    <title>{{if .product}}{{if .product.SEOTitle}}{{.product.SEOTitle}}{{else}}{{.product.Name}} | {{.product.CategoryName}} | Yuanmao Fastener{{end}}{{else}}Product Details | Yuanmao Fastener{{end}}</title>
+    <meta name="description" content="{{if .product}}{{if .product.SEODescription}}{{.product.SEODescription}}{{else}}{{.product.Name}} - High quality {{.product.CategoryName}} from Yuanmao. {{if .product.Material}}{{.product.Material}} material.{{end}} {{if .product.Standard}}{{.product.Standard}} standard.{{end}} Factory direct, competitive pricing, fast delivery.{{end}}{{else}}Product details - Yuanmao Fastener{{end}}">
+    <meta name="keywords" content="{{if .product}}{{if .product.SEOKeywords}}{{.product.SEOKeywords}}{{else}}{{.product.Name}}, {{.product.CategoryName}}, {{if .product.Standard}}{{.product.Standard}}, {{end}}{{if .product.Material}}{{.product.Material}}, {{end}}fastener manufacturer, China fastener, industrial fastener{{end}}{{else}}fasteners, industrial fasteners, fastener manufacturer{{end}}">
+    <meta property="og:title" content="{{if .product}}{{.product.Name}} | {{.product.CategoryName}} | Yuanmao{{else}}Product | Yuanmao{{end}}">
+    <meta property="og:description" content="{{if .product}}{{.product.Name}} - High quality {{.product.CategoryName}}. {{if .product.Material}}{{.product.Material}}.{{end}} {{if .product.Standard}}{{.product.Standard}}.{{end}} Factory direct.{{else}}Product details{{end}}">
     <meta property="og:type" content="product">
     <link rel="canonical" href="https://nexfasten.com/product/{{if .product}}{{.product.ID}}{{end}}">
     <link rel="stylesheet" href="/static/css/style.css?2026041301">
@@ -21,7 +21,7 @@
         <div class="container">
             <ol>
                 <li><a href="/">Home</a></li>
-                <li><a href="/products.html">Products</a></li>
+                <li><a href="/product">Products</a></li>
                 <li>{{if .product}}{{.product.Name}}{{else}}Product{{end}}</li>
             </ol>
         </div>
@@ -34,7 +34,7 @@
                 <div class="error-icon">⚠</div>
                 <h2>Product Not Found</h2>
                 <p>{{.error}}</p>
-                <a href="/products.html" class="btn btn-primary">Browse Products</a>
+                <a href="/product" class="btn btn-primary">Browse Products</a>
             </div>
             {{else if .product}}
             
@@ -97,13 +97,7 @@
 
                     <!-- Product Tags -->
                     <div class="product-tags">
-                        {{$categorySlug := .product.Category}}
-                        {{range .categories}}
-                            {{if eq .Name $.product.Category}}
-                                {{$categorySlug = .Slug}}
-                            {{end}}
-                        {{end}}
-                        <a href="/products-{{$categorySlug}}.html" class="product-tag">{{.product.Category}}</a>
+                        <a href="/product/{{.product.CategorySlug}}" class="product-tag">{{.product.CategoryName}}</a>
                         <span class="product-tag">{{.product.Name}}</span>
                         {{if .product.Standard}}
                         <span class="product-tag">{{.product.Standard}}</span>
@@ -209,7 +203,7 @@
                 <div class="form-group full-width">
                     <label for="message">Your Message *</label>
                     <textarea id="message" name="message" rows="5" required placeholder="Please describe your requirements, quantity, specifications, etc.">Product: {{.product.Name}}
-Category: {{.product.Category}}
+Category: {{.product.CategoryName}}
 Standard: {{if .product.Standard}}{{.product.Standard}}{{else}}N/A{{end}}
 Finish: {{if .product.Finish}}{{.product.Finish}}{{else}}N/A{{end}}
 Brand: {{if .product.Brand}}{{.product.Brand}}{{else}}N/A{{end}}

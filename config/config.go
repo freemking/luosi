@@ -11,7 +11,12 @@ import (
 type Config struct {
 	Database DatabaseConfig `yaml:"database"`
 	CDN      CDNConfig      `yaml:"cdn"`
+	Site     SiteConfig     `yaml:"site"`
 	Mail     MailConfig     `yaml:"mail"`
+}
+
+type SiteConfig struct {
+	URL string `yaml:"url"`
 }
 
 // DatabaseConfig 数据库配置

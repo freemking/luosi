@@ -47,8 +47,8 @@
                 <h1 id="hero-title">{{if .heroAds}}{{if (index .heroAds 0).Title}}{{(index .heroAds 0).Title}}{{else}}Precision Manufacturing | Global Supply Excellence{{end}}{{else}}Precision Manufacturing | Global Supply Excellence{{end}}</h1>
                 <p id="hero-subtitle">{{if .heroAds}}{{if (index .heroAds 0).Subtitle}}{{(index .heroAds 0).Subtitle}}{{else}}High-quality bolts, nuts, screws, washers and custom fastener solutions for industries worldwide. Serving global customers with DIN, BS, JIS, and ISO standard products.{{end}}{{else}}High-quality bolts, nuts, screws, washers and custom fastener solutions for industries worldwide. Serving global customers with DIN, BS, JIS, and ISO standard products.{{end}}</p>
                 <div class="hero-buttons">
-                    <a href="/products.html" class="btn">Browse Products</a>
-                    <a href="/contact.html" class="btn btn-outline">Get an Quote</a>
+                    <a href="/product" class="btn">Browse Products</a>
+                    <a href="/contact" class="btn btn-outline">Get an Quote</a>
                 </div>
                 <div class="hero-stats">
                     <div class="hero-stat">
@@ -74,7 +74,7 @@
             <p class="section-subtitle">Comprehensive range of industrial fasteners to meet your every requirement</p>
             <div class="categories-grid">
                 {{range .categories}}
-                <a href="/products-{{.Slug}}.html" class="category-card">
+                <a href="/product/{{.Slug}}" class="category-card">
                     <div class="category-image">
                         {{if .ImageURL}}
                         <img src="{{.ImageURL}}" alt="{{.Name}}" >
@@ -169,7 +169,7 @@
                             </div>
                         </div>
                     </div>
-                    <a href="/about.html" class="btn">Learn More About Us</a>
+                    <a href="/about" class="btn">Learn More About Us</a>
                 </div>
                 <div class="about-preview-visual">
                     <img src="{{if .aboutAd}}{{if (index .aboutAd 0).ImageURL}}{{(index .aboutAd 0).ImageURL}}{{else}}/static/images/about-preview.jpg{{end}}{{else}}/static/images/about-preview.jpg{{end}}" alt="About Us" class="about-preview-image">
@@ -239,8 +239,8 @@
             <h2>Ready to Get Started?</h2>
             <p>Contact us today for a free quote and discover how SYM Fastener can support your business with high-quality products and professional service.</p>
             <div class="cta-buttons">
-                <a href="/contact.html" class="btn">Contact Us Now</a>
-                <a href="/products.html" class="btn btn-outline">Explore Our Products</a>
+                <a href="/contact" class="btn">Contact Us Now</a>
+                <a href="/product" class="btn btn-outline">Explore Our Products</a>
             </div>
         </div>
     </section>

@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"nexfasten/models"
 	"strconv"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,14 +12,7 @@ import (
 // ProductsHandler 产品页处理器
 func ProductsHandler(c *gin.Context) {
 	// 获取分类 slug 参数 - 优先从URL路径获取，其次从查询参数获取
-	slug := c.Param("category")
-	if slug == "" {
-		slug = c.Query("category")
-	}
-	// Remove .html extension if present
-	if strings.HasSuffix(slug, ".html") {
-		slug = strings.TrimSuffix(slug, ".html")
-	}
+	slug := c.Param("category_slug")
 
 	// 通过 slug 获取分类信息
 	category := ""
@@ -91,26 +83,10 @@ func ProductsHandler(c *gin.Context) {
 
 // ProductDetailHandler 产品详情页处理器
 func ProductDetailHandler(c *gin.Context) {
-	// 获取产品ID
-	idStr := c.Param("id")
+	categorySlug := c.Param("category_slug")
+	slug := c.Param("slug")
 
-	// Handle .html extension if present
-	if strings.HasSuffix(idStr, ".html") {
-		idStr = strings.TrimSuffix(idStr, ".html")
-	}
-
-	id, err := strconv.ParseUint(idStr, 10, 32)
-	if err != nil {
-		c.HTML(http.StatusBadRequest, "product-detail.html", gin.H{
-			"title":  "Product | Yuanmao Fastener",
-			"error":  "Invalid product ID",
-			"active": "products",
-		})
-		return
-	}
-
-	// 根据ID查询产品
-	product, err := models.GetProductByID(uint(id))
+	product, err := models.GetProductBySlug(slug)
 	if err != nil {
 		c.HTML(http.StatusNotFound, "product-detail.html", gin.H{
 			"title":  "Product | Yuanmao Fastener",
@@ -120,12 +96,12 @@ func ProductDetailHandler(c *gin.Context) {
 		return
 	}
 
-	// 创建HTML内容字段，避免HTML标签被转义
 	htmlDescription := template.HTML(product.Description)
 
 	c.HTML(200, "product-detail.html", gin.H{
 		"title":           "Product | Yuanmao Fastener",
 		"product":         product,
+		"categorySlug":    categorySlug,
 		"htmlDescription": htmlDescription,
 		"categories":      models.GetCategories(),
 		"active":          "products",

@@ -44,16 +44,16 @@
             <div class="category-filter-wrapper">
                 <div class="category-filter-label">Browse by Category</div>
                 <div class="category-filter">
-                    <a href="/products.html" class="category-tag {{if eq .category ""}}active{{end}}">All</a>
+                    <a href="/product" class="category-tag {{if eq .category ""}}active{{end}}">All</a>
                     {{range .categories}}
-                    <a href="/products-{{.Slug}}.html" class="category-tag {{if eq $.category .Name}}active{{end}}">{{.Name}}</a>
+                    <a href="/product/{{.Slug}}" class="category-tag {{if eq $.category .Name}}active{{end}}">{{.Name}}</a>
                     {{end}}
                 </div>
             </div>
 
             <div class="products-grid">
                 {{range .products}}
-                <a href="/product-{{.ID}}.html" class="product-card">
+                <a href="/product/{{.CategorySlug}}/{{.Slug}}" class="product-card">
                     <div class="product-image">
                         {{if gt (len .Images) 0}}
                         <img src="{{(index .Images 0).ImageURL}}" alt="{{.Name}}">
@@ -74,9 +74,9 @@
                 <div class="pagination-wrapper">
                     {{if gt $.page 1}}
                     {{if eq $.slug ""}}
-                    <a href="/products.html?page={{sub $.page 1}}&pageSize={{$.pageSize}}" class="pagination-btn">← Prev</a>
+                    <a href="/product?page={{sub $.page 1}}&pageSize={{$.pageSize}}" class="pagination-btn">← Prev</a>
                     {{else}}
-                    <a href="/products-{{$.slug}}.html?page={{sub $.page 1}}&pageSize={{$.pageSize}}" class="pagination-btn">← Prev</a>
+                    <a href="/product/{{$.slug}}?page={{sub $.page 1}}&pageSize={{$.pageSize}}" class="pagination-btn">← Prev</a>
                     {{end}}
                     {{else}}
                     <span class="pagination-btn disabled">← Prev</span>
@@ -85,24 +85,24 @@
                     {{range $i := seq 1 .pages}}
                         {{if eq $i $.page}}
                         {{if eq $.slug ""}}
-                        <a href="/products.html?page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn active">{{$i}}</a>
+                        <a href="/product?page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn active">{{$i}}</a>
                         {{else}}
-                        <a href="/products-{{$.slug}}.html?page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn active">{{$i}}</a>
+                        <a href="/product/{{$.slug}}?page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn active">{{$i}}</a>
                         {{end}}
                         {{else}}
                         {{if eq $.slug ""}}
-                        <a href="/products.html?page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn">{{$i}}</a>
+                        <a href="/product?page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn">{{$i}}</a>
                         {{else}}
-                        <a href="/products-{{$.slug}}.html?page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn">{{$i}}</a>
+                        <a href="/product/{{$.slug}}?page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn">{{$i}}</a>
                         {{end}}
                         {{end}}
                     {{end}}
 
                     {{if lt $.page $.pages}}
                     {{if eq $.slug ""}}
-                    <a href="/products.html?page={{add $.page 1}}&pageSize={{$.pageSize}}" class="pagination-btn">Next →</a>
+                    <a href="/product?page={{add $.page 1}}&pageSize={{$.pageSize}}" class="pagination-btn">Next →</a>
                     {{else}}
-                    <a href="/products-{{$.slug}}.html?page={{add $.page 1}}&pageSize={{$.pageSize}}" class="pagination-btn">Next →</a>
+                    <a href="/product/{{$.slug}}?page={{add $.page 1}}&pageSize={{$.pageSize}}" class="pagination-btn">Next →</a>
                     {{end}}
                     {{else}}
                     <span class="pagination-btn disabled">Next →</span>

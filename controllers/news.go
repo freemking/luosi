@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"nexfasten/models"
 	"strconv"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -70,38 +69,9 @@ func NewsListHandler(c *gin.Context) {
 
 // NewsDetailHandler 新闻详情处理器
 func NewsDetailHandler(c *gin.Context) {
-	// 获取新闻ID
-	idStr := c.Param("id")
+	slug := c.Param("title_slug")
 
-	// Gin automatically strips the .html in this route pattern, but handle it if present
-	if strings.HasSuffix(idStr, ".html") {
-		idStr = strings.TrimSuffix(idStr, ".html")
-	}
-	idStr = strings.TrimSpace(idStr)
-
-	if idStr == "" {
-		c.HTML(http.StatusBadRequest, "news-detail.html", gin.H{
-			"title":      "News | Yuanmao Fastener",
-			"error":      "Invalid news ID: parameter is empty",
-			"categories": models.GetCategories(),
-			"active":     "news",
-		})
-		return
-	}
-
-	id, err := strconv.ParseUint(idStr, 10, 32)
-	if err != nil {
-		c.HTML(http.StatusBadRequest, "news-detail.html", gin.H{
-			"title":      "News | Yuanmao Fastener",
-			"error":      "Invalid news ID: '" + idStr + "' - " + err.Error(),
-			"categories": models.GetCategories(),
-			"active":     "news",
-		})
-		return
-	}
-
-	// 根据ID查询新闻
-	news, err := models.GetNewsByID(uint(id))
+	news, err := models.GetNewsBySlug(slug)
 	if err != nil {
 		c.HTML(http.StatusNotFound, "news-detail.html", gin.H{
 			"title":      "News | Yuanmao Fastener",

@@ -54,7 +54,7 @@
             <div class="news-grid">
                 {{range $index, $item := .newsList}}
                 <article class="news-card">
-                    <a href="/news-{{$item.ID}}.html" class="news-card-link">
+                    <a href="/news/{{$item.Slug}}" class="news-card-link">
                         <div class="news-image">
                             {{if $item.CoverImage}}
                             <img src="{{$item.CoverImage}}" alt="{{$item.Title}}">
@@ -78,21 +78,21 @@
             <div class="pagination">
                 <div class="pagination-wrapper">
                     {{if gt .page 1}}
-                    <a href="/news.html?page={{sub .page 1}}&pageSize={{.pageSize}}" class="pagination-btn">← Prev</a>
+                    <a href="/news?page={{sub .page 1}}&pageSize={{.pageSize}}" class="pagination-btn">← Prev</a>
                     {{else}}
                     <span class="pagination-btn disabled">← Prev</span>
                     {{end}}
             
                     {{range $i := seq 1 .pages}}
                         {{if eq $i $.page}}
-                        <a href="/news.html?page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn active">{{$i}}</a>
+                        <a href="/news?page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn active">{{$i}}</a>
                         {{else}}
-                        <a href="/news.html?page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn">{{$i}}</a>
+                        <a href="/news?page={{$i}}&pageSize={{$.pageSize}}" class="pagination-btn">{{$i}}</a>
                         {{end}}
                     {{end}}
             
                     {{if lt .page .pages}}
-                    <a href="/news.html?page={{add .page 1}}&pageSize={{.pageSize}}" class="pagination-btn">Next →</a>
+                    <a href="/news?page={{add .page 1}}&pageSize={{.pageSize}}" class="pagination-btn">Next →</a>
                     {{else}}
                     <span class="pagination-btn disabled">Next →</span>
                     {{end}}
