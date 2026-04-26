@@ -6,6 +6,7 @@ import (
 	"nexfasten/config"
 	"nexfasten/models"
 	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -37,7 +38,7 @@ func SitemapHandler(c *gin.Context) {
 	var sb strings.Builder
 	sb.WriteString(`<?xml version="1.0" encoding="UTF-8"?>`)
 	sb.WriteString("\n")
-	sb.WriteString(`<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`)
+	sb.WriteString(`<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">`)
 	sb.WriteString("\n")
 
 	// 静态页面
@@ -52,6 +53,7 @@ func SitemapHandler(c *gin.Context) {
 		{"/about", "monthly", "0.6"},
 		{"/contact", "monthly", "0.6"},
 		{"/faq", "monthly", "0.5"},
+		{"/3d", "monthly", "0.4"},
 	}
 
 	for _, u := range staticURLs {
@@ -59,6 +61,7 @@ func SitemapHandler(c *gin.Context) {
 		sb.WriteString(fmt.Sprintf("    <loc>%s%s</loc>\n", baseURL, u.loc))
 		sb.WriteString(fmt.Sprintf("    <changefreq>%s</changefreq>\n", u.changefreq))
 		sb.WriteString(fmt.Sprintf("    <priority>%s</priority>\n", u.priority))
+		sb.WriteString(fmt.Sprintf("    <lastmod>%s</lastmod>\n", time.Now().Format("2006-01-02T15:04:05+00:00")))
 		sb.WriteString("  </url>\n")
 	}
 
@@ -69,6 +72,7 @@ func SitemapHandler(c *gin.Context) {
 			sb.WriteString(fmt.Sprintf("    <loc>%s/product/%s</loc>\n", baseURL, cat.Slug))
 			sb.WriteString("    <changefreq>weekly</changefreq>\n")
 			sb.WriteString("    <priority>0.8</priority>\n")
+			sb.WriteString(fmt.Sprintf("    <lastmod>%s</lastmod>\n", time.Now().Format("2006-01-02T15:04:05+00:00")))
 			sb.WriteString("  </url>\n")
 		}
 	}
@@ -81,7 +85,9 @@ func SitemapHandler(c *gin.Context) {
 			sb.WriteString("    <changefreq>weekly</changefreq>\n")
 			sb.WriteString("    <priority>0.7</priority>\n")
 			if !p.UpdatedAt.IsZero() {
-				sb.WriteString(fmt.Sprintf("    <lastmod>%s</lastmod>\n", p.UpdatedAt.Format("2006-01-02")))
+				sb.WriteString(fmt.Sprintf("    <lastmod>%s</lastmod>\n", p.UpdatedAt.Format("2006-01-02T15:04:05+00:00")))
+			} else {
+				sb.WriteString(fmt.Sprintf("    <lastmod>%s</lastmod>\n", time.Now().Format("2006-01-02T15:04:05+00:00")))
 			}
 			sb.WriteString("  </url>\n")
 		}
@@ -95,7 +101,9 @@ func SitemapHandler(c *gin.Context) {
 			sb.WriteString("    <changefreq>weekly</changefreq>\n")
 			sb.WriteString("    <priority>0.7</priority>\n")
 			if !n.UpdatedAt.IsZero() {
-				sb.WriteString(fmt.Sprintf("    <lastmod>%s</lastmod>\n", n.UpdatedAt.Format("2006-01-02")))
+				sb.WriteString(fmt.Sprintf("    <lastmod>%s</lastmod>\n", n.UpdatedAt.Format("2006-01-02T15:04:05+00:00")))
+			} else {
+				sb.WriteString(fmt.Sprintf("    <lastmod>%s</lastmod>\n", time.Now().Format("2006-01-02T15:04:05+00:00")))
 			}
 			sb.WriteString("  </url>\n")
 		}

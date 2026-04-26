@@ -1,6 +1,7 @@
 # robots.txt for SYM Fastener
 # https://nexfasten.com/
 
+# Default user agent
 User-agent: *
 Allow: /
 
@@ -8,14 +9,28 @@ Allow: /
 Disallow: /admin/
 Disallow: /.github/
 Disallow: /.qoder/
+Disallow: /luosi-admin/
 
 # Allow all static resources
 Allow: /static/css/
 Allow: /static/js/
 Allow: /static/images/
 
+# Allow API endpoints for search crawlers
+Allow: /api/search
+
 # Sitemap location
 Sitemap: https://nexfasten.com/sitemap.xml
 
 # Crawl delay (optional, be nice to the server)
+Crawl-delay: 1
+
+# Google specific directives
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# Bing specific directives
+User-agent: Bingbot
+Allow: /
 Crawl-delay: 1

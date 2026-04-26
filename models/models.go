@@ -336,6 +336,36 @@ func GetProductsByCategory(category string) ([]Product, error) {
 	return products, result.Error
 }
 
+// GetRelatedProducts 获取当前分类下的随机产品（排除当前产品）
+func GetRelatedProducts(categorySlug string, currentProductID uint, limit int) ([]Product, error) {
+	var products []Product
+	result := DB.Where("category_slug = ? AND id != ?", categorySlug, currentProductID).
+		Preload("Images", func(db *gorm.DB) *gorm.DB {
+			return db.Order("`order` ASC")
+		}).
+		Order("RAND()").
+		Limit(limit).
+		Find(&products)
+
+	for i := range products {
+		seen := make(map[string]bool)
+		var uniqueImages []ProductImage
+		for j := range products[i].Images {
+			if products[i].Images[j].ImageURL == "" {
+				continue
+			}
+			products[i].Images[j].ImageURL = prependCDN(products[i].Images[j].ImageURL)
+			if !seen[products[i].Images[j].ImageURL] {
+				seen[products[i].Images[j].ImageURL] = true
+				uniqueImages = append(uniqueImages, products[i].Images[j])
+			}
+		}
+		products[i].Images = uniqueImages
+	}
+
+	return products, result.Error
+}
+
 // CreateFeedback 创建留言反馈
 func CreateFeedback(feedback Feedback) error {
 	result := DB.Create(&feedback)

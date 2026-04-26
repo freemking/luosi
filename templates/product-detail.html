@@ -8,11 +8,49 @@
     <title>{{if .product}}{{if .product.SEOTitle}}{{.product.SEOTitle}}{{else}}{{.product.Name}} | {{.product.CategoryName}} | Yuanmao Fastener{{end}}{{else}}Product Details | Yuanmao Fastener{{end}}</title>
     <meta name="description" content="{{if .product}}{{if .product.SEODescription}}{{.product.SEODescription}}{{else}}{{.product.Name}} - High quality {{.product.CategoryName}} from Yuanmao. {{if .product.Material}}{{.product.Material}} material.{{end}} {{if .product.Standard}}{{.product.Standard}} standard.{{end}} Factory direct, competitive pricing, fast delivery.{{end}}{{else}}Product details - Yuanmao Fastener{{end}}">
     <meta name="keywords" content="{{if .product}}{{if .product.SEOKeywords}}{{.product.SEOKeywords}}{{else}}{{.product.Name}}, {{.product.CategoryName}}, {{if .product.Standard}}{{.product.Standard}}, {{end}}{{if .product.Material}}{{.product.Material}}, {{end}}fastener manufacturer, China fastener, industrial fastener{{end}}{{else}}fasteners, industrial fasteners, fastener manufacturer{{end}}">
+    <meta name="author" content="Yuanmao Fastener">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <meta property="og:title" content="{{if .product}}{{.product.Name}} | {{.product.CategoryName}} | Yuanmao{{else}}Product | Yuanmao{{end}}">
     <meta property="og:description" content="{{if .product}}{{.product.Name}} - High quality {{.product.CategoryName}}. {{if .product.Material}}{{.product.Material}}.{{end}} {{if .product.Standard}}{{.product.Standard}}.{{end}} Factory direct.{{else}}Product details{{end}}">
     <meta property="og:type" content="product">
-    <link rel="canonical" href="https://nexfasten.com/product/{{if .product}}{{.product.ID}}{{end}}">
+    <meta property="og:url" content="https://nexfasten.com/product/{{if .product}}{{.product.CategorySlug}}/{{.product.Slug}}{{end}}">
+    <meta property="og:image" content="{{if .product}}{{if gt (len .product.Images) 0}}{{(index .product.Images 0).ImageURL}}{{else}}/static/images/default-product.svg{{end}}{{else}}/static/images/default-product.svg{{end}}">
+    <meta property="og:site_name" content="Yuanmao Fastener">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{if .product}}{{.product.Name}} | {{.product.CategoryName}} | Yuanmao{{else}}Product | Yuanmao{{end}}">
+    <meta name="twitter:description" content="{{if .product}}{{.product.Name}} - High quality {{.product.CategoryName}}. {{if .product.Material}}{{.product.Material}}.{{end}} {{if .product.Standard}}{{.product.Standard}}.{{end}} Factory direct.{{else}}Product details{{end}}">
+    <meta name="twitter:image" content="{{if .product}}{{if gt (len .product.Images) 0}}{{(index .product.Images 0).ImageURL}}{{else}}/static/images/default-product.svg{{end}}{{else}}/static/images/default-product.svg{{end}}">
+    <link rel="canonical" href="https://nexfasten.com/product/{{if .product}}{{.product.CategorySlug}}/{{.product.Slug}}{{end}}">
+    <link rel="alternate" hreflang="en" href="https://nexfasten.com/product/{{if .product}}{{.product.CategorySlug}}/{{.product.Slug}}{{end}}">
     <link rel="stylesheet" href="/static/css/style.css?2026041301">
+    <!-- Schema.org Structured Data -->
+    {{if .product}}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "{{.product.Name}}",
+      "image": "{{if gt (len .product.Images) 0}}{{(index .product.Images 0).ImageURL}}{{else}}/static/images/default-product.svg{{end}}",
+      "description": "{{if .product.SEODescription}}{{.product.SEODescription}}{{else}}{{.product.Name}} - High quality {{.product.CategoryName}} from Yuanmao. {{if .product.Material}}{{.product.Material}} material.{{end}} {{if .product.Standard}}{{.product.Standard}} standard.{{end}} Factory direct, competitive pricing, fast delivery.{{end}}",
+      "sku": "{{.product.ID}}",
+      "brand": {
+        "@type": "Brand",
+        "name": "{{if .product.Brand}}{{.product.Brand}}{{else}}Yuanmao{{end}}"
+      },
+      "category": "{{.product.CategoryName}}",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+          "@type": "Organization",
+          "name": "Yuanmao Fastener"
+        }
+      }
+    }
+    </script>
+    {{end}}
 </head>
 <body>
     {{template "header.html" .}}
@@ -162,6 +200,40 @@
                             <li>Urgent orders can be accommodated</li>
                         </ul>
                     </div>
+                </div>
+            </div>
+
+            <!-- Related Products -->
+            <div class="related-products">
+                <h2>Related Products</h2>
+                <div class="related-products-grid">
+                    {{range .relatedProducts}}
+                    <div class="related-product-item">
+                        <a href="/product/{{.CategorySlug}}/{{.Slug}}" class="product-link">
+                            <div class="product-image">
+                                {{if gt (len .Images) 0}}
+                                <img src="{{(index .Images 0).ImageURL}}" alt="{{.Name}}">
+                                {{else}}
+                                <div class="placeholder-image">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <path d="M8 12h8M12 8v8"/>
+                                    </svg>
+                                    <span>Product Image</span>
+                                </div>
+                                {{end}}
+                            </div>
+                            <div class="product-info">
+                                <h3>{{.Name}}</h3>
+                                <p class="product-category">{{.CategoryName}}</p>
+                            </div>
+                        </a>
+                    </div>
+                    {{else}}
+                    <div class="no-related-products">
+                        <p>Related products will be shown here</p>
+                    </div>
+                    {{end}}
                 </div>
             </div>
 

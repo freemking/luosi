@@ -9,6 +9,7 @@ import (
 	"nexfasten/models"
 	"nexfasten/routes"
 	"reflect"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -43,6 +44,16 @@ func main() {
 
 	// 创建Gin引擎
 	r := gin.Default()
+
+	// 添加缓存中间件
+	r.Use(func(c *gin.Context) {
+		// 静态文件缓存
+		if len(c.Request.URL.Path) > 8 && c.Request.URL.Path[:8] == "/static/" {
+			c.Header("Cache-Control", "public, max-age=86400") // 24小时缓存
+			c.Header("Expires", time.Now().Add(24*time.Hour).Format("Mon, 02 Jan 2006 15:04:05 GMT"))
+		}
+		c.Next()
+	})
 
 	// 静态文件服务
 	r.Static("/static", "./static")

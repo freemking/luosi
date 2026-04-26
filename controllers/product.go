@@ -98,12 +98,15 @@ func ProductDetailHandler(c *gin.Context) {
 
 	htmlDescription := template.HTML(product.Description)
 
+	relatedProducts, _ := models.GetRelatedProducts(categorySlug, product.ID, 4)
+
 	c.HTML(200, "product-detail.html", gin.H{
-		"title":           "Product | Yuanmao Fastener",
-		"product":         product,
-		"categorySlug":    categorySlug,
-		"htmlDescription": htmlDescription,
-		"categories":      models.GetCategories(),
-		"active":          "products",
+		"title":            "Product | Yuanmao Fastener",
+		"product":          product,
+		"categorySlug":     categorySlug,
+		"htmlDescription":  htmlDescription,
+		"relatedProducts":  relatedProducts,
+		"categories":       models.GetCategories(),
+		"active":           "products",
 	})
 }
