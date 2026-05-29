@@ -1321,6 +1321,10 @@ footer::before {
     color: var(--primary-color);
 }
 
+.footer-contact-list li > span {
+    font-size: 15px;
+}
+
 /* Footer Bottom Section */
 .footer-bottom {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
